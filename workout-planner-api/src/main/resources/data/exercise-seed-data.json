@@ -1,0 +1,1861 @@
+[
+  {
+    "name": "Push-Up",
+    "description": "A bodyweight pushing exercise that targets the chest, shoulders, and triceps by lowering and raising the body with straight arms.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "CHEST",
+    "secondaryMuscleGroup": [
+      "SHOULDERS",
+      "TRICEPS"
+    ]
+  },
+  {
+    "name": "Squat",
+    "description": "A fundamental lower-body movement targeting the quadriceps, hamstrings, glutes, and core by bending knees and hips to lower the body.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY",
+      "ENDURANCE",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "BARBELL",
+      "DUMBBELL",
+      "MACHINE"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": false,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Lunges",
+    "description": "A unilateral leg exercise that targets quads, hamstrings, and glutes by stepping forward and lowering the body.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "DUMBBELL",
+      "BARBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": true,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Plank",
+    "description": "An isometric core exercise that strengthens the abdominals, lower back, and shoulders by holding a straight body position supported by forearms and toes.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "ENDURANCE",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "CARRY",
+    "unilateral": false,
+    "primaryMuscleGroup": "CORE",
+    "secondaryMuscleGroup": [
+      "HIP_FLEXORS",
+      "OBLIQUES"
+    ]
+  },
+  {
+    "name": "Deadlift",
+    "description": "A compound hinge movement that targets the posterior chain including hamstrings, glutes, lower back, and traps by lifting a loaded barbell from the ground.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY",
+      "POWER"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BARBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "HINGE",
+    "unilateral": false,
+    "primaryMuscleGroup": "BACK",
+    "secondaryMuscleGroup": [
+      "BICEPS",
+      "TRAPS"
+    ]
+  },
+  {
+    "name": "Bicep Curl",
+    "description": "An isolation exercise that targets the biceps by curling a weight towards the shoulders.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "HYPERTROPHY",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "DUMBBELL",
+      "BARBELL",
+      "RESISTANCE_BAND"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "PULL",
+    "unilateral": true,
+    "primaryMuscleGroup": "BICEPS",
+    "secondaryMuscleGroup": []
+  },
+  {
+    "name": "Tricep Dips",
+    "description": "A bodyweight pushing exercise that targets the triceps, chest, and shoulders by lowering and raising the body using parallel bars or a bench.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "TRICEPS",
+    "secondaryMuscleGroup": ["SHOULDERS", "CHEST"]
+  },
+  {
+    "name": "Bench Press",
+    "description": "A compound pressing movement targeting the chest, shoulders, and triceps by pressing a barbell or dumbbells upward from a lying position.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY",
+      "POWER"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BARBELL",
+      "DUMBBELL",
+      "MACHINE"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "CHEST",
+    "secondaryMuscleGroup": [
+      "SHOULDERS",
+      "TRICEPS"
+    ]
+  },
+  {
+    "name": "Lat Pulldown",
+    "description": "A machine-based pulling exercise targeting the latissimus dorsi and upper back by pulling a bar down towards the chest.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "MACHINE"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PULL",
+    "unilateral": false,
+    "primaryMuscleGroup": "BACK",
+    "secondaryMuscleGroup": [
+      "BICEPS",
+      "TRAPS"
+    ]
+  },
+  {
+    "name": "Bent-Over Row",
+    "description": "A compound pulling exercise targeting the upper and mid-back by rowing a barbell or dumbbells while bent over at the hips.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BARBELL",
+      "DUMBBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PULL",
+    "unilateral": false,
+    "primaryMuscleGroup": "BACK",
+    "secondaryMuscleGroup": [
+      "BICEPS",
+      "TRAPS"
+    ]
+  },
+  {
+    "name": "Shoulder Press",
+    "description": "A compound pushing exercise targeting the deltoids and triceps by pressing weights overhead.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY",
+      "POWER"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "DUMBBELL",
+      "BARBELL",
+      "MACHINE"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "SHOULDERS",
+    "secondaryMuscleGroup": [
+      "TRICEPS"
+    ]
+  },
+  {
+    "name": "Leg Press",
+    "description": "A machine-based compound exercise that targets quads, hamstrings, and glutes by pressing weight away using the legs.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "MACHINE"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": false,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Glute Bridge",
+    "description": "A bodyweight or weighted hip hinge exercise targeting the glutes and hamstrings by lifting hips off the floor while lying down.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "BARBELL",
+      "DUMBBELL"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "HINGE",
+    "unilateral": false,
+    "primaryMuscleGroup": "GLUTES",
+    "secondaryMuscleGroup": [
+      "HAMSTRINGS"
+    ]
+  },
+  {
+    "name": "Calf Raise",
+    "description": "An isolation exercise targeting the calf muscles by raising the heels while standing or on a machine.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "MACHINE",
+      "DUMBBELL"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "GAIT",
+    "unilateral": false,
+    "primaryMuscleGroup": "CALVES",
+    "secondaryMuscleGroup": []
+  },
+  {
+    "name": "Burpee",
+    "description": "A high-intensity full-body exercise combining a squat, jump, and push-up to improve cardiovascular fitness and strength.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "ENDURANCE",
+      "FAT_LOSS",
+      "POWER"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "FULL_BODY",
+    "secondaryMuscleGroup": [
+      "CORE",
+      "LEGS",
+      "SHOULDERS"
+    ]
+  },
+  {
+    "name": "Mountain Climber",
+    "description": "A dynamic bodyweight exercise targeting the core and cardiovascular system by alternating knee drives in a plank position.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "ENDURANCE",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "CARRY",
+    "unilateral": true,
+    "primaryMuscleGroup": "CORE",
+    "secondaryMuscleGroup": [
+      "HIP_FLEXORS",
+      "OBLIQUES"
+    ]
+  },
+  {
+    "name": "Box Jump",
+    "description": "A plyometric exercise targeting the legs and power by jumping onto a raised platform or box.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "POWER",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BOX",
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": false,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Kettlebell Swing",
+    "description": "A powerful hip hinge movement using a kettlebell to generate momentum, targeting glutes, hamstrings, and core.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "POWER",
+      "ENDURANCE",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "KETTLEBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "HINGE",
+    "unilateral": false,
+    "primaryMuscleGroup": "GLUTES",
+    "secondaryMuscleGroup": [
+      "HAMSTRINGS"
+    ]
+  },
+  {
+    "name": "Dead Bug",
+    "description": "A core stability exercise performed lying on the back by moving opposing arms and legs while maintaining a neutral spine.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "ENDURANCE",
+      "STABILITY"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "ROTATION",
+    "unilateral": true,
+    "primaryMuscleGroup": "CORE",
+    "secondaryMuscleGroup": [
+      "HIP_FLEXORS",
+      "OBLIQUES"
+    ]
+  },
+  {
+    "name": "Russian Twist",
+    "description": "A rotational core exercise performed sitting by twisting the torso side to side, often with added weight.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "ENDURANCE",
+      "FAT_LOSS",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "DUMBBELL",
+      "MEDICINE_BALL"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "ROTATION",
+    "unilateral": false,
+    "primaryMuscleGroup": "CORE",
+    "secondaryMuscleGroup": [
+      "HIP_FLEXORS",
+      "OBLIQUES"
+    ]
+  },
+  {
+    "name": "Sit-Up",
+    "description": "A basic abdominal exercise involving lifting the torso from a lying position to strengthen the abs.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "ENDURANCE",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "CARRY",
+    "unilateral": false,
+    "primaryMuscleGroup": "CORE",
+    "secondaryMuscleGroup": [
+      "HIP_FLEXORS",
+      "OBLIQUES"
+    ]
+  },
+  {
+    "name": "Glute Kickback",
+    "description": "A unilateral hip extension exercise targeting the glutes, performed by kicking the leg backward from a quadruped or standing position.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "HYPERTROPHY",
+      "STRENGTH"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "RESISTANCE_BAND"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "HINGE",
+    "unilateral": true,
+    "primaryMuscleGroup": "GLUTES",
+    "secondaryMuscleGroup": [
+      "HAMSTRINGS"
+    ]
+  },
+  {
+    "name": "Side Plank",
+    "description": "An isometric core exercise that targets the obliques and shoulder stabilizers by holding a side-supported plank position.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "ENDURANCE",
+      "STABILITY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "CARRY",
+    "unilateral": true,
+    "primaryMuscleGroup": "CORE",
+    "secondaryMuscleGroup": [
+      "HIP_FLEXORS",
+      "OBLIQUES"
+    ]
+  },
+  {
+    "name": "Reverse Lunge",
+    "description": "A unilateral leg exercise performed by stepping backward and lowering the body to target quads, hamstrings, and glutes.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "DUMBBELL",
+      "BARBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": true,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Front Squat",
+    "description": "A variation of the squat where the barbell is held at the front shoulders, emphasizing the quads and core.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BARBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": false,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Incline Push-Up",
+    "description": "A variation of the push-up with hands elevated, reducing resistance and targeting the upper chest and shoulders.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "CHEST",
+    "secondaryMuscleGroup": [
+      "SHOULDERS",
+      "TRICEPS"
+    ]
+  },
+  {
+    "name": "Tricep Kickback",
+    "description": "An isolation exercise targeting the triceps by extending the arm backward with a dumbbell.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "HYPERTROPHY",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "DUMBBELL"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "PUSH",
+    "unilateral": true,
+    "primaryMuscleGroup": "TRICEPS",
+    "secondaryMuscleGroup": []
+  },
+  {
+    "name": "Dumbbell Fly",
+    "description": "An isolation exercise targeting the chest by opening arms wide with dumbbells while lying on a bench.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "DUMBBELL"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "CHEST",
+    "secondaryMuscleGroup": [
+      "SHOULDERS",
+      "TRICEPS"
+    ]
+  },
+  {
+    "name": "Hamstring Curl",
+    "description": "An isolation exercise performed on a machine to target and strengthen the hamstrings by curling the legs.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "MACHINE"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "HINGE",
+    "unilateral": false,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Hip Thrust",
+    "description": "A powerful glute activation exercise where the hips are thrust upward against resistance, typically with a barbell.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BARBELL",
+      "BODYWEIGHT",
+      "DUMBBELL"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "HINGE",
+    "unilateral": false,
+    "primaryMuscleGroup": "GLUTES",
+    "secondaryMuscleGroup": [
+      "HAMSTRINGS"
+    ]
+  },
+  {
+    "name": "Sled Push",
+    "description": "A power and conditioning exercise involving pushing a weighted sled across a distance to develop strength and endurance.",
+    "difficulty": "ADVANCED",
+    "targetGoals": [
+      "STRENGTH",
+      "POWER",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "SLED"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "FULL_BODY",
+    "secondaryMuscleGroup": [
+      "CORE",
+      "LEGS",
+      "SHOULDERS"
+    ]
+  },
+  {
+    "name": "Wall Sit",
+    "description": "An isometric exercise targeting the quadriceps by holding a seated position with back against a wall.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "ENDURANCE",
+      "STRENGTH"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "SQUAT",
+    "unilateral": false,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Jumping Jack",
+    "description": "A cardio exercise involving jumping to a position with legs spread and arms overhead, then returning to standing.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "ENDURANCE",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "GAIT",
+    "unilateral": false,
+    "primaryMuscleGroup": "FULL_BODY",
+    "secondaryMuscleGroup": [
+      "CORE",
+      "LEGS",
+      "SHOULDERS"
+    ]
+  },
+  {
+    "name": "Skater Jump",
+    "description": "A lateral plyometric exercise mimicking a speed skater\u2019s movement to develop power and agility.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "POWER",
+      "ENDURANCE",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "GAIT",
+    "unilateral": true,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Chin-Up",
+    "description": "A pulling bodyweight exercise targeting the upper back and biceps by pulling the body upward on a bar with an underhand grip.",
+    "difficulty": "ADVANCED",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY",
+      "POWER"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PULL",
+    "unilateral": false,
+    "primaryMuscleGroup": "BACK",
+    "secondaryMuscleGroup": [
+      "BICEPS",
+      "TRAPS"
+    ]
+  },
+  {
+    "name": "Pull-Up",
+    "description": "A bodyweight pulling exercise focusing on the upper back and arms by pulling the body up to a bar with an overhand grip.",
+    "difficulty": "ADVANCED",
+    "targetGoals": [
+      "STRENGTH",
+      "POWER"
+    ],
+    "suitableLevels": [
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PULL",
+    "unilateral": false,
+    "primaryMuscleGroup": "BACK",
+    "secondaryMuscleGroup": [
+      "BICEPS",
+      "TRAPS"
+    ]
+  },
+  {
+    "name": "Bent-Over Reverse Fly",
+    "description": "An isolation exercise targeting the rear deltoids and upper back by raising dumbbells laterally while bent over.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "HYPERTROPHY",
+      "STRENGTH"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "DUMBBELL"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "PULL",
+    "unilateral": false,
+    "primaryMuscleGroup": "SHOULDERS",
+    "secondaryMuscleGroup": [
+      "TRICEPS"
+    ]
+  },
+  {
+    "name": "Bicep Hammer Curl",
+    "description": "An isolation exercise for the biceps and brachialis muscles using dumbbells with a neutral grip.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "HYPERTROPHY",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "DUMBBELL"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "PULL",
+    "unilateral": true,
+    "primaryMuscleGroup": "BICEPS",
+    "secondaryMuscleGroup": []
+  },
+  {
+    "name": "Dumbbell Shrug",
+    "description": "An isolation exercise targeting the trapezius muscles by shrugging the shoulders upwards while holding dumbbells.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "DUMBBELL"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "PULL",
+    "unilateral": false,
+    "primaryMuscleGroup": "TRAPS",
+    "secondaryMuscleGroup": [
+      "SHOULDERS"
+    ]
+  },
+  {
+    "name": "Lateral Raise",
+    "description": "An isolation exercise targeting the lateral deltoid by raising dumbbells out to the sides.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "HYPERTROPHY",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "DUMBBELL"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "PUSH",
+    "unilateral": true,
+    "primaryMuscleGroup": "SHOULDERS",
+    "secondaryMuscleGroup": [
+      "TRICEPS"
+    ]
+  },
+  {
+    "name": "Front Raise",
+    "description": "An isolation exercise focusing on the anterior deltoid by lifting dumbbells or plates in front of the body.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "HYPERTROPHY",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "DUMBBELL",
+      "PLATE"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "PUSH",
+    "unilateral": true,
+    "primaryMuscleGroup": "SHOULDERS",
+    "secondaryMuscleGroup": [
+      "TRICEPS"
+    ]
+  },
+  {
+    "name": "Reverse Fly",
+    "description": "An isolation exercise targeting rear delts by lifting dumbbells out to the sides while bent forward.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "HYPERTROPHY",
+      "STRENGTH"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "DUMBBELL"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "PULL",
+    "unilateral": false,
+    "primaryMuscleGroup": "SHOULDERS",
+    "secondaryMuscleGroup": [
+      "TRICEPS"
+    ]
+  },
+  {
+    "name": "Squat Jump",
+    "description": "A plyometric variation of the squat that develops explosive power by jumping upward from the squat position.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "POWER",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": false,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Lateral Lunge",
+    "description": "A unilateral lower-body exercise targeting the inner and outer thighs by lunging sideways.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "DUMBBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": true,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Walking Lunge",
+    "description": "A unilateral leg exercise performed by stepping forward continuously and lowering into lunges.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "DUMBBELL",
+      "BARBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": true,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Plank Jack",
+    "description": "A dynamic plank variation involving jumping legs in and out while maintaining plank posture for core and cardio benefits.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "ENDURANCE",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "CARRY",
+    "unilateral": false,
+    "primaryMuscleGroup": "CORE",
+    "secondaryMuscleGroup": [
+      "HIP_FLEXORS",
+      "OBLIQUES"
+    ]
+  },
+  {
+    "name": "Side Lateral Raise",
+    "description": "An isolation exercise targeting lateral deltoids by lifting weights to the sides of the body.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "HYPERTROPHY",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "DUMBBELL"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "PUSH",
+    "unilateral": true,
+    "primaryMuscleGroup": "SHOULDERS",
+    "secondaryMuscleGroup": [
+      "TRICEPS"
+    ]
+  },
+  {
+    "name": "Dumbbell Row",
+    "description": "A unilateral pulling exercise targeting the lats and rhomboids by rowing a dumbbell while bent over.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "DUMBBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PULL",
+    "unilateral": true,
+    "primaryMuscleGroup": "BACK",
+    "secondaryMuscleGroup": [
+      "BICEPS",
+      "TRAPS"
+    ]
+  },
+  {
+    "name": "Kettlebell Clean",
+    "description": "A dynamic full-body movement where the kettlebell is lifted from the floor to the rack position, engaging multiple muscle groups.",
+    "difficulty": "ADVANCED",
+    "targetGoals": [
+      "POWER",
+      "STRENGTH",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "KETTLEBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "HINGE",
+    "unilateral": true,
+    "primaryMuscleGroup": "FULL_BODY",
+    "secondaryMuscleGroup": [
+      "CORE",
+      "LEGS",
+      "SHOULDERS"
+    ]
+  },
+  {
+    "name": "TRX Row",
+    "description": "A bodyweight suspension exercise targeting the upper back by pulling the body towards the TRX handles.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "TRX"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PULL",
+    "unilateral": false,
+    "primaryMuscleGroup": "BACK",
+    "secondaryMuscleGroup": [
+      "BICEPS",
+      "TRAPS"
+    ]
+  },
+  {
+    "name": "Kettlebell Swing",
+    "description": "A powerful hip-hinge exercise using a kettlebell swung between the legs and up to shoulder height for strength and cardio.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "POWER",
+      "STRENGTH",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "KETTLEBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "HINGE",
+    "unilateral": false,
+    "primaryMuscleGroup": "FULL_BODY",
+    "secondaryMuscleGroup": [
+      "CORE",
+      "LEGS",
+      "SHOULDERS"
+    ]
+  },
+  {
+    "name": "Goblet Squat",
+    "description": "A squat variation holding a kettlebell or dumbbell at chest level to engage the legs and core.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "KETTLEBELL",
+      "DUMBBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": false,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Cable Row",
+    "description": "A pulling exercise using a cable machine to target the middle back muscles.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "CABLE"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PULL",
+    "unilateral": false,
+    "primaryMuscleGroup": "BACK",
+    "secondaryMuscleGroup": [
+      "BICEPS",
+      "TRAPS"
+    ]
+  },
+  {
+    "name": "Step-Up",
+    "description": "A unilateral leg exercise stepping onto a raised platform to develop strength and balance.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "DUMBBELL",
+      "BARBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": true,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Romanian Deadlift (RDL)",
+    "description": "A hip hinge exercise focusing on hamstring and glute strength by lowering the weight with straight legs.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BARBELL",
+      "DUMBBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "HINGE",
+    "unilateral": false,
+    "primaryMuscleGroup": "HAMSTRINGS",
+    "secondaryMuscleGroup": [
+      "GLUTES"
+    ]
+  },
+  {
+    "name": "Incline Bench Press",
+    "description": "A pressing movement performed on an inclined bench to target the upper chest and shoulders.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY",
+      "POWER"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BARBELL",
+      "DUMBBELL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "CHEST",
+    "secondaryMuscleGroup": [
+      "SHOULDERS",
+      "TRICEPS"
+    ]
+  },
+  {
+    "name": "Overhead Tricep Extension",
+    "description": "An isolation exercise targeting the triceps by extending the arms overhead with dumbbells or cable.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "HYPERTROPHY",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "DUMBBELL",
+      "CABLE"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "PUSH",
+    "unilateral": true,
+    "primaryMuscleGroup": "TRICEPS",
+    "secondaryMuscleGroup": []
+  },
+  {
+    "name": "Hanging Leg Raise",
+    "description": "A core exercise performed by hanging from a bar and lifting the legs to engage lower abs and hip flexors.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "PULLUP_BAR"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "CARRY",
+    "unilateral": false,
+    "primaryMuscleGroup": "CORE",
+    "secondaryMuscleGroup": [
+      "HIP_FLEXORS",
+      "OBLIQUES"
+    ]
+  },
+  {
+    "name": "Bird Dog",
+    "description": "A bodyweight core stability exercise performed by extending opposite arm and leg while balancing on hands and knees.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "ENDURANCE",
+      "STABILITY"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "CARRY",
+    "unilateral": true,
+    "primaryMuscleGroup": "CORE",
+    "secondaryMuscleGroup": [
+      "HIP_FLEXORS",
+      "OBLIQUES"
+    ]
+  },
+  {
+    "name": "Medicine Ball Slam",
+    "description": "An explosive power exercise where a medicine ball is lifted overhead and slammed down to the ground.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "POWER",
+      "FAT_LOSS",
+      "STRENGTH"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "MEDICINE_BALL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "FULL_BODY",
+    "secondaryMuscleGroup": [
+      "CORE",
+      "LEGS",
+      "SHOULDERS"
+    ]
+  },
+  {
+    "name": "Sprint Intervals",
+    "description": "High-intensity sprinting performed in intervals for conditioning, power, and fat loss benefits.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "POWER",
+      "FAT_LOSS",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "GAIT",
+    "unilateral": false,
+    "primaryMuscleGroup": "FULL_BODY",
+    "secondaryMuscleGroup": [
+      "CORE",
+      "LEGS",
+      "SHOULDERS"
+    ]
+  },
+  {
+    "name": "Pistol Squat",
+    "description": "A challenging single-leg squat requiring strength, balance, and mobility.",
+    "difficulty": "ADVANCED",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE",
+      "POWER"
+    ],
+    "suitableLevels": [
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": true,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Archer Push-Up",
+    "description": "A unilateral push-up variation where one arm extends to the side, increasing difficulty and strength on the working arm.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": true,
+    "primaryMuscleGroup": "CHEST",
+    "secondaryMuscleGroup": ["SHOULDERS", "TRICEPS"]
+  },
+  {
+    "name": "L-Sit",
+    "description": "An isometric hold with legs extended forward off the ground to build core and hip flexor strength.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "PARALLET_BARS"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "CARRY",
+    "unilateral": false,
+    "primaryMuscleGroup": "CORE",
+    "secondaryMuscleGroup": ["HIP_FLEXORS"]
+  },
+  {
+    "name": "Handstand Hold",
+    "description": "An isometric balance hold upside down on hands, strengthening shoulders, arms, and core.",
+    "difficulty": "ADVANCED",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE",
+      "BALANCE"
+    ],
+    "suitableLevels": [
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "CARRY",
+    "unilateral": false,
+    "primaryMuscleGroup": "SHOULDERS",
+    "secondaryMuscleGroup": ["CORE"]
+  },
+  {
+    "name": "Tuck Planche",
+    "description": "An advanced isometric hold balancing on the hands with knees tucked, developing tremendous shoulder and core strength.",
+    "difficulty": "ADVANCED",
+    "targetGoals": [
+      "STRENGTH",
+      "POWER",
+      "BALANCE"
+    ],
+    "suitableLevels": [
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "CARRY",
+    "unilateral": false,
+    "primaryMuscleGroup": "SHOULDERS",
+    "secondaryMuscleGroup": ["TRICEPS", "CORE", "CHEST"]
+  },
+  {
+    "name": "Muscle-Up",
+    "description": "A powerful combination of pull-up and dip performed on rings or bars, requiring strength and coordination.",
+    "difficulty": "ADVANCED",
+    "targetGoals": [
+      "STRENGTH",
+      "POWER"
+    ],
+    "suitableLevels": [
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "RINGS",
+      "PULLUP_BAR"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PULL",
+    "unilateral": false,
+    "primaryMuscleGroup": "BACK",
+    "secondaryMuscleGroup": ["BICEPS", "CHEST", "SHOULDERS"]
+  },
+  {
+    "name": "Clapping Push-Up",
+    "description": "A plyometric push-up where you push off explosively and clap before landing, improving power and upper body explosiveness.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "POWER",
+      "STRENGTH",
+      "FAT_LOSS"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "CHEST",
+    "secondaryMuscleGroup": ["SHOULDERS", "TRICEPS"]
+  },
+  {
+    "name": "Box Jump",
+    "description": "Explosive jump onto a raised platform, building power and coordination.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "POWER",
+      "FAT_LOSS",
+      "STRENGTH"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "BOX"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "SQUAT",
+    "unilateral": false,
+    "primaryMuscleGroup": "LEGS",
+    "secondaryMuscleGroup": [
+      "GLUTES",
+      "HAMSTRINGS",
+      "CALVES"
+    ]
+  },
+  {
+    "name": "Wall Walk",
+    "description": "Start in a plank, walk feet up a wall and hands closer to the wall to build shoulder strength and core control.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE",
+      "BALANCE"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "WALL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "CARRY",
+    "unilateral": false,
+    "primaryMuscleGroup": "SHOULDERS",
+    "secondaryMuscleGroup": ["CORE"]
+  },
+  {
+    "name": "Tuck Front Lever",
+    "description": "An isometric hold where you hang horizontally from a bar with knees tucked, strengthening the core and lats.",
+    "difficulty": "ADVANCED",
+    "targetGoals": [
+      "STRENGTH",
+      "POWER"
+    ],
+    "suitableLevels": [
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "PULLUP_BAR"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "PULL",
+    "unilateral": false,
+    "primaryMuscleGroup": "SHOULDERS",
+    "secondaryMuscleGroup": ["BACK", "CORE"]
+  },
+  {
+    "name": "Diamond Push-Up",
+    "description": "A close-grip push-up variation placing hands together to emphasize triceps and inner chest.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "TRICEPS",
+    "secondaryMuscleGroup": ["CHEST", "SHOULDERS"]
+  },
+  {
+    "name": "Glute Bridge March",
+    "description": "A glute bridge variation where one leg lifts at a time while hips stay elevated, challenging core and hip stability.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "HINGE",
+    "unilateral": true,
+    "primaryMuscleGroup": "GLUTES",
+    "secondaryMuscleGroup": ["HAMSTRINGS", "CORE"]
+  },
+  {
+    "name": "Elevated Pike Push-Up",
+    "description": "A shoulder-focused push-up with hips elevated to mimic a vertical press and develop overhead pressing strength.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "HYPERTROPHY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "ELEVATED_SURFACE"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "PUSH",
+    "unilateral": false,
+    "primaryMuscleGroup": "SHOULDERS",
+    "secondaryMuscleGroup": ["TRICEPS"]
+  },
+  {
+    "name": "Wall Handstand Kick-Up",
+    "description": "Practice kicking up into a handstand against the wall to build shoulder strength and balance control.",
+    "difficulty": "BEGINNER",
+    "targetGoals": [
+      "BALANCE",
+      "STRENGTH",
+      "ENDURANCE"
+    ],
+    "suitableLevels": [
+      "BEGINNER",
+      "INTERMEDIATE"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT",
+      "WALL"
+    ],
+    "exerciseType": "COMPOUND",
+    "movementPattern": "CARRY",
+    "unilateral": false,
+    "primaryMuscleGroup": "SHOULDERS",
+    "secondaryMuscleGroup": ["CORE", "TRICEPS"]
+  },
+  {
+    "name": "Side Plank with Leg Lift",
+    "description": "A side plank hold with top leg lifted to increase core and hip abductor strength.",
+    "difficulty": "INTERMEDIATE",
+    "targetGoals": [
+      "STRENGTH",
+      "ENDURANCE",
+      "STABILITY"
+    ],
+    "suitableLevels": [
+      "INTERMEDIATE",
+      "ADVANCED"
+    ],
+    "equipmentType": [
+      "BODYWEIGHT"
+    ],
+    "exerciseType": "ISOLATION",
+    "movementPattern": "CARRY",
+    "unilateral": true,
+    "primaryMuscleGroup": "OBLIQUES",
+    "secondaryMuscleGroup": ["CORE", "GLUTES"]
+  }
+]
