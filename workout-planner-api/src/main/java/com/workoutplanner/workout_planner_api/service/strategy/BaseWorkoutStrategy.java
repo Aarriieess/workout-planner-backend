@@ -2,6 +2,7 @@ package com.workoutplanner.workout_planner_api.service.strategy;
 
 import com.workoutplanner.workout_planner_api.model.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +11,9 @@ public abstract class BaseWorkoutStrategy implements WorkoutGenerationStrategy{
 
     protected List<Exercise> pickRandom(List<Exercise> list, int count){
         if (list == null || list.isEmpty() || count == 0) return List.of();
-        Collections.shuffle(list);
-        return list.stream().limit(count).toList();
+        List<Exercise> exerciseList = new ArrayList<>(list);
+        Collections.shuffle(exerciseList);
+        return exerciseList.stream().limit(count).toList();
     }
 
     protected PlanExercise createPlanExercise(Exercise exercise, WorkoutTemplate workoutTemplate, UserProfile userProfile){

@@ -1,6 +1,7 @@
 package com.workoutplanner.workout_planner_api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "planExercises"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class WorkoutTemplate {
 
     @Id
@@ -31,11 +32,12 @@ public class WorkoutTemplate {
     private FitnessGoal fitnessGoal;
 
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "workoutTemplate", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<PlanExercise> planExercises = new ArrayList<>();
 
 }

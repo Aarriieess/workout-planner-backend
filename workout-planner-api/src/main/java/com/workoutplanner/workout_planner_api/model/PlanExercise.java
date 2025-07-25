@@ -1,5 +1,6 @@
 package com.workoutplanner.workout_planner_api.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -34,8 +35,12 @@ public class PlanExercise {
     @JoinColumn(name = "exercise_id")
     private Exercise exercise;
 
+    @Column
+    private  int dayIndex;
+
     @ManyToOne
     @JoinColumn(name = "workout_template_id")
+    @JsonBackReference
     private WorkoutTemplate workoutTemplate;
 
 
