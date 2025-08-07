@@ -24,9 +24,8 @@ public class UserProfile {
     @Enumerated(EnumType.STRING)
     private FitnessGoal fitnessGoal;
 
-    @ElementCollection
     @Enumerated(EnumType.STRING)
-    private List<EquipmentType> equipmentType;
+    private WorkoutEnvironment workoutEnvironment;
 
     @Enumerated(EnumType.STRING)
     private WorkoutSplit workoutSplit;

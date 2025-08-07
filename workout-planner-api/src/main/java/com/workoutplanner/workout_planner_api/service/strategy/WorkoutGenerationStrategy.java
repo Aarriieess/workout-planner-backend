@@ -8,7 +8,7 @@ import java.util.Map;
 public interface WorkoutGenerationStrategy {
 
     List<PlanExercise> generatePlan(UserProfile userProfile,
-                                    Map<MovementPattern, List<Exercise>> movementMap,
+                                    Map<MuscleGroup, List<Exercise>> movementMap,
                                     WorkoutTemplate template);
 
     WorkoutSplit getSupportedSplit();

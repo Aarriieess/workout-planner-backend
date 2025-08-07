@@ -33,13 +33,11 @@ public class ExerciseService {
         existingExercise.setName(exercise.getName());
         existingExercise.setPrimaryMuscleGroup(exercise.getPrimaryMuscleGroup());
         existingExercise.setSecondaryMuscleGroup(exercise.getSecondaryMuscleGroup());
-        existingExercise.setDifficulty(exercise.getDifficulty());
         existingExercise.setDescription(exercise.getDescription());
         existingExercise.setExerciseType(exercise.getExerciseType());
-        existingExercise.setMovementPattern(exercise.getMovementPattern());
         existingExercise.setTargetGoals(exercise.getTargetGoals());
         existingExercise.setSuitableLevels(exercise.getSuitableLevels());
-        existingExercise.setEquipmentType(exercise.getEquipmentType());
+        existingExercise.setWorkoutEnvironment(exercise.getWorkoutEnvironment());
         existingExercise.setUnilateral(exercise.isUnilateral());
 
         return exerciseRepo.save(existingExercise);

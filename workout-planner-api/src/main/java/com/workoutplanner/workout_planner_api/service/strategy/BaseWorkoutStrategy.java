@@ -5,7 +5,8 @@ import com.workoutplanner.workout_planner_api.model.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.logging.*;
+
 
 public abstract class BaseWorkoutStrategy implements WorkoutGenerationStrategy{
 
@@ -17,6 +18,11 @@ public abstract class BaseWorkoutStrategy implements WorkoutGenerationStrategy{
     }
 
     protected PlanExercise createPlanExercise(Exercise exercise, WorkoutTemplate workoutTemplate, UserProfile userProfile){
+        if (exercise == null) {
+            System.err.println("This is an error message.");
+            return null;
+        }
+
         PlanExercise planExercise = new PlanExercise();
         planExercise.setExercise(exercise);
         planExercise.setWorkoutTemplate(workoutTemplate);

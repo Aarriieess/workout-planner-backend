@@ -30,10 +30,9 @@ public class PlanExerciseService {
         PlanExercise existing  = planExerciseRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("PlanExercise not found"));
 
-        existing .setReps(updated.getReps());
-        existing .setSets(updated.getSets());
-        existing .setRestSeconds(updated.getRestSeconds());
-
+        existing.setReps(updated.getReps());
+        existing.setSets(updated.getSets());
+        existing.setRestSeconds(updated.getRestSeconds());
 
         return planExerciseRepo.save(existing );
     }

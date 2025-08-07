@@ -8,11 +8,5 @@ public enum MuscleGroup {
     BICEPS,
     TRICEPS,
     CORE,
-    GLUTES,
-    HAMSTRINGS,
-    CALVES,
-    TRAPS,
     FULL_BODY,
-    HIP_FLEXORS,
-    OBLIQUES
 }

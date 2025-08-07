@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 public class FullBodyStrategy extends BaseWorkoutStrategy {
 
     @Override
-    public List<PlanExercise> generatePlan(UserProfile userProfile, Map<MovementPattern, List<Exercise>> movementMap,
+    public List<PlanExercise> generatePlan(UserProfile userProfile, Map<MuscleGroup, List<Exercise>> movementMap,
                                            WorkoutTemplate workoutTemplate) {
 
         List<PlanExercise> fullBodyRoutine = new ArrayList<>();
@@ -36,21 +36,24 @@ public class FullBodyStrategy extends BaseWorkoutStrategy {
         return WorkoutSplit.FULL_BODY;
     }
 
-    public List<Exercise> generateFullBodyRoutine(Map<MovementPattern, List<Exercise>> movementMap) {
+    public List<Exercise> generateFullBodyRoutine(Map<MuscleGroup, List<Exercise>> movementMap) {
 
-        List<Exercise> lowerBodyExercises =
-                Stream.of(
-                        movementMap.getOrDefault(MovementPattern.SQUAT, List.of()),
-                        movementMap.getOrDefault(MovementPattern.HINGE, List.of()),
-                        movementMap.getOrDefault(MovementPattern.LUNGE, List.of())
-                ).flatMap(Collection::stream).toList();
-
+        System.out.println("=== Movement Map Contents ===");
+        for (MuscleGroup group : MuscleGroup.values()) {
+            List<Exercise> exercises = movementMap.getOrDefault(group, List.of());
+            System.out.println(group + ": " + exercises.size() + " exercises");
+            if (!exercises.isEmpty()) {
+                exercises.forEach(ex -> System.out.println("  - " + ex.getName()));
+            }
+        }
 
         return Stream.of(
-                pickRandom(movementMap.getOrDefault(MovementPattern.PUSH, List.of()), 2),
-                pickRandom(movementMap.getOrDefault(MovementPattern.PULL, List.of()), 2),
-                pickRandom(lowerBodyExercises, 2),
-                pickRandom(movementMap.getOrDefault(MovementPattern.CORE, List.of()), 1)
+                pickRandom(movementMap.getOrDefault(MuscleGroup.CHEST, List.of()), 1),
+                pickRandom(movementMap.getOrDefault(MuscleGroup.SHOULDERS, List.of()), 1),
+                pickRandom(movementMap.getOrDefault(MuscleGroup.TRICEPS, List.of()), 1),
+                pickRandom(movementMap.getOrDefault(MuscleGroup.BACK, List.of()), 1),
+                pickRandom(movementMap.getOrDefault(MuscleGroup.LEGS, List.of()), 2),
+                pickRandom(movementMap.getOrDefault(MuscleGroup.CORE, List.of()), 1)
         ).flatMap(Collection::stream).toList();
 
     }

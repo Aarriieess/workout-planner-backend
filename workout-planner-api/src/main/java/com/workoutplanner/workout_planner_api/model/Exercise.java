@@ -32,7 +32,6 @@ public class Exercise {
 
     private String description;
 
-    private String difficulty;
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
@@ -44,13 +43,10 @@ public class Exercise {
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
-    private List<EquipmentType> equipmentType;
+    private List<WorkoutEnvironment> workoutEnvironment;
 
     @Enumerated(EnumType.STRING)
     private ExerciseType exerciseType;
-
-    @Enumerated(EnumType.STRING)
-    private MovementPattern movementPattern;
 
     private boolean isUnilateral;
 

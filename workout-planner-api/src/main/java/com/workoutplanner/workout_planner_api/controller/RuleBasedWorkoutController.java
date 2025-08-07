@@ -1,8 +1,6 @@
 package com.workoutplanner.workout_planner_api.controller;
 
 import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
-import com.workoutplanner.workout_planner_api.model.User;
-import com.workoutplanner.workout_planner_api.model.UserProfile;
 import com.workoutplanner.workout_planner_api.model.WorkoutTemplate;
 import com.workoutplanner.workout_planner_api.service.implementation.RuleBasedWorkoutServiceImpl;
 import jakarta.validation.Valid;

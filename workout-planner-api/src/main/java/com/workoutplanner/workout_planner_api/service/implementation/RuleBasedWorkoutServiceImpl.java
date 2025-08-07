@@ -9,6 +9,7 @@ import com.workoutplanner.workout_planner_api.service.RuleBasedWorkoutService;
 import com.workoutplanner.workout_planner_api.service.strategy.WorkoutGenerationStrategy;
 import com.workoutplanner.workout_planner_api.service.strategy.WorkoutStrategyFactory;
 import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.jdbc.Work;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -39,12 +40,15 @@ public class RuleBasedWorkoutServiceImpl implements RuleBasedWorkoutService {
         UserProfile profile = new UserProfile(
                 request.getFitnessLevel(),
                 request.getFitnessGoal(),
-                request.getEquipmentType(),
+                request.getWorkoutEnvironment(),
                 request.getWorkoutSplit(),
                 request.getTrainingDays()
         );
 
-        WorkoutTemplate template = new WorkoutTemplate();
+
+        WorkoutTemplate template = workoutTemplateRepo.findByUser(user)
+                .orElse(new WorkoutTemplate());
+
         template.setUser(user);
         template.setName("Smart Plan - " + profile.getFitnessGoal().name());
         template.setFitnessGoal(profile.getFitnessGoal());
@@ -52,23 +56,26 @@ public class RuleBasedWorkoutServiceImpl implements RuleBasedWorkoutService {
 
         List<Exercise> filteredExercises = filterExercises(profile);
 
-        Map<MovementPattern, List<Exercise>> movementMap = filteredExercises.stream()
-                .collect(Collectors.groupingBy(Exercise::getMovementPattern));
+        Map<MuscleGroup, List<Exercise>> movementMap = filteredExercises.stream()
+                .collect(Collectors.groupingBy(Exercise::getPrimaryMuscleGroup));
 
         WorkoutGenerationStrategy strategy = strategyFactory.getStrategy(profile.getWorkoutSplit());
         List<PlanExercise> planExercises = strategy.generatePlan(profile, movementMap, template);
 
-        template.setPlanExercises(planExercises);
+        template.getPlanExercises().clear();
+
+        for (PlanExercise exercise : planExercises) {
+            exercise.setWorkoutTemplate(template);
+        }
+
+        template.getPlanExercises().addAll(planExercises);
 
         return workoutTemplateRepo.save(template);
     }
 
     private List<Exercise> filterExercises(UserProfile userProfile) {
         return exerciseRepo.findAll().stream()
-                .filter(exercise -> exercise.getTargetGoals().contains(userProfile.getFitnessGoal()))
-                .filter(exercise -> exercise.getSuitableLevels().contains(userProfile.getFitnessLevel()))
-                .filter(exercise -> !Collections.disjoint(exercise.getEquipmentType(), userProfile.getEquipmentType()))
+                .filter(exercise -> exercise.getWorkoutEnvironment().contains(userProfile.getWorkoutEnvironment()))
                 .toList();
     }
-
 }
