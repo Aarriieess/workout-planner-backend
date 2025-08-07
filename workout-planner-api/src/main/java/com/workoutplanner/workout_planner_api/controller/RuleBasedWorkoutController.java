@@ -2,7 +2,7 @@ package com.workoutplanner.workout_planner_api.controller;
 
 import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.model.WorkoutTemplate;
-import com.workoutplanner.workout_planner_api.service.implementation.RuleBasedWorkoutServiceImpl;
+import com.workoutplanner.workout_planner_api.service.implementation.RuleBasedWorkoutService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/rule-engine")
 public class  RuleBasedWorkoutController {
 
-    private final RuleBasedWorkoutServiceImpl ruleBasedWorkoutService;
+    private final RuleBasedWorkoutService ruleBasedWorkoutService;
 
-    public RuleBasedWorkoutController(RuleBasedWorkoutServiceImpl ruleBasedWorkoutService) {
+    public RuleBasedWorkoutController(RuleBasedWorkoutService ruleBasedWorkoutService) {
         this.ruleBasedWorkoutService = ruleBasedWorkoutService;
     }
 

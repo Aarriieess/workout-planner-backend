@@ -1,6 +1,5 @@
 package com.workoutplanner.workout_planner_api.model;
 
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -8,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,9 +23,6 @@ public class UserProfile {
 
     @Enumerated(EnumType.STRING)
     private WorkoutEnvironment workoutEnvironment;
-
-    @Enumerated(EnumType.STRING)
-    private WorkoutSplit workoutSplit;
 
     private int trainingDays;
 

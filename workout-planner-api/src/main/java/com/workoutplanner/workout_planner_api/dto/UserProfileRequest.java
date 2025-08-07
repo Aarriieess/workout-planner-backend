@@ -4,6 +4,7 @@ import com.workoutplanner.workout_planner_api.model.FitnessGoal;
 import com.workoutplanner.workout_planner_api.model.FitnessLevel;
 import com.workoutplanner.workout_planner_api.model.WorkoutEnvironment;
 import com.workoutplanner.workout_planner_api.model.WorkoutSplit;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -24,9 +25,7 @@ public class UserProfileRequest {
     @NotNull
     private WorkoutEnvironment workoutEnvironment;
 
-    @NotNull
-    private WorkoutSplit workoutSplit;
-
     @Min(1)
+    @Max(6)
     private int trainingDays;
 }
