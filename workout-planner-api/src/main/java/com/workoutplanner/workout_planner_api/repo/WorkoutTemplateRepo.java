@@ -11,11 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface WorkoutTemplateRepo extends JpaRepository<WorkoutTemplate, Long> {
-
-    List<WorkoutTemplate> findByFitnessGoal(FitnessGoal fitnessGoal);
-    List<WorkoutTemplate> findByFitnessGoalAndId(FitnessGoal fitnessGoal, Long id);
-
     Optional<WorkoutTemplate> findByUser(User user);
-
+    Optional<WorkoutTemplate> findByUserId(Long userId);
 
 }

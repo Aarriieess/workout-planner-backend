@@ -30,6 +30,7 @@ public class RuleBasedWorkoutService implements com.workoutplanner.workout_plann
         this.workoutTemplateRepo = workoutTemplateRepo;
         this.userRepo = userRepo;
 }
+
     @Transactional
     @Override
     public WorkoutTemplate generateTemplate(@Valid UserProfileRequest request) {
@@ -47,6 +48,16 @@ public class RuleBasedWorkoutService implements com.workoutplanner.workout_plann
         updateTemplateExercises(template, planExercises);
 
         return workoutTemplateRepo.save(template);
+    }
+
+    private void validateRequest(UserProfileRequest request) {
+
+        if (request.getUserId() == null) {
+            throw new IllegalArgumentException("User ID cannot be null");
+        }
+        if (request.getTrainingDays() < 1 || request.getTrainingDays() > 7) {
+            throw new IllegalArgumentException("Training days must be between 1 and 6");
+        }
     }
 
     private User findUserById(Long userId) {
@@ -81,10 +92,8 @@ public class RuleBasedWorkoutService implements com.workoutplanner.workout_plann
 
         List<Exercise> filteredExercise = exerciseRepo.findByWorkoutEnvironment(userProfile.getWorkoutEnvironment());
 
-        Map<MuscleGroup, List<Exercise>> exercisesByMuscleGroup  = filteredExercise.stream()
+        return filteredExercise.stream()
                 .collect(Collectors.groupingBy(Exercise::getPrimaryMuscleGroup));
-
-        return exercisesByMuscleGroup;
     }
 
     private WorkoutSplit determineWorkoutSplit (UserProfile profile) {
@@ -94,7 +103,7 @@ public class RuleBasedWorkoutService implements com.workoutplanner.workout_plann
         return switch (days) {
             case 2, 4 -> WorkoutSplit.UPPER_LOWER;
             case 5 -> WorkoutSplit.BRO_SPLIT;
-            case 6 -> WorkoutSplit.PPL;
+            case 3, 6 -> WorkoutSplit.PPL;
             default -> WorkoutSplit.FULL_BODY;
         };
     }
@@ -107,13 +116,4 @@ public class RuleBasedWorkoutService implements com.workoutplanner.workout_plann
         template.getPlanExercises().addAll(planExercises);
     }
 
-    private void validateRequest(UserProfileRequest request) {
-
-        if (request.getUserId() == null) {
-            throw new IllegalArgumentException("User ID cannot be null");
-        }
-        if (request.getTrainingDays() < 1 || request.getTrainingDays() > 7) {
-            throw new IllegalArgumentException("Training days must be between 1 and 6");
-        }
-    }
 }

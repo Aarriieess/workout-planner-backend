@@ -1,12 +1,15 @@
 package com.workoutplanner.workout_planner_api.controller;
 
+import com.workoutplanner.workout_planner_api.dto.PlanExerciseRequest;
 import com.workoutplanner.workout_planner_api.model.PlanExercise;
 import com.workoutplanner.workout_planner_api.service.PlanExerciseService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
+@ControllerAdvice
 @RestController
 @RequestMapping("/api/plan-exercises")
 public class PlanExerciseController {
@@ -32,14 +35,17 @@ public class PlanExerciseController {
         return planExerciseService.createPlanExercise(planExercise);
     }
 
-    @PutMapping("/{id}")
-    public PlanExercise updatePlanExercise(@PathVariable Long id, @Valid @RequestBody PlanExercise updated){
-        return planExerciseService.updatePlanExercise(id, updated);
+    @PutMapping("/{userId}/plan-exercise/{id}")
+    public PlanExercise updatePlanExercise(@PathVariable Long userId,
+                                           @PathVariable Long id,
+                                           @Valid @RequestBody PlanExerciseRequest request)  {
+        return planExerciseService.updateExercise(id, userId, request);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{userId}/plan-exercise/{id}")
     public void deletePlanExercise(@PathVariable Long id){
-        planExerciseService.deletePlanExercise(id);
+        planExerciseService.deleteExercise(id);
     }
+
 }
 

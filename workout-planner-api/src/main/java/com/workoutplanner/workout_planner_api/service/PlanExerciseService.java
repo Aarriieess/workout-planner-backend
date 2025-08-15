@@ -1,5 +1,6 @@
 package com.workoutplanner.workout_planner_api.service;
 
+import com.workoutplanner.workout_planner_api.dto.PlanExerciseRequest;
 import com.workoutplanner.workout_planner_api.model.PlanExercise;
 import com.workoutplanner.workout_planner_api.repo.PlanExerciseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +27,23 @@ public class PlanExerciseService {
         return planExerciseRepo.save(planExercise);
     }
 
-    public PlanExercise updatePlanExercise(Long id, PlanExercise updated){
-        PlanExercise existing  = planExerciseRepo.findById(id)
+    public PlanExercise updateExercise(Long planExerciseId, Long userId, PlanExerciseRequest request){
+
+        PlanExercise existingExercise  = planExerciseRepo.findById(planExerciseId)
                 .orElseThrow(() -> new RuntimeException("PlanExercise not found"));
 
-        existing.setReps(updated.getReps());
-        existing.setSets(updated.getSets());
-        existing.setRestSeconds(updated.getRestSeconds());
+        if (!existingExercise.getWorkoutTemplate().getUser().getId().equals(userId)) {
+            throw new RuntimeException("Unauthorized: This exercise is not in your template");
+        }
 
-        return planExerciseRepo.save(existing );
+        existingExercise.setReps(request.getReps());
+        existingExercise.setSets(request.getSets());
+        existingExercise.setRestSeconds(request.getRestSeconds());
+
+        return planExerciseRepo.save(existingExercise );
     }
 
-    public void deletePlanExercise(Long id){
+    public void deleteExercise(Long id){
         if (!planExerciseRepo.existsById(id)){
             throw new RuntimeException("PlanExercise not found");
         }
