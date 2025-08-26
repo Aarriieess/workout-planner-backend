@@ -1,5 +1,6 @@
 package com.workoutplanner.workout_planner_api.service;
 
+import com.workoutplanner.workout_planner_api.dto.ExerciseRequest;
 import com.workoutplanner.workout_planner_api.model.Exercise;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,11 @@ import java.util.List;
 @Service
 public class ExerciseService {
 
-    @Autowired
-    private ExerciseRepo exerciseRepo;
+    private final ExerciseRepo exerciseRepo;
+
+    public ExerciseService(ExerciseRepo exerciseRepo) {
+        this.exerciseRepo = exerciseRepo;
+    }
 
     public List<Exercise> getAllExercise() {
         return exerciseRepo.findAll();
@@ -22,25 +26,15 @@ public class ExerciseService {
                 .orElse(null);
     }
 
-    public Exercise createExercise(Exercise exercise){
-        return exerciseRepo.save(exercise);
+    public Exercise createExercise(ExerciseRequest request){
+        return exerciseRepo.save(Exercise.fromRequest(request));
     }
 
-    public Exercise updateExercise(Long id, Exercise exercise) {
-        Exercise existingExercise = exerciseRepo.findById(id)
+    public void updateExercise(Long id, ExerciseRequest request) {
+        Exercise exercise = exerciseRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Exercise not found"));
-
-        existingExercise.setName(exercise.getName());
-        existingExercise.setPrimaryMuscleGroup(exercise.getPrimaryMuscleGroup());
-        existingExercise.setSecondaryMuscleGroup(exercise.getSecondaryMuscleGroup());
-        existingExercise.setDescription(exercise.getDescription());
-        existingExercise.setExerciseType(exercise.getExerciseType());
-        existingExercise.setTargetGoals(exercise.getTargetGoals());
-        existingExercise.setSuitableLevels(exercise.getSuitableLevels());
-        existingExercise.setWorkoutEnvironment(exercise.getWorkoutEnvironment());
-        existingExercise.setUnilateral(exercise.isUnilateral());
-
-        return exerciseRepo.save(existingExercise);
+        exercise.updateFromRequest(request);
+        exerciseRepo.save(exercise);
     }
 
     public void deleteExercise(Long id) {

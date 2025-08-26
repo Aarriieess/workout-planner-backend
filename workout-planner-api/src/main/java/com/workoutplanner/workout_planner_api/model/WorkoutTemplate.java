@@ -39,4 +39,17 @@ public class WorkoutTemplate {
     @JsonManagedReference
     private List<PlanExercise> planExercises = new ArrayList<>();
 
+    public void clearExercises() {
+        if (this.planExercises != null) {
+            for (PlanExercise exercise : planExercises) {
+                exercise.setWorkoutTemplate(null);
+            }
+            planExercises.clear();
+        }
+    }
+
+    public void addExercise(PlanExercise exercise) {
+        exercise.setWorkoutTemplate(this);
+        this.planExercises.add(exercise);
+    }
 }

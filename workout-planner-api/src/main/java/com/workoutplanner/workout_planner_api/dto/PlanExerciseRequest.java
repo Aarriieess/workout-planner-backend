@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class PlanExerciseRequest {
+    private Long exerciseId;
 
     @NotNull
     @Min(1)

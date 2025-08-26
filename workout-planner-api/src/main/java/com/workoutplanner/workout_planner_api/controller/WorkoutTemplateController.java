@@ -1,7 +1,9 @@
 package com.workoutplanner.workout_planner_api.controller;
 
+import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateRequest;
 import com.workoutplanner.workout_planner_api.model.WorkoutTemplate;
 import com.workoutplanner.workout_planner_api.service.WorkoutTemplateService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -20,15 +22,13 @@ public class WorkoutTemplateController {
         return workoutTemplateService.getUserTemplate(userId);
     }
 
-    @PostMapping
-    public WorkoutTemplate createTemplate(@RequestBody WorkoutTemplate template) {
-        return workoutTemplateService.createTemplate(template);
-    }
-
     @PutMapping("/{id}")
-    public WorkoutTemplate updateTemplate(@PathVariable Long id,
-                                          @RequestBody WorkoutTemplate template) {
-        return workoutTemplateService.updateTemplate(id, template);
+    public ResponseEntity<Void> updateTemplate(
+            @PathVariable Long id,
+            @RequestBody WorkoutTemplateRequest request
+    ) {
+        workoutTemplateService.updateTemplate(id, request);
+        return ResponseEntity.ok().build();
     }
 
 }

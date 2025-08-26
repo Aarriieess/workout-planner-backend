@@ -1,6 +1,7 @@
 package com.workoutplanner.workout_planner_api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.workoutplanner.workout_planner_api.dto.ExerciseRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,4 +51,22 @@ public class Exercise {
 
     private boolean isUnilateral;
 
+
+    public static Exercise fromRequest(ExerciseRequest request) {
+        Exercise exercise = new Exercise();
+        exercise.updateFromRequest(request);
+        return exercise;
+    }
+
+    public void updateFromRequest(ExerciseRequest request) {
+        this.setName(request.getName());
+        this.setPrimaryMuscleGroup(request.getPrimaryMuscleGroup());
+        this.setSecondaryMuscleGroup(request.getSecondaryMuscleGroup());
+        this.setDescription(request.getDescription());
+        this.setExerciseType(request.getExerciseType());
+        this.setTargetGoals(request.getTargetGoals());
+        this.setSuitableLevels(request.getSuitableLevels());
+        this.setWorkoutEnvironment(request.getWorkoutEnvironment());
+        this.setUnilateral(request.isUnilateral());
+    }
 }

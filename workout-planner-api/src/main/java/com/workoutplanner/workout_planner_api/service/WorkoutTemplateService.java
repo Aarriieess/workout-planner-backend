@@ -1,12 +1,16 @@
 package com.workoutplanner.workout_planner_api.service;
 
-import com.workoutplanner.workout_planner_api.model.FitnessGoal;
-import com.workoutplanner.workout_planner_api.model.User;
+import com.workoutplanner.workout_planner_api.dto.PlanExerciseRequest;
+import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateRequest;
+import com.workoutplanner.workout_planner_api.model.Exercise;
+import com.workoutplanner.workout_planner_api.model.PlanExercise;
+import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import com.workoutplanner.workout_planner_api.model.WorkoutTemplate;
 import com.workoutplanner.workout_planner_api.repo.UserRepo;
 import com.workoutplanner.workout_planner_api.repo.WorkoutTemplateRepo;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,10 +18,11 @@ import java.util.List;
 public class WorkoutTemplateService {
 
     private final WorkoutTemplateRepo workoutTemplateRepo;
-    private UserRepo userRepo;
+    private final ExerciseRepo exerciseRepo;
 
-    public WorkoutTemplateService(WorkoutTemplateRepo workoutTemplateRepo) {
+    public WorkoutTemplateService(WorkoutTemplateRepo workoutTemplateRepo, ExerciseRepo exerciseRepo) {
         this.workoutTemplateRepo = workoutTemplateRepo;
+        this.exerciseRepo = exerciseRepo;
     }
 
     public WorkoutTemplate getUserTemplate(Long userId) {
@@ -25,18 +30,31 @@ public class WorkoutTemplateService {
                 .orElseThrow(() -> new EntityNotFoundException("Workout template not found for user ID: " + userId));
     }
 
-    public WorkoutTemplate createTemplate(WorkoutTemplate template) {
-        return workoutTemplateRepo.save(template);
-    }
-
-    public WorkoutTemplate updateTemplate(Long id, WorkoutTemplate template) {
-        WorkoutTemplate existingTemplate = workoutTemplateRepo.findById(id)
+    @Transactional
+    public void updateTemplate(Long templateId, WorkoutTemplateRequest request) {
+        WorkoutTemplate template = workoutTemplateRepo.findById(templateId)
                 .orElseThrow(() -> new RuntimeException("Workout template not found"));
 
-        existingTemplate.setName(template.getName());
-        existingTemplate.setFitnessGoal(template.getFitnessGoal());
+        template.setName(request.getName());
+        template.setFitnessGoal(request.getFitnessGoal());
+        template.setWorkoutSplit(request.getWorkoutSplit());
 
-        return workoutTemplateRepo.save(existingTemplate);
+        template.clearExercises();
+
+        for (PlanExerciseRequest exerciseRequest : request.getPlanExerciseRequestList()) {
+            Exercise exercise = exerciseRepo.findById(exerciseRequest.getExerciseId())
+                    .orElseThrow(() -> new EntityNotFoundException("Exercise not found"));
+
+            PlanExercise planExercise = new PlanExercise();
+            planExercise.setExercise(exercise);
+            planExercise.setSets(exerciseRequest.getSets());
+            planExercise.setReps(exerciseRequest.getReps());
+            planExercise.setRestSeconds(exerciseRequest.getRestSeconds());
+
+            template.addExercise(planExercise);
+        }
+
+        workoutTemplateRepo.save(template);
     }
 
 }

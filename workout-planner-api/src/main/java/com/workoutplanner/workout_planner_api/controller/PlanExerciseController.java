@@ -1,6 +1,7 @@
 package com.workoutplanner.workout_planner_api.controller;
 
 import com.workoutplanner.workout_planner_api.dto.PlanExerciseRequest;
+import com.workoutplanner.workout_planner_api.dto.PlanExerciseResponse;
 import com.workoutplanner.workout_planner_api.model.PlanExercise;
 import com.workoutplanner.workout_planner_api.service.PlanExerciseService;
 import jakarta.validation.Valid;
@@ -26,7 +27,7 @@ public class PlanExerciseController {
     }
 
     @GetMapping("/{id}")
-    public PlanExercise getAllPlanExercisesById(@PathVariable Long id){
+    public PlanExerciseResponse getPlanExercisesById(@PathVariable Long id){
         return planExerciseService.getPlanExerciseById(id);
     }
 

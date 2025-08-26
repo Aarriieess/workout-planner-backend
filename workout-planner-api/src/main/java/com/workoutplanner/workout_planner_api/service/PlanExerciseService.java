@@ -1,6 +1,7 @@
 package com.workoutplanner.workout_planner_api.service;
 
 import com.workoutplanner.workout_planner_api.dto.PlanExerciseRequest;
+import com.workoutplanner.workout_planner_api.dto.PlanExerciseResponse;
 import com.workoutplanner.workout_planner_api.model.PlanExercise;
 import com.workoutplanner.workout_planner_api.repo.PlanExerciseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,17 @@ public class PlanExerciseService {
         return planExerciseRepo.findAll();
     }
 
-    public PlanExercise getPlanExerciseById(Long id){
-        return planExerciseRepo.findById(id)
+    public PlanExerciseResponse getPlanExerciseById(Long id){
+        PlanExercise planExercise = planExerciseRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("PlanExercise not found"));
+
+        return new PlanExerciseResponse(
+                planExercise.getId(),
+                planExercise.getExercise().getName(),
+                planExercise.getSets(),
+                planExercise.getReps(),
+                planExercise.getRestSeconds()
+        );
     }
 
     public PlanExercise createPlanExercise(PlanExercise planExercise){
