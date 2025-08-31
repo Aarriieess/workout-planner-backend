@@ -2,6 +2,7 @@ package com.workoutplanner.workout_planner_api.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.workoutplanner.workout_planner_api.dto.PlanExerciseRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class PlanExercise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Min(1)
     private int sets;
@@ -43,6 +44,20 @@ public class PlanExercise {
     @JsonBackReference
     private WorkoutTemplate workoutTemplate;
 
+    public static PlanExercise fromRequest(PlanExerciseRequest request,
+                                           WorkoutTemplate template,
+                                           Exercise exercise)
+    {
+        PlanExercise planExercise = new PlanExercise();
+        planExercise.updateFromRequest(request);
+        planExercise.setWorkoutTemplate(template);
+        planExercise.setExercise(exercise);
+        return planExercise;
+    }
 
-
+    public void updateFromRequest(PlanExerciseRequest request) {
+        this.setReps(request.getReps());
+        this.setSets(request.getSets());
+        this.setRestSeconds(request.getRestSeconds());
+    }
 }

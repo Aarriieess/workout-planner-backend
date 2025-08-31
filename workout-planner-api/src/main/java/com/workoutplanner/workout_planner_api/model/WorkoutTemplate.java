@@ -2,6 +2,9 @@ package com.workoutplanner.workout_planner_api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.workoutplanner.workout_planner_api.dto.PlanExerciseResponse;
+import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateRequest;
+import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,5 +54,22 @@ public class WorkoutTemplate {
     public void addExercise(PlanExercise exercise) {
         exercise.setWorkoutTemplate(this);
         this.planExercises.add(exercise);
+    }
+
+    public void removeExercise(PlanExercise exercise) {
+        this.planExercises.remove(exercise);
+        exercise.setWorkoutTemplate(null);
+    }
+
+    public static WorkoutTemplate fromRequest(WorkoutTemplateRequest request) {
+        WorkoutTemplate template = new WorkoutTemplate();
+        template.updateFromRequest(request);
+        return template;
+    }
+
+    public void updateFromRequest(WorkoutTemplateRequest request) {
+        this.setName(request.getName());
+        this.setWorkoutSplit(request.getWorkoutSplit());
+        this.setFitnessGoal(request.getFitnessGoal());
     }
 }

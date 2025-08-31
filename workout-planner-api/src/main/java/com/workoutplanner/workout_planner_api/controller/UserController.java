@@ -1,8 +1,13 @@
 package com.workoutplanner.workout_planner_api.controller;
 
+import com.sun.security.auth.UserPrincipal;
+import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
+import com.workoutplanner.workout_planner_api.dto.UserProfileResponse;
 import com.workoutplanner.workout_planner_api.model.User;
+import com.workoutplanner.workout_planner_api.model.UserProfile;
 import com.workoutplanner.workout_planner_api.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,18 +22,19 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public List<User> getAllUsers(){
-        return userService.getAllUsers();
+    @GetMapping("/me/profile")
+    public ResponseEntity<UserProfileResponse> getProfile(@AuthenticationPrincipal UserPrincipal user) {
+        UserProfile userProfile = userService.getUser(user.getId()).getUserProfile();
+        return ResponseEntity.ok(UserProfileResponse.fromEntity(userProfile));
     }
 
-    @PostMapping
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
-    }
+    @PutMapping("/me/profile")
+    public ResponseEntity<UserProfileResponse> updateProfile(
+            @AuthenticationPrincipal UserPrincipal user,
+            @RequestBody UserProfileRequest request
+            ) {
 
-    @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
-        return userService.updateUser(id, user);
+        UserProfile updated = userService.updateUserProfile(user.getId(), request);
+        return ResponseEntity.ok(UserProfileResponse.fromEntity(updated));
     }
 }

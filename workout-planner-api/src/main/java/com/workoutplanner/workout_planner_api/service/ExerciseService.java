@@ -1,6 +1,7 @@
 package com.workoutplanner.workout_planner_api.service;
 
 import com.workoutplanner.workout_planner_api.dto.ExerciseRequest;
+import com.workoutplanner.workout_planner_api.dto.ExerciseResponse;
 import com.workoutplanner.workout_planner_api.model.Exercise;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import org.springframework.beans.factory.annotation.Autowired;

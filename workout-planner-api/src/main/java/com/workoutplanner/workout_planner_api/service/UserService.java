@@ -1,10 +1,11 @@
 package com.workoutplanner.workout_planner_api.service;
 
+import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.model.User;
+import com.workoutplanner.workout_planner_api.model.UserProfile;
 import com.workoutplanner.workout_planner_api.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -14,23 +15,19 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
+    public User getUser(Long userId) {
+        return userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public User createUser(User user) {
-        return userRepo.save(user);
-    }
+    public UserProfile updateUserProfile(Long userId, UserProfileRequest request) {
+        User user = getUser(userId);
 
-    public User updateUser(Long id, User user) {
-        User existingUser = userRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("User can't find"));
+        user.getUserProfile().setFitnessGoal(request.getFitnessGoal());
+        user.getUserProfile().setFitnessLevel(request.getFitnessLevel());
+        user.getUserProfile().setTrainingDays(request.getTrainingDays());
+        user.getUserProfile().setTrainingDays(request.getTrainingDays());
 
-        existingUser.setUserProfile(user.getUserProfile());
-        existingUser.setName(user.getName());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setPasswordHash(user.getPasswordHash());
-
-        return userRepo.save(existingUser);
+        return userRepo.save(user).getUserProfile();
     }
 }

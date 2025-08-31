@@ -6,6 +6,7 @@ import com.workoutplanner.workout_planner_api.model.Exercise;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import com.workoutplanner.workout_planner_api.service.ExerciseService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,13 +40,18 @@ public class ExerciseController {
     }
 
     @PostMapping
-    public Exercise createExercise(@RequestBody ExerciseRequest exercise){
-        return exerciseService.createExercise(exercise);
+    public ResponseEntity<ExerciseResponse> createExercise(@RequestBody ExerciseRequest request) {
+        Exercise exercise = exerciseService.createExercise(request);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(ExerciseResponse.fromEntity(exercise));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ExerciseResponse> updateExercise(@PathVariable Long id,
-                                         @Valid @RequestBody ExerciseRequest request){
+    public ResponseEntity<ExerciseResponse> updateExercise(
+            @PathVariable Long id,
+            @Valid @RequestBody ExerciseRequest request){
 
         exerciseService.updateExercise(id, request);
         Exercise updated = exerciseRepo.findById(id).orElseThrow();
