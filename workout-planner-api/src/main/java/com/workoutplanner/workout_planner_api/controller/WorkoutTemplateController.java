@@ -1,18 +1,14 @@
 package com.workoutplanner.workout_planner_api.controller;
 
+import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
 import com.workoutplanner.workout_planner_api.dto.*;
-import com.workoutplanner.workout_planner_api.model.PlanExercise;
 import com.workoutplanner.workout_planner_api.model.WorkoutTemplate;
-import com.workoutplanner.workout_planner_api.repo.WorkoutTemplateRepo;
 import com.workoutplanner.workout_planner_api.service.WorkoutTemplateService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.attribute.UserPrincipal;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/templates")
 public class WorkoutTemplateController {
@@ -40,7 +36,7 @@ public class WorkoutTemplateController {
         WorkoutTemplate template = workoutTemplateService.addExerciseToTemplate(
                 templateId,
                 request,
-                userId));
+                userId);
         return ResponseEntity.ok(WorkoutTemplateResponse.fromEntity(template));
     }
 
@@ -62,7 +58,7 @@ public class WorkoutTemplateController {
             @PathVariable Long planExerciseId,
             @AuthenticationPrincipal UserPrincipal user) {
 
-        workoutTemplateService.removeExerciseFromTemplate(templateId, planExerciseId);
+        workoutTemplateService.removeExerciseFromTemplate(templateId, planExerciseId, user.getId());
         return ResponseEntity.noContent().build();
     }
 

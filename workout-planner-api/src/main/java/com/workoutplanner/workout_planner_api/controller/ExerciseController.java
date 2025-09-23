@@ -6,6 +6,7 @@ import com.workoutplanner.workout_planner_api.model.Exercise;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import com.workoutplanner.workout_planner_api.service.ExerciseService;
 import jakarta.validation.Valid;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class ExerciseController {
     }
 
     @PostMapping
-    public ResponseEntity<ExerciseResponse> createExercise(@RequestBody ExerciseRequest request) {
+    public ResponseEntity<ExerciseResponse> createExercise(@Valid @RequestBody ExerciseRequest request) {
         Exercise exercise = exerciseService.createExercise(request);
 
         return ResponseEntity

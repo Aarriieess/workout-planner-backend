@@ -967,27 +967,6 @@
     "unilateral": false
   },
   {
-    "name": "Plank",
-    "primaryMuscleGroup": "CORE",
-    "secondaryMuscleGroup": ["SHOULDERS", "LEGS"],
-    "description": "Hold a position similar to the top of a push-up, supporting your body on your forearms and toes.",
-    "targetGoals": ["STABILITY", "ENDURANCE"],
-    "suitableLevels": ["BEGINNER", "INTERMEDIATE", "ADVANCED"],
-    "workoutEnvironment": ["HOME", "GYM"],
-    "exerciseType": "COMPOUND",
-    "unilateral": false
-  },
-  {
-    "name": "Russian Twists",
-    "primaryMuscleGroup": "CORE",
-    "description": "Sit on the floor with bent knees, lean back slightly, and twist your torso from side to side.",
-    "targetGoals": ["STRENGTH", "HYPERTROPHY", "STABILITY"],
-    "suitableLevels": ["INTERMEDIATE", "ADVANCED"],
-    "workoutEnvironment": ["HOME", "GYM"],
-    "exerciseType": "ISOLATION",
-    "unilateral": false
-  },
-  {
     "name": "Hanging Leg Raises",
     "primaryMuscleGroup": "CORE",
     "secondaryMuscleGroup": ["LEGS"],
@@ -1007,26 +986,6 @@
     "suitableLevels": ["INTERMEDIATE", "ADVANCED"],
     "workoutEnvironment": ["GYM"],
     "exerciseType": "ISOLATION",
-    "unilateral": false
-  },
-  {
-    "name": "Bicycle Crunches",
-    "primaryMuscleGroup": "CORE",
-    "description": "Lie on your back, bring opposite elbow to opposite knee while extending the other leg.",
-    "targetGoals": ["STRENGTH", "ENDURANCE"],
-    "suitableLevels": ["INTERMEDIATE", "ADVANCED"],
-    "workoutEnvironment": ["HOME", "GYM"],
-    "exerciseType": "ISOLATION",
-    "unilateral": false
-  },
-  {
-    "name": "Burpees",
-    "primaryMuscleGroup": "FULL_BODY",
-    "description": "A full-body exercise combining a squat, push-up, and jump.",
-    "targetGoals": ["ENDURANCE", "FAT_LOSS", "POWER"],
-    "suitableLevels": ["INTERMEDIATE", "ADVANCED"],
-    "workoutEnvironment": ["HOME", "GYM"],
-    "exerciseType": "COMPOUND",
     "unilateral": false
   },
   {

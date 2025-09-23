@@ -1,9 +1,8 @@
 package com.workoutplanner.workout_planner_api.controller;
 
-import com.sun.security.auth.UserPrincipal;
 import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.dto.UserProfileResponse;
-import com.workoutplanner.workout_planner_api.model.User;
+import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
 import com.workoutplanner.workout_planner_api.model.UserProfile;
 import com.workoutplanner.workout_planner_api.service.UserService;
 import org.springframework.http.ResponseEntity;

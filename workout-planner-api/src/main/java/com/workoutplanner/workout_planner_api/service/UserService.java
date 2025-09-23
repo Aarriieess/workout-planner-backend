@@ -22,11 +22,12 @@ public class UserService {
 
     public UserProfile updateUserProfile(Long userId, UserProfileRequest request) {
         User user = getUser(userId);
+        UserProfile profile = user.getUserProfile();
 
-        user.getUserProfile().setFitnessGoal(request.getFitnessGoal());
-        user.getUserProfile().setFitnessLevel(request.getFitnessLevel());
-        user.getUserProfile().setTrainingDays(request.getTrainingDays());
-        user.getUserProfile().setTrainingDays(request.getTrainingDays());
+        profile.setFitnessGoal(request.getFitnessGoal());
+        profile.setFitnessLevel(request.getFitnessLevel());
+        profile.setTrainingDays(request.getTrainingDays());
+        profile.setTrainingDays(request.getTrainingDays());
 
         return userRepo.save(user).getUserProfile();
     }

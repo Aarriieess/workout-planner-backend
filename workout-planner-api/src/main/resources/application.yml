@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: workout-planner-api
+
+  profiles:
+    active: dev
+
+jwt:
+  secret: my-secret-key
+  expiration: 86400000 # 24h in ms
