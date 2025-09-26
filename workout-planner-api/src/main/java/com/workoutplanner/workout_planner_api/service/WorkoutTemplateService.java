@@ -31,15 +31,11 @@ public class WorkoutTemplateService {
 
     @Transactional
     public WorkoutTemplate updateTemplate(Long templateId, WorkoutTemplateRequest request, Long userId) {
-        WorkoutTemplate template = workoutTemplateRepo.findById(templateId)
-                .orElseThrow(() -> new ResourceNotFoundException("Workout template not found"));
 
-        ownershipTemplateCheck(template, userId);
+        WorkoutTemplate template = findTemplateForUser(templateId, userId);
 
-        //updates the template info
         template.updateFromRequest(request);
 
-        //clear the template exercises
         template.clearExercises();
 
         for (PlanExerciseRequest exerciseRequest : request.getPlanExerciseRequestList()) {
@@ -57,10 +53,8 @@ public class WorkoutTemplateService {
     }
 
     public WorkoutTemplate addExerciseToTemplate(Long templateId, PlanExerciseRequest request, Long userId){
-        WorkoutTemplate template = workoutTemplateRepo.findById(templateId)
-                .orElseThrow(() -> new ResourceNotFoundException("Template not found"));
 
-        ownershipTemplateCheck(template, userId);
+        WorkoutTemplate template = findTemplateForUser(templateId, userId);
 
         Exercise exercise = exerciseRepo.findById(request.getExerciseId())
                 .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
@@ -68,15 +62,12 @@ public class WorkoutTemplateService {
         PlanExercise planExercise = PlanExercise.fromRequest(request, template, exercise);
 
         template.addExercise(planExercise);
-
         return workoutTemplateRepo.save(template);
     }
 
     public void removeExerciseFromTemplate(Long templateId, Long planExerciseId, Long userId) {
-        WorkoutTemplate template = workoutTemplateRepo.findById(templateId)
-                .orElseThrow(() -> new ResourceNotFoundException("Template not found"));
 
-        ownershipTemplateCheck(template, userId);
+        WorkoutTemplate template = findTemplateForUser(templateId, userId);
 
         PlanExercise toRemove = template.getPlanExercises().stream()
                 .filter(pe -> pe.getId().equals(planExerciseId))
@@ -84,13 +75,18 @@ public class WorkoutTemplateService {
                 .orElseThrow(() -> new ResourceNotFoundException("Exercise not found in this template"));
 
         template.removeExercise(toRemove);
-
         workoutTemplateRepo.save(template);
     }
 
-    private void ownershipTemplateCheck(WorkoutTemplate template, Long userId) {
+    private WorkoutTemplate findTemplateForUser(Long templateId, Long userId) {
+
+        WorkoutTemplate template = workoutTemplateRepo.findById(templateId)
+                .orElseThrow(() -> new ResourceNotFoundException("Template not found"));
+
         if (!template.getUser().getId().equals(userId)) {
             throw new AccessDeniedException("You can only modify your own template");
         }
+
+        return template;
     }
 }

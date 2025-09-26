@@ -40,23 +40,44 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         jwt = authHeader.substring(7);
+
         userEmail = jwtService.extractUsername(jwt);
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
             if (jwtService.isTokenValid(jwt, userDetails.getUsername())) {
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities()
-                        );
+                Long userId = jwtService.extractUserId(jwt);
+
+                UsernamePasswordAuthenticationToken authToken = buildAuthToken(
+                        userDetails,
+                        userId,
+                        userEmail
+                );
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private UsernamePasswordAuthenticationToken buildAuthToken(
+            UserDetails userDetails,
+            Long userId,
+            String userEmail
+    ) {
+        UserPrincipal principal = new UserPrincipal(
+                userId,
+                userEmail,
+                userDetails.getPassword(),
+                userDetails.getAuthorities()
+        );
+
+        return new UsernamePasswordAuthenticationToken(
+                principal,
+                null,
+                userDetails.getAuthorities()
+        );
     }
 }

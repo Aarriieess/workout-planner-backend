@@ -1,10 +1,11 @@
 package com.workoutplanner.workout_planner_api.service;
 
+import com.workoutplanner.workout_planner_api.dto.SignupRequest;
 import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.model.User;
 import com.workoutplanner.workout_planner_api.model.UserProfile;
 import com.workoutplanner.workout_planner_api.repo.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +13,29 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepo userRepo;
+
+    private final UserRepo userRepo;
+    private final PasswordEncoder passwordEncoder;
+
+    private UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
+        this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public User createdUserFromSignup(SignupRequest request) {
+        if (userRepo.findByEmail(request.email()).isPresent()){
+            throw new IllegalArgumentException("Email already in use");
+        }
+
+        String encodedPassword = passwordEncoder.encode(request.password());
+
+        User user = new User();
+        user.setName(request.name());
+        user.setEmail(request.email());
+        user.setPasswordHash(encodedPassword);
+
+        return userRepo.save(user);
+    }
 
     public User getUser(Long userId) {
         return userRepo.findById(userId)
