@@ -8,7 +8,6 @@ import com.workoutplanner.workout_planner_api.repo.UserRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class UserService {
@@ -23,15 +22,15 @@ public class UserService {
     }
 
     public User createdUserFromSignup(SignupRequest request) {
-        if (userRepo.findByEmail(request.email()).isPresent()){
+        if (userRepo.findByEmail(request.getEmail()).isPresent()){
             throw new IllegalArgumentException("Email already in use");
         }
 
-        String encodedPassword = passwordEncoder.encode(request.password());
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
 
         User user = new User();
-        user.setName(request.name());
-        user.setEmail(request.email());
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
         user.setPasswordHash(encodedPassword);
 
         return userRepo.save(user);
