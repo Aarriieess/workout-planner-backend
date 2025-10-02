@@ -1,12 +1,11 @@
 package com.workoutplanner.workout_planner_api.controller;
 
-import com.workoutplanner.workout_planner_api.dto.AuthResponse;
-import com.workoutplanner.workout_planner_api.dto.LoginRequest;
-import com.workoutplanner.workout_planner_api.dto.RefreshTokenRequest;
-import com.workoutplanner.workout_planner_api.dto.SignupRequest;
+import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
+import com.workoutplanner.workout_planner_api.dto.*;
 import com.workoutplanner.workout_planner_api.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,5 +34,11 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refreshAccessToken(@Valid @RequestBody RefreshTokenRequest request) {
         return ResponseEntity.ok(authService.refreshToken(request));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        authService.logout(userPrincipal.getId());
+        return ResponseEntity.noContent().build();
     }
 }

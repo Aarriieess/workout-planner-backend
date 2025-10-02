@@ -129,4 +129,8 @@ public class AuthService {
         );
     }
 
+    public void logout(Long userId){
+        refreshTokenRepo.deleteByUserId(userId);
+    }
+
 }
