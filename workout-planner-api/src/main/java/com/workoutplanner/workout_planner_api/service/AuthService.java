@@ -16,9 +16,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
-import java.sql.Ref;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
@@ -129,8 +129,11 @@ public class AuthService {
         );
     }
 
-    public void logout(Long userId){
-        refreshTokenRepo.deleteByUserId(userId);
-    }
+    @Transactional
+    public void logout(String refreshToken) {
+        RefreshToken token = refreshTokenRepo.findByToken(refreshToken)
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid refresh token"));
 
+        refreshTokenRepo.delete(token);
+    }
 }
