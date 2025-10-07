@@ -1,11 +1,9 @@
 package com.workoutplanner.workout_planner_api.controller;
 
-import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
 import com.workoutplanner.workout_planner_api.dto.*;
 import com.workoutplanner.workout_planner_api.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

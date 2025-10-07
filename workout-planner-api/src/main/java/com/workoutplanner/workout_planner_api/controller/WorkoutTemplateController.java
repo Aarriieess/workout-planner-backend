@@ -36,11 +36,12 @@ public class WorkoutTemplateController {
         WorkoutTemplate template = workoutTemplateService.addExerciseToTemplate(
                 templateId,
                 request,
-                userId);
+                userId
+        );
         return ResponseEntity.ok(WorkoutTemplateResponse.fromEntity(template));
     }
 
-    @PutMapping("/{templateId}/exercises/{planExerciseId}")
+    @PutMapping("/{templateId}")
     public ResponseEntity<WorkoutTemplateResponse> updateTemplate(
             @PathVariable Long templateId,
             @RequestBody WorkoutTemplateRequest request,
@@ -52,7 +53,7 @@ public class WorkoutTemplateController {
         return ResponseEntity.ok(WorkoutTemplateResponse.fromEntity(updated));
     }
 
-    @DeleteMapping("/{templateId}/exercises{planExerciseId}")
+    @DeleteMapping("/{templateId}/exercises/{planExerciseId}")
     public ResponseEntity<Void> removeExerciseFromTemplate(
             @PathVariable Long templateId,
             @PathVariable Long planExerciseId,

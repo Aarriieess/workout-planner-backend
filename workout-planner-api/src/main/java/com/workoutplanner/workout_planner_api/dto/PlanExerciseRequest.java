@@ -6,17 +6,16 @@ import lombok.Data;
 
 @Data
 public class PlanExerciseRequest {
+
+    @NotNull(message = "Exercise ID is required")
     private Long exerciseId;
 
-    @NotNull
-    @Min(1)
+    @Min(value = 1, message = "Sets must be at least 1")
     private Integer sets;
 
-    @NotNull
-    @Min(1)
+    @Min(value = 1, message = "Reps must be at least 1")
     private Integer reps;
 
-    @NotNull
-    @Min(1)
+    @Min(value = 1, message = "Reps must be at least 1")
     private Integer restSeconds;
 }
