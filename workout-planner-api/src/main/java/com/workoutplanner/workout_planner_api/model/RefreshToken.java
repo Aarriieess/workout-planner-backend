@@ -26,4 +26,11 @@ public class RefreshToken {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    private boolean revoked = false;
+    private boolean expired = false;
+
+    public boolean isActive() {
+        return !revoked && !expired && expiryDate.isAfter(Instant.now());
+    }
 }

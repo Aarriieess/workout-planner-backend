@@ -10,6 +10,7 @@ import com.workoutplanner.workout_planner_api.model.RefreshToken;
 import com.workoutplanner.workout_planner_api.model.User;
 import com.workoutplanner.workout_planner_api.repo.RefreshTokenRepo;
 import com.workoutplanner.workout_planner_api.repo.UserRepo;
+import jakarta.annotation.Nullable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -130,10 +131,19 @@ public class AuthService {
     }
 
     @Transactional
-    public void logout(String refreshToken) {
-        RefreshToken token = refreshTokenRepo.findByToken(refreshToken)
-                .orElseThrow(() -> new ResourceNotFoundException("Invalid refresh token"));
+    public void logout(Long userId, @Nullable String refreshToken, boolean allDevices) {
+        if (allDevices) {
+            refreshTokenRepo.revokeAllByUserId(userId);
+        }
+        else {
+            if (refreshToken == null) {
+                throw new IllegalArgumentException("Refresh token is required for single-device logout");
+            }
 
-        refreshTokenRepo.delete(token);
+            int updated = refreshTokenRepo.revokeByTokenAndUserId(refreshToken, userId);
+            if (updated == 0) {
+                throw new ResourceNotFoundException("Invalid refresh token");
+            }
+        }
     }
 }

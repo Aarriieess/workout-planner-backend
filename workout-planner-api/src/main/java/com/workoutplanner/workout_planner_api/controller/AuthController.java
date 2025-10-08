@@ -1,9 +1,11 @@
 package com.workoutplanner.workout_planner_api.controller;
 
+import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
 import com.workoutplanner.workout_planner_api.dto.*;
 import com.workoutplanner.workout_planner_api.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,8 +34,11 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@Valid @RequestBody RefreshTokenRequest request) {
-        authService.logout(request.refreshToken());
+    public ResponseEntity<Void> logout(
+            @AuthenticationPrincipal UserPrincipal user,
+            @RequestBody LogoutRequest request
+    ) {
+        authService.logout(user.getId(), request.getRefreshToken(), request.isAllDevices());
         return ResponseEntity.noContent().build();
     }
 }
