@@ -2,10 +2,12 @@ package com.workoutplanner.workout_planner_api.service;
 
 import com.workoutplanner.workout_planner_api.dto.ExerciseRequest;
 import com.workoutplanner.workout_planner_api.model.Exercise;
+import com.workoutplanner.workout_planner_api.model.MuscleGroup;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ExerciseService {
@@ -16,13 +18,14 @@ public class ExerciseService {
         this.exerciseRepo = exerciseRepo;
     }
 
-    public List<Exercise> getAllExercise() {
-        return exerciseRepo.findAll();
-    }
+    public Page<Exercise> getExercise(MuscleGroup muscleGroup, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
 
-    public Exercise getExerciseById(Long id){
-        return exerciseRepo.findById(id)
-                .orElse(null);
+        if (muscleGroup != null) {
+            return exerciseRepo.findByMuscleGroup(muscleGroup, pageable);
+        } else {
+            return exerciseRepo.findAllExercises(pageable);
+        }
     }
 
     public Exercise createExercise(ExerciseRequest request){

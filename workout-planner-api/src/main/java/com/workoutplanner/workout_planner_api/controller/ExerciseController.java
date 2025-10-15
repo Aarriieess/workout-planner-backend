@@ -3,10 +3,11 @@ package com.workoutplanner.workout_planner_api.controller;
 import com.workoutplanner.workout_planner_api.dto.ExerciseRequest;
 import com.workoutplanner.workout_planner_api.dto.ExerciseResponse;
 import com.workoutplanner.workout_planner_api.model.Exercise;
+import com.workoutplanner.workout_planner_api.model.MuscleGroup;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import com.workoutplanner.workout_planner_api.service.ExerciseService;
 import jakarta.validation.Valid;
-import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,19 +27,15 @@ public class ExerciseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExerciseResponse>> getAllExercise() {
-        List<ExerciseResponse> responses = exerciseService.getAllExercise()
-                .stream()
-                .map(ExerciseResponse::fromEntity)
-                .toList();
-        return ResponseEntity.ok(responses);
+    public ResponseEntity<Page<ExerciseResponse>> getAllExercises(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) MuscleGroup muscleGroup
+    ) {
+        Page<Exercise> exercises = exerciseService.getExercise(muscleGroup, page, size);
+        return ResponseEntity.ok(exercises.map(ExerciseResponse::fromEntity));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ExerciseResponse> getExerciseById(@PathVariable Long id){
-        Exercise exercise = exerciseService.getExerciseById(id);
-        return ResponseEntity.ok(ExerciseResponse.fromEntity(exercise));
-    }
 
     @PostMapping
     public ResponseEntity<ExerciseResponse> createExercise(@Valid @RequestBody ExerciseRequest request) {
