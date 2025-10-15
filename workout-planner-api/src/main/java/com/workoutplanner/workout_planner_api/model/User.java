@@ -27,6 +27,11 @@ public class User {
     @Column(nullable = false)
     private String passwordHash;
 
-    @Embedded
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserProfile userProfile;
+
+    public void setUserProfile(UserProfile profile) {
+        this.userProfile = profile;
+        profile.setUser(this);
+    }
 }

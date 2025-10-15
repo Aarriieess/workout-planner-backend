@@ -67,12 +67,13 @@ public class RuleBasedWorkoutService implements com.workoutplanner.workout_plann
     }
 
     private UserProfile createUserProfile (UserProfileRequest request) {
-        return new UserProfile(
-                request.getFitnessLevel(),
-                request.getFitnessGoal(),
-                request.getWorkoutEnvironment(),
-                request.getTrainingDays()
-        );
+
+        return UserProfile.builder()
+                .fitnessLevel(request.getFitnessLevel())
+                .fitnessGoal(request.getFitnessGoal())
+                .workoutEnvironment(request.getWorkoutEnvironment())
+                .trainingDays(request.getTrainingDays())
+                .build();
     }
 
     private WorkoutTemplate getOrCreateTemplate (User user, UserProfile profile, WorkoutSplit split) {

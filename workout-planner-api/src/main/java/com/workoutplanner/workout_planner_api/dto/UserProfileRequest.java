@@ -26,6 +26,6 @@ public class UserProfileRequest {
     private WorkoutEnvironment workoutEnvironment;
 
     @Min(1)
-    @Max(6)
+    @Max(7)
     private int trainingDays;
 }

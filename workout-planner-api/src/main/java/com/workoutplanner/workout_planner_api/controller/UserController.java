@@ -5,6 +5,7 @@ import com.workoutplanner.workout_planner_api.dto.UserProfileResponse;
 import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
 import com.workoutplanner.workout_planner_api.model.UserProfile;
 import com.workoutplanner.workout_planner_api.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +31,10 @@ public class UserController {
     @PutMapping("/me/profile")
     public ResponseEntity<UserProfileResponse> updateProfile(
             @AuthenticationPrincipal UserPrincipal user,
-            @RequestBody UserProfileRequest request
+            @RequestBody @Valid UserProfileRequest request
             ) {
 
-        UserProfile updated = userService.updateUserProfile(user.getId(), request);
-        return ResponseEntity.ok(UserProfileResponse.fromEntity(updated));
+        UserProfileResponse response = userService.updateUserProfile(user.getId(), request);
+        return ResponseEntity.ok(response);
     }
 }

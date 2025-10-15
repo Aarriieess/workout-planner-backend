@@ -1,12 +1,16 @@
 package com.workoutplanner.workout_planner_api.service;
 
-import com.workoutplanner.workout_planner_api.dto.SignupRequest;
+import com.workoutplanner.workout_planner_api.config.ResourceNotFoundException;
 import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
+import com.workoutplanner.workout_planner_api.dto.UserProfileResponse;
 import com.workoutplanner.workout_planner_api.model.User;
 import com.workoutplanner.workout_planner_api.model.UserProfile;
 import com.workoutplanner.workout_planner_api.repo.UserRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 
 @Service
@@ -21,35 +25,32 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User createdUserFromSignup(SignupRequest request) {
-        if (userRepo.findByEmail(request.getEmail()).isPresent()){
-            throw new IllegalArgumentException("Email already in use");
-        }
-
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
-
-        User user = new User();
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
-        user.setPasswordHash(encodedPassword);
-
-        return userRepo.save(user);
-    }
-
     public User getUser(Long userId) {
         return userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
-    public UserProfile updateUserProfile(Long userId, UserProfileRequest request) {
-        User user = getUser(userId);
-        UserProfile profile = user.getUserProfile();
+    @Transactional
+    public UserProfileResponse updateUserProfile(Long userId, UserProfileRequest request) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        UserProfile profile = Optional.ofNullable(user.getUserProfile())
+                .orElse(new UserProfile());
 
         profile.setFitnessGoal(request.getFitnessGoal());
         profile.setFitnessLevel(request.getFitnessLevel());
-        profile.setTrainingDays(request.getTrainingDays());
+        profile.setWorkoutEnvironment(request.getWorkoutEnvironment());
         profile.setTrainingDays(request.getTrainingDays());
 
-        return userRepo.save(user).getUserProfile();
+        user.setUserProfile(profile);
+        userRepo.save(user);
+
+        return new UserProfileResponse(
+                profile.getFitnessLevel(),
+                profile.getFitnessGoal(),
+                profile.getWorkoutEnvironment(),
+                profile.getTrainingDays()
+        );
     }
 }

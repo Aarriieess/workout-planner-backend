@@ -1,5 +1,6 @@
 package com.workoutplanner.workout_planner_api.service;
 
+import com.workoutplanner.workout_planner_api.config.ResourceNotFoundException;
 import com.workoutplanner.workout_planner_api.dto.ExerciseRequest;
 import com.workoutplanner.workout_planner_api.model.Exercise;
 import com.workoutplanner.workout_planner_api.model.MuscleGroup;
@@ -34,7 +35,7 @@ public class ExerciseService {
 
     public void updateExercise(Long id, ExerciseRequest request) {
         Exercise exercise = exerciseRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Exercise not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
         exercise.updateFromRequest(request);
         exerciseRepo.save(exercise);
     }
