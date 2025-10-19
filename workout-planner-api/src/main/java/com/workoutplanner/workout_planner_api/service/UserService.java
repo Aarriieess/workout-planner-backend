@@ -18,16 +18,18 @@ public class UserService {
 
 
     private final UserRepo userRepo;
-    private final PasswordEncoder passwordEncoder;
 
-    private UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
+    private UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
     }
 
-    public User getUser(Long userId) {
-        return userRepo.findById(userId)
+    public UserProfileResponse getUser(Long userId) {
+        User user = userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        UserProfile profile = user.getUserProfile();
+
+        return UserProfileResponse.fromEntity(profile);
+
     }
 
     @Transactional
@@ -46,11 +48,6 @@ public class UserService {
         user.setUserProfile(profile);
         userRepo.save(user);
 
-        return new UserProfileResponse(
-                profile.getFitnessLevel(),
-                profile.getFitnessGoal(),
-                profile.getWorkoutEnvironment(),
-                profile.getTrainingDays()
-        );
+        return UserProfileResponse.fromEntity(profile);
     }
 }

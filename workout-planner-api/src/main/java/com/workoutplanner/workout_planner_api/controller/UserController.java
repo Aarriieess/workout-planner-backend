@@ -24,8 +24,7 @@ public class UserController {
 
     @GetMapping("/me/profile")
     public ResponseEntity<UserProfileResponse> getProfile(@AuthenticationPrincipal UserPrincipal user) {
-        UserProfile userProfile = userService.getUser(user.getId()).getUserProfile();
-        return ResponseEntity.ok(UserProfileResponse.fromEntity(userProfile));
+        return ResponseEntity.ok(userService.getUser(user.getId()));
     }
 
     @PutMapping("/me/profile")
@@ -33,8 +32,6 @@ public class UserController {
             @AuthenticationPrincipal UserPrincipal user,
             @RequestBody @Valid UserProfileRequest request
             ) {
-
-        UserProfileResponse response = userService.updateUserProfile(user.getId(), request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(userService.updateUserProfile(user.getId(), request));
     }
 }

@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/exercises")
@@ -51,9 +50,8 @@ public class ExerciseController {
             @PathVariable Long id,
             @Valid @RequestBody ExerciseRequest request){
 
-        exerciseService.updateExercise(id, request);
-        Exercise updated = exerciseRepo.findById(id).orElseThrow();
-        return ResponseEntity.ok(ExerciseResponse.fromEntity(updated));
+        ExerciseResponse updated = exerciseService.updateExercise(id, request);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
