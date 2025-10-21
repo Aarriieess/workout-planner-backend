@@ -3,70 +3,83 @@ package com.workoutplanner.workout_planner_api.service;
 import com.workoutplanner.workout_planner_api.config.ResourceNotFoundException;
 import com.workoutplanner.workout_planner_api.dto.PlanExerciseRequest;
 import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateRequest;
+import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateResponse;
+import com.workoutplanner.workout_planner_api.mapper.PlanExerciseMapper;
+import com.workoutplanner.workout_planner_api.mapper.WorkoutTemplateMapper;
 import com.workoutplanner.workout_planner_api.model.Exercise;
 import com.workoutplanner.workout_planner_api.model.PlanExercise;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import com.workoutplanner.workout_planner_api.model.WorkoutTemplate;
 import com.workoutplanner.workout_planner_api.repo.WorkoutTemplateRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class WorkoutTemplateService {
 
     private final WorkoutTemplateRepo workoutTemplateRepo;
     private final ExerciseRepo exerciseRepo;
+    private final WorkoutTemplateMapper templateMapper;
+    private final PlanExerciseMapper planExerciseMapper;
 
-    public WorkoutTemplateService(WorkoutTemplateRepo workoutTemplateRepo,
-                                  ExerciseRepo exerciseRepo) {
-        this.workoutTemplateRepo = workoutTemplateRepo;
-        this.exerciseRepo = exerciseRepo;
-    }
 
-    public WorkoutTemplate getUserTemplate(Long userId) {
-        return workoutTemplateRepo.findByUserId(userId)
+    public WorkoutTemplateResponse getUserTemplate(Long userId) {
+        WorkoutTemplate template = workoutTemplateRepo.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Workout template not found for user ID: " + userId));
+
+        return templateMapper.toResponse(template);
     }
 
     @Transactional
-    public WorkoutTemplate updateTemplate(Long templateId, WorkoutTemplateRequest request, Long userId) {
-
+    public WorkoutTemplateResponse updateTemplate(
+            Long templateId,
+            WorkoutTemplateRequest request,
+            Long userId
+    ) {
         WorkoutTemplate template = findTemplateForUser(templateId, userId);
-
-        template.updateFromRequest(request);
-
         template.clearExercises();
 
-        for (PlanExerciseRequest exerciseRequest : request.getPlanExerciseRequestList()) {
-                exerciseRepo.findById(exerciseRequest.getExerciseId())
+        for (PlanExerciseRequest planExerciseRequest : request.getPlanExerciseRequestList()) {
+            Exercise exercise = exerciseRepo.findById(planExerciseRequest.getExerciseId())
                             .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
 
-                    PlanExercise planExercise = new PlanExercise();
-                    planExercise.updateFromRequest(exerciseRequest);
-                    planExercise.setWorkoutTemplate(template);
-
+                    PlanExercise planExercise = planExerciseMapper.toEntity(planExerciseRequest);
+                    planExercise.setExercise(exercise);
                     template.addExercise(planExercise);
                 }
 
-        return workoutTemplateRepo.save(template);
+        templateMapper.updateEntityFromRequest(request, template);
+        workoutTemplateRepo.save(template);
+
+        return templateMapper.toResponse(template);
     }
 
-    public WorkoutTemplate addExerciseToTemplate(Long templateId, PlanExerciseRequest request, Long userId){
-
+    public WorkoutTemplateResponse addExerciseToTemplate(
+            Long templateId,
+            PlanExerciseRequest planExerciseRequest,
+            Long userId
+    ){
         WorkoutTemplate template = findTemplateForUser(templateId, userId);
 
-        Exercise exercise = exerciseRepo.findById(request.getExerciseId())
+        Exercise exercise = exerciseRepo.findById(planExerciseRequest.getExerciseId())
                 .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
 
-        PlanExercise planExercise = PlanExercise.fromRequest(request, template, exercise);
-
+        PlanExercise planExercise = planExerciseMapper.toEntity(planExerciseRequest);
+        planExercise.setExercise(exercise);
         template.addExercise(planExercise);
-        return workoutTemplateRepo.save(template);
+
+        workoutTemplateRepo.save(template);
+        return templateMapper.toResponse(template);
     }
 
-    public void removeExerciseFromTemplate(Long templateId, Long planExerciseId, Long userId) {
-
+    public void removeExerciseFromTemplate(
+            Long templateId,
+            Long planExerciseId,
+            Long userId
+    ) {
         WorkoutTemplate template = findTemplateForUser(templateId, userId);
 
         PlanExercise toRemove = template.getPlanExercises().stream()
@@ -79,7 +92,6 @@ public class WorkoutTemplateService {
     }
 
     private WorkoutTemplate findTemplateForUser(Long templateId, Long userId) {
-
         WorkoutTemplate template = workoutTemplateRepo.findById(templateId)
                 .orElseThrow(() -> new ResourceNotFoundException("Template not found"));
 
@@ -89,6 +101,4 @@ public class WorkoutTemplateService {
 
         return template;
     }
-
-
 }

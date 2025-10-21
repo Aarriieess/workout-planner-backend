@@ -16,5 +16,8 @@ public interface UserProfileMapper {
     UserProfileResponse toResponse(UserProfile profile);
     UserProfile toEntity(UserProfileRequest request);
 
-    void updateEntityFromRequest(UserProfileRequest request, @MappingTarget UserProfile entity);
+    void updateEntityFromRequest(
+            UserProfileRequest request,
+            @MappingTarget UserProfile profile
+    );
 }

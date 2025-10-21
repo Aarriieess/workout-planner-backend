@@ -1,9 +1,12 @@
 package com.workoutplanner.workout_planner_api.mapper;
 
+import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateRequest;
 import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateResponse;
+import com.workoutplanner.workout_planner_api.model.UserProfile;
 import com.workoutplanner.workout_planner_api.model.WorkoutTemplate;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(
@@ -15,4 +18,10 @@ public interface WorkoutTemplateMapper {
 
     WorkoutTemplateResponse toResponse(WorkoutTemplate workoutTemplate);
     WorkoutTemplate toEntity(WorkoutTemplateRequest request);
+
+    void updateEntityFromRequest(
+            WorkoutTemplateRequest request,
+            @MappingTarget WorkoutTemplate workoutTemplate
+    );
+
 }

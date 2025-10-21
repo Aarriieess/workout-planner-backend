@@ -60,16 +60,4 @@ public class WorkoutTemplate {
         this.planExercises.remove(exercise);
         exercise.setWorkoutTemplate(null);
     }
-
-    public static WorkoutTemplate fromRequest(WorkoutTemplateRequest request) {
-        WorkoutTemplate template = new WorkoutTemplate();
-        template.updateFromRequest(request);
-        return template;
-    }
-
-    public void updateFromRequest(WorkoutTemplateRequest request) {
-        this.setName(request.getName());
-        this.setWorkoutSplit(request.getWorkoutSplit());
-        this.setFitnessGoal(request.getFitnessGoal());
-    }
 }
