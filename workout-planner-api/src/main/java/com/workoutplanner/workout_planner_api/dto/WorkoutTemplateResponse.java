@@ -12,17 +12,4 @@ public record WorkoutTemplateResponse(
         FitnessGoal fitnessGoal,
         WorkoutSplit workoutSplit,
         List<PlanExerciseResponse> planExercise
-) {
-    public static WorkoutTemplateResponse fromEntity(WorkoutTemplate template) {
-        return new WorkoutTemplateResponse(
-                template.getId(),
-                template.getName(),
-                template.getFitnessGoal(),
-                template.getWorkoutSplit(),
-                template.getPlanExercises()
-                        .stream()
-                        .map(PlanExerciseResponse::fromEntity)
-                        .toList()
-        );
-    }
-}
+) {}

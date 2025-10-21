@@ -10,13 +10,4 @@ public record UserProfileResponse(
         FitnessGoal fitnessGoal,
         WorkoutEnvironment workoutEnvironment,
         int trainingDays
-) {
-    public static UserProfileResponse fromEntity(UserProfile userProfile) {
-        return new UserProfileResponse(
-                userProfile.getFitnessLevel(),
-                userProfile.getFitnessGoal(),
-                userProfile.getWorkoutEnvironment(),
-                userProfile.getTrainingDays()
-        );
-    }
-}
+) {}

@@ -4,6 +4,7 @@ import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.dto.UserProfileResponse;
 import com.workoutplanner.workout_planner_api.model.UserProfile;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(
@@ -14,4 +15,6 @@ public interface UserProfileMapper {
 
     UserProfileResponse toResponse(UserProfile profile);
     UserProfile toEntity(UserProfileRequest request);
+
+    void updateEntityFromRequest(UserProfileRequest request, @MappingTarget UserProfile entity);
 }

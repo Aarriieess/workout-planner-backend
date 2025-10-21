@@ -17,20 +17,4 @@ public record ExerciseResponse(
         List<WorkoutEnvironment> workoutEnvironment,
         ExerciseType exerciseType,
         boolean isUnilateral
-) {
-    public static ExerciseResponse fromEntity(Exercise exercise) {
-        return ExerciseResponse.builder()
-                .id(exercise.getId())
-                .name(exercise.getName())
-                .primaryMuscleGroup(exercise.getPrimaryMuscleGroup())
-                .secondaryMuscleGroup(exercise.getSecondaryMuscleGroup())
-                .description(exercise.getDescription())
-                .targetGoals(exercise.getTargetGoals())
-                .suitableLevels(exercise.getSuitableLevels())
-                .workoutEnvironment(exercise.getWorkoutEnvironment())
-                .exerciseType(exercise.getExerciseType())
-                .isUnilateral(exercise.isUnilateral())
-                .build();
-
-    }
-}
+) {}

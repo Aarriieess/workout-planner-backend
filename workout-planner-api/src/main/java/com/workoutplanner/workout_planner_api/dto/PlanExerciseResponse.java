@@ -8,14 +8,4 @@ public record PlanExerciseResponse(
         int sets,
         int reps,
         int restSeconds
-) {
-    public static PlanExerciseResponse fromEntity(PlanExercise planExercise) {
-        return new PlanExerciseResponse(
-                planExercise.getId(),
-                planExercise.getExercise().getName(),
-                planExercise.getSets(),
-                planExercise.getReps(),
-                planExercise.getRestSeconds()
-        );
-    }
-}
+) {}

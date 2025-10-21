@@ -3,32 +3,31 @@ package com.workoutplanner.workout_planner_api.service;
 import com.workoutplanner.workout_planner_api.config.ResourceNotFoundException;
 import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.dto.UserProfileResponse;
+import com.workoutplanner.workout_planner_api.dto.UserResponse;
+import com.workoutplanner.workout_planner_api.mapper.UserMapper;
+import com.workoutplanner.workout_planner_api.mapper.UserProfileMapper;
 import com.workoutplanner.workout_planner_api.model.User;
 import com.workoutplanner.workout_planner_api.model.UserProfile;
 import com.workoutplanner.workout_planner_api.repo.UserRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-
     private final UserRepo userRepo;
+    private final UserMapper userMapper;
+    private final UserProfileMapper userProfileMapper;
 
-    private UserService(UserRepo userRepo) {
-        this.userRepo = userRepo;
-    }
-
-    public UserProfileResponse getUser(Long userId) {
+    public UserProfileResponse getUserProfile(Long userId) {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        UserProfile profile = user.getUserProfile();
 
-        return UserProfileResponse.fromEntity(profile);
-
+        return userProfileMapper.toResponse(user.getUserProfile());
     }
 
     @Transactional
@@ -39,14 +38,10 @@ public class UserService {
         UserProfile profile = Optional.ofNullable(user.getUserProfile())
                 .orElse(new UserProfile());
 
-        profile.setFitnessGoal(request.getFitnessGoal());
-        profile.setFitnessLevel(request.getFitnessLevel());
-        profile.setWorkoutEnvironment(request.getWorkoutEnvironment());
-        profile.setTrainingDays(request.getTrainingDays());
-
+        userProfileMapper.updateEntityFromRequest(request, profile);
         user.setUserProfile(profile);
-        userRepo.save(user);
 
-        return UserProfileResponse.fromEntity(profile);
+        userRepo.save(user);
+        return userProfileMapper.toResponse(profile);
     }
 }
