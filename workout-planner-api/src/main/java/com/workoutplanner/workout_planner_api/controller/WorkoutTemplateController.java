@@ -21,8 +21,7 @@ public class WorkoutTemplateController {
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<WorkoutTemplateResponse> getUserTemplate(@PathVariable Long userId) {
-        WorkoutTemplate template = workoutTemplateService.getUserTemplate(userId);
-        return ResponseEntity.ok(WorkoutTemplateResponse.fromEntity(template));
+        return ResponseEntity.ok(workoutTemplateService.getUserTemplate(userId));
     }
 
     @PostMapping("/{templateId}/exercises")
@@ -31,34 +30,32 @@ public class WorkoutTemplateController {
             @RequestBody PlanExerciseRequest request,
             @AuthenticationPrincipal UserPrincipal user
     ) {
-        Long userId = user.getId();
-
-        WorkoutTemplate template = workoutTemplateService.addExerciseToTemplate(
+        return ResponseEntity.ok(workoutTemplateService.addExerciseToTemplate(
                 templateId,
                 request,
-                userId
-        );
-        return ResponseEntity.ok(WorkoutTemplateResponse.fromEntity(template));
+                user.getId()
+        ));
     }
 
     @PutMapping("/{templateId}")
     public ResponseEntity<WorkoutTemplateResponse> updateTemplate(
             @PathVariable Long templateId,
             @RequestBody WorkoutTemplateRequest request,
-            @AuthenticationPrincipal UserPrincipal user) {
-
-        Long userId = user.getId();
-
-        WorkoutTemplate updated = workoutTemplateService.updateTemplate(templateId, request, userId);
-        return ResponseEntity.ok(WorkoutTemplateResponse.fromEntity(updated));
+            @AuthenticationPrincipal UserPrincipal user
+    ) {
+        return ResponseEntity.ok(workoutTemplateService.updateTemplate(
+                templateId,
+                request,
+                user.getId()
+        ));
     }
 
     @DeleteMapping("/{templateId}/exercises/{planExerciseId}")
     public ResponseEntity<Void> removeExerciseFromTemplate(
             @PathVariable Long templateId,
             @PathVariable Long planExerciseId,
-            @AuthenticationPrincipal UserPrincipal user) {
-
+            @AuthenticationPrincipal UserPrincipal user
+    ) {
         workoutTemplateService.removeExerciseFromTemplate(templateId, planExerciseId, user.getId());
         return ResponseEntity.noContent().build();
     }
