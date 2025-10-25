@@ -5,6 +5,7 @@ import com.workoutplanner.workout_planner_api.dto.UserProfileResponse;
 import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
 import com.workoutplanner.workout_planner_api.service.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService){
-        this.userService = userService;
-    }
 
     @GetMapping("/me/profile")
     public ResponseEntity<UserProfileResponse> getProfile(@AuthenticationPrincipal UserPrincipal user) {

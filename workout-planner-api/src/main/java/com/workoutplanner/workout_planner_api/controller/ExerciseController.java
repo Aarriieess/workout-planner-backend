@@ -7,6 +7,7 @@ import com.workoutplanner.workout_planner_api.model.MuscleGroup;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import com.workoutplanner.workout_planner_api.service.ExerciseService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +16,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/exercises")
+@RequiredArgsConstructor
 public class ExerciseController {
 
     private final ExerciseService exerciseService;
     private final ExerciseRepo exerciseRepo;
 
-    public ExerciseController(ExerciseService exerciseService, ExerciseRepo exerciseRepo){
-        this.exerciseService = exerciseService;
-        this.exerciseRepo = exerciseRepo;
-    }
 
     @GetMapping
     public ResponseEntity<Page<ExerciseResponse>> getAllExercises(

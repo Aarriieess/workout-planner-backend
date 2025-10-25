@@ -4,6 +4,8 @@ import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
 import com.workoutplanner.workout_planner_api.dto.*;
 import com.workoutplanner.workout_planner_api.model.WorkoutTemplate;
 import com.workoutplanner.workout_planner_api.service.WorkoutTemplateService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -11,15 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/templates")
+@RequiredArgsConstructor
 public class WorkoutTemplateController {
 
     private final WorkoutTemplateService workoutTemplateService;
 
-    public WorkoutTemplateController(WorkoutTemplateService workoutTemplateService){
-        this.workoutTemplateService = workoutTemplateService;
-    }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/me")
     public ResponseEntity<WorkoutTemplateResponse> getUserTemplate(@PathVariable Long userId) {
         return ResponseEntity.ok(workoutTemplateService.getUserTemplate(userId));
     }
@@ -27,7 +27,7 @@ public class WorkoutTemplateController {
     @PostMapping("/{templateId}/exercises")
     public ResponseEntity<WorkoutTemplateResponse> addExerciseToTemplate(
             @PathVariable Long templateId,
-            @RequestBody PlanExerciseRequest request,
+            @RequestBody @Valid PlanExerciseRequest request,
             @AuthenticationPrincipal UserPrincipal user
     ) {
         return ResponseEntity.ok(workoutTemplateService.addExerciseToTemplate(
@@ -40,7 +40,7 @@ public class WorkoutTemplateController {
     @PutMapping("/{templateId}")
     public ResponseEntity<WorkoutTemplateResponse> updateTemplate(
             @PathVariable Long templateId,
-            @RequestBody WorkoutTemplateRequest request,
+            @RequestBody @Valid WorkoutTemplateRequest request,
             @AuthenticationPrincipal UserPrincipal user
     ) {
         return ResponseEntity.ok(workoutTemplateService.updateTemplate(
@@ -59,5 +59,4 @@ public class WorkoutTemplateController {
         workoutTemplateService.removeExerciseFromTemplate(templateId, planExerciseId, user.getId());
         return ResponseEntity.noContent().build();
     }
-
 }
