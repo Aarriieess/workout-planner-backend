@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-20T12:49:40+0800",
+    date = "2025-10-25T11:40:49+0800",
     comments = "version: 1.6.3, compiler: javac, environment: Java 24.0.1 (Oracle Corporation)"
 )
 @Component
@@ -55,5 +55,22 @@ public class PlanExerciseMapperImpl implements PlanExerciseMapper {
         }
 
         return planExercise.build();
+    }
+
+    @Override
+    public void updateEntityFromRequest(PlanExerciseRequest request, PlanExercise planExercise) {
+        if ( request == null ) {
+            return;
+        }
+
+        if ( request.getSets() != null ) {
+            planExercise.setSets( request.getSets() );
+        }
+        if ( request.getReps() != null ) {
+            planExercise.setReps( request.getReps() );
+        }
+        if ( request.getRestSeconds() != null ) {
+            planExercise.setRestSeconds( request.getRestSeconds() );
+        }
     }
 }

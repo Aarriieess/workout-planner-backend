@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-20T12:49:40+0800",
+    date = "2025-10-25T11:40:49+0800",
     comments = "version: 1.6.3, compiler: javac, environment: Java 24.0.1 (Oracle Corporation)"
 )
 @Component
@@ -54,5 +54,16 @@ public class WorkoutTemplateMapperImpl implements WorkoutTemplateMapper {
         workoutTemplate.fitnessGoal( request.getFitnessGoal() );
 
         return workoutTemplate.build();
+    }
+
+    @Override
+    public void updateEntityFromRequest(WorkoutTemplateRequest request, WorkoutTemplate workoutTemplate) {
+        if ( request == null ) {
+            return;
+        }
+
+        workoutTemplate.setName( request.getName() );
+        workoutTemplate.setWorkoutSplit( request.getWorkoutSplit() );
+        workoutTemplate.setFitnessGoal( request.getFitnessGoal() );
     }
 }

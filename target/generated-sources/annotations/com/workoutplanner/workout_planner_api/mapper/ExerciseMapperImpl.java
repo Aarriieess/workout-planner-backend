@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-20T12:49:39+0800",
+    date = "2025-10-25T11:40:49+0800",
     comments = "version: 1.6.3, compiler: javac, environment: Java 24.0.1 (Oracle Corporation)"
 )
 @Component
@@ -83,5 +83,82 @@ public class ExerciseMapperImpl implements ExerciseMapper {
         exercise.exerciseType( request.getExerciseType() );
 
         return exercise.build();
+    }
+
+    @Override
+    public void updateEntityFromRequest(ExerciseRequest request, Exercise exercise) {
+        if ( request == null ) {
+            return;
+        }
+
+        exercise.setName( request.getName() );
+        exercise.setPrimaryMuscleGroup( request.getPrimaryMuscleGroup() );
+        if ( exercise.getSecondaryMuscleGroup() != null ) {
+            List<MuscleGroup> list = request.getSecondaryMuscleGroup();
+            if ( list != null ) {
+                exercise.getSecondaryMuscleGroup().clear();
+                exercise.getSecondaryMuscleGroup().addAll( list );
+            }
+            else {
+                exercise.setSecondaryMuscleGroup( null );
+            }
+        }
+        else {
+            List<MuscleGroup> list = request.getSecondaryMuscleGroup();
+            if ( list != null ) {
+                exercise.setSecondaryMuscleGroup( new ArrayList<MuscleGroup>( list ) );
+            }
+        }
+        exercise.setDescription( request.getDescription() );
+        if ( exercise.getTargetGoals() != null ) {
+            List<FitnessGoal> list1 = request.getTargetGoals();
+            if ( list1 != null ) {
+                exercise.getTargetGoals().clear();
+                exercise.getTargetGoals().addAll( list1 );
+            }
+            else {
+                exercise.setTargetGoals( null );
+            }
+        }
+        else {
+            List<FitnessGoal> list1 = request.getTargetGoals();
+            if ( list1 != null ) {
+                exercise.setTargetGoals( new ArrayList<FitnessGoal>( list1 ) );
+            }
+        }
+        if ( exercise.getSuitableLevels() != null ) {
+            List<FitnessLevel> list2 = request.getSuitableLevels();
+            if ( list2 != null ) {
+                exercise.getSuitableLevels().clear();
+                exercise.getSuitableLevels().addAll( list2 );
+            }
+            else {
+                exercise.setSuitableLevels( null );
+            }
+        }
+        else {
+            List<FitnessLevel> list2 = request.getSuitableLevels();
+            if ( list2 != null ) {
+                exercise.setSuitableLevels( new ArrayList<FitnessLevel>( list2 ) );
+            }
+        }
+        if ( exercise.getWorkoutEnvironment() != null ) {
+            List<WorkoutEnvironment> list3 = request.getWorkoutEnvironment();
+            if ( list3 != null ) {
+                exercise.getWorkoutEnvironment().clear();
+                exercise.getWorkoutEnvironment().addAll( list3 );
+            }
+            else {
+                exercise.setWorkoutEnvironment( null );
+            }
+        }
+        else {
+            List<WorkoutEnvironment> list3 = request.getWorkoutEnvironment();
+            if ( list3 != null ) {
+                exercise.setWorkoutEnvironment( new ArrayList<WorkoutEnvironment>( list3 ) );
+            }
+        }
+        exercise.setExerciseType( request.getExerciseType() );
+        exercise.setUnilateral( request.isUnilateral() );
     }
 }

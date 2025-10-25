@@ -1,15 +1,19 @@
 package com.workoutplanner.workout_planner_api.service.implementation;
 
 import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
+import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateResponse;
+import com.workoutplanner.workout_planner_api.mapper.WorkoutTemplateMapper;
 import com.workoutplanner.workout_planner_api.model.*;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import com.workoutplanner.workout_planner_api.repo.UserRepo;
 import com.workoutplanner.workout_planner_api.repo.WorkoutTemplateRepo;
+import com.workoutplanner.workout_planner_api.service.RuleBasedWorkoutService;
 import com.workoutplanner.workout_planner_api.service.strategy.WorkoutGenerationStrategy;
 import com.workoutplanner.workout_planner_api.service.strategy.WorkoutStrategyFactory;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -17,41 +21,46 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class RuleBasedWorkoutService implements com.workoutplanner.workout_planner_api.service.RuleBasedWorkoutService {
+@RequiredArgsConstructor
+public class RuleBasedWorkoutServiceImpl implements RuleBasedWorkoutService {
 
     private final ExerciseRepo exerciseRepo;
     private final WorkoutStrategyFactory strategyFactory;
     private final WorkoutTemplateRepo workoutTemplateRepo;
     private final UserRepo userRepo;
+    private final WorkoutTemplateMapper workoutTemplateMapper;
 
-    public RuleBasedWorkoutService(ExerciseRepo exerciseRepo, WorkoutStrategyFactory strategyFactory, WorkoutTemplateRepo workoutTemplateRepo, UserRepo userRepo) {
-        this.exerciseRepo = exerciseRepo;
-        this.strategyFactory = strategyFactory;
-        this.workoutTemplateRepo = workoutTemplateRepo;
-        this.userRepo = userRepo;
-}
 
     @Transactional
     @Override
-    public WorkoutTemplate generateTemplate(@Valid UserProfileRequest request) {
-
+    public WorkoutTemplateResponse generateTemplate(@Valid UserProfileRequest request) {
         validateRequest(request);
+
         User user = findUserById(request.getUserId());
+
         UserProfile profile = createUserProfile(request);
+        user.setUserProfile(profile);
+        userRepo.save(user);
+
         WorkoutSplit split = determineWorkoutSplit(profile);
         WorkoutTemplate template = getOrCreateTemplate(user, profile, split);
 
         Map<MuscleGroup, List<Exercise>> exercisesByMuscleGroup = getExercisesByMuscleGroup(profile);
 
         WorkoutGenerationStrategy strategy = strategyFactory.getStrategy(split);
-        List<PlanExercise> planExercises = strategy.generatePlan(profile, exercisesByMuscleGroup , template);
-        updateTemplateExercises(template, planExercises);
+        List<PlanExercise> planExercises = strategy.generatePlan(
+                profile,
+                exercisesByMuscleGroup,
+                template
+        );
 
-        return workoutTemplateRepo.save(template);
+        updateTemplateExercises(template, planExercises);
+        workoutTemplateRepo.save(template);
+
+        return workoutTemplateMapper.toResponse(template);
     }
 
     private void validateRequest(UserProfileRequest request) {
-
         if (request.getUserId() == null) {
             throw new IllegalArgumentException("User ID cannot be null");
         }
@@ -61,13 +70,11 @@ public class RuleBasedWorkoutService implements com.workoutplanner.workout_plann
     }
 
     private User findUserById(Long userId) {
-
         return userRepo.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     private UserProfile createUserProfile (UserProfileRequest request) {
-
         return UserProfile.builder()
                 .fitnessLevel(request.getFitnessLevel())
                 .fitnessGoal(request.getFitnessGoal())
@@ -76,8 +83,11 @@ public class RuleBasedWorkoutService implements com.workoutplanner.workout_plann
                 .build();
     }
 
-    private WorkoutTemplate getOrCreateTemplate (User user, UserProfile profile, WorkoutSplit split) {
-
+    private WorkoutTemplate getOrCreateTemplate (
+            User user,
+            UserProfile profile,
+            WorkoutSplit split
+    ) {
         WorkoutTemplate template = workoutTemplateRepo.findByUser(user)
                 .orElse(new WorkoutTemplate());
 
@@ -90,7 +100,6 @@ public class RuleBasedWorkoutService implements com.workoutplanner.workout_plann
     }
 
     private Map<MuscleGroup, List<Exercise>> getExercisesByMuscleGroup(UserProfile userProfile) {
-
         List<Exercise> filteredExercise = exerciseRepo.findByWorkoutEnvironment(userProfile.getWorkoutEnvironment());
 
         return filteredExercise.stream()
@@ -98,7 +107,6 @@ public class RuleBasedWorkoutService implements com.workoutplanner.workout_plann
     }
 
     private WorkoutSplit determineWorkoutSplit (UserProfile profile) {
-
         int days = profile.getTrainingDays();
 
         return switch (days) {
@@ -110,7 +118,6 @@ public class RuleBasedWorkoutService implements com.workoutplanner.workout_plann
     }
 
     private void updateTemplateExercises (WorkoutTemplate template, List<PlanExercise> planExercises) {
-
         template.getPlanExercises().clear();
 
         planExercises.forEach(exercise -> exercise.setWorkoutTemplate(template));

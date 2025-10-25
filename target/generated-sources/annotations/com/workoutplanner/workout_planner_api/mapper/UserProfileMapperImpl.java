@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-20T12:49:40+0800",
+    date = "2025-10-25T11:40:49+0800",
     comments = "version: 1.6.3, compiler: javac, environment: Java 24.0.1 (Oracle Corporation)"
 )
 @Component
@@ -52,5 +52,17 @@ public class UserProfileMapperImpl implements UserProfileMapper {
         userProfile.trainingDays( request.getTrainingDays() );
 
         return userProfile.build();
+    }
+
+    @Override
+    public void updateEntityFromRequest(UserProfileRequest request, UserProfile profile) {
+        if ( request == null ) {
+            return;
+        }
+
+        profile.setFitnessLevel( request.getFitnessLevel() );
+        profile.setFitnessGoal( request.getFitnessGoal() );
+        profile.setWorkoutEnvironment( request.getWorkoutEnvironment() );
+        profile.setTrainingDays( request.getTrainingDays() );
     }
 }

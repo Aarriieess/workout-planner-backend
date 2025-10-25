@@ -11,6 +11,7 @@ import com.workoutplanner.workout_planner_api.model.User;
 import com.workoutplanner.workout_planner_api.repo.RefreshTokenRepo;
 import com.workoutplanner.workout_planner_api.repo.UserRepo;
 import jakarta.annotation.Nullable;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +26,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
@@ -33,17 +35,6 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final RefreshTokenRepo refreshTokenRepo;
 
-    public AuthService(AuthenticationManager authenticationManager,
-                       JwtService jwtService,
-                       UserRepo userRepo,
-                       PasswordEncoder passwordEncoder,
-                       RefreshTokenRepo refreshTokenRepo) {
-        this.authenticationManager = authenticationManager;
-        this.jwtService = jwtService;
-        this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
-        this.refreshTokenRepo = refreshTokenRepo;
-    }
 
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(
