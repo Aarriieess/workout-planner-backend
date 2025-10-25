@@ -26,7 +26,7 @@ public class ExerciseService {
 
         Page<Exercise> exercisePage = (muscleGroup != null)
                 ? exerciseRepo.findByMuscleGroup(muscleGroup, pageable)
-                : exerciseRepo.findAllExercises(pageable);
+                : exerciseRepo.findAll(pageable);
 
         return exercisePage.map(exerciseMapper::toResponse);
     }

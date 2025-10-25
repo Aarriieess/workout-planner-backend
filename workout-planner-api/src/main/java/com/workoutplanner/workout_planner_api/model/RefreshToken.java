@@ -27,8 +27,10 @@ public class RefreshToken {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-
+    @Column(nullable = false)
     private boolean revoked = false;
+
+    @Column(nullable = false)
     private boolean expired = false;
 
     public boolean isActive() {
