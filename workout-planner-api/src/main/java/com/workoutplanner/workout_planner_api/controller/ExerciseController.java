@@ -29,18 +29,18 @@ public class ExerciseController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) MuscleGroup muscleGroup
     ) {
-        Page<Exercise> exercises = exerciseService.getExercise(muscleGroup, page, size);
-        return ResponseEntity.ok(exercises.map(ExerciseResponse::fromEntity));
+        Page<ExerciseResponse> responses = exerciseService.getExercise(muscleGroup, page, size);
+        return ResponseEntity.ok(responses);
     }
 
 
     @PostMapping
     public ResponseEntity<ExerciseResponse> createExercise(@Valid @RequestBody ExerciseRequest request) {
-        Exercise exercise = exerciseService.createExercise(request);
+        ExerciseResponse response = exerciseService.createExercise(request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(ExerciseResponse.fromEntity(exercise));
+                .body(response);
     }
 
     @PutMapping("/{id}")

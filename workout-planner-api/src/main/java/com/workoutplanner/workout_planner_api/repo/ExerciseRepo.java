@@ -17,4 +17,6 @@ public interface ExerciseRepo extends JpaRepository<Exercise, Long> {
 
     Page<Exercise> findByMuscleGroup(MuscleGroup muscleGroup, Pageable pageable);
     Page<Exercise> findAllExercises(Pageable pageable);
+
+    boolean existsByNameIgnoreCase(String name);
 }

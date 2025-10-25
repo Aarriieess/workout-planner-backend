@@ -3,8 +3,6 @@ package com.workoutplanner.workout_planner_api.service;
 import com.workoutplanner.workout_planner_api.config.ResourceNotFoundException;
 import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.dto.UserProfileResponse;
-import com.workoutplanner.workout_planner_api.dto.UserResponse;
-import com.workoutplanner.workout_planner_api.mapper.UserMapper;
 import com.workoutplanner.workout_planner_api.mapper.UserProfileMapper;
 import com.workoutplanner.workout_planner_api.model.User;
 import com.workoutplanner.workout_planner_api.model.UserProfile;
@@ -20,7 +18,6 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepo userRepo;
-    private final UserMapper userMapper;
     private final UserProfileMapper userProfileMapper;
 
     public UserProfileResponse getUserProfile(Long userId) {
