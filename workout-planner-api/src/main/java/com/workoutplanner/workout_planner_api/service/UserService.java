@@ -27,6 +27,7 @@ public class UserService {
         return userProfileMapper.toResponse(user.getUserProfile());
     }
 
+
     @Transactional
     public UserProfileResponse updateUserProfile(Long userId, UserProfileRequest request) {
         User user = userRepo.findById(userId)
@@ -41,4 +42,29 @@ public class UserService {
         userRepo.save(user);
         return userProfileMapper.toResponse(profile);
     }
+
+    public void validateRequest(UserProfileRequest request) {
+        if (request.getUserId() == null) {
+            throw new IllegalArgumentException("User ID cannot be null");
+        }
+        if (request.getTrainingDays() < 1 || request.getTrainingDays() > 7) {
+            throw new IllegalArgumentException("Training days must be between 1 and 6");
+        }
+    }
+
+    public UserProfile createUserProfile (UserProfileRequest request) {
+        User user = userRepo.findById(request.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (user.getUserProfile() != null) {
+            throw new IllegalStateException("User already has a profile");
+        }
+        UserProfile profile = userProfileMapper.toEntity(request);
+
+        user.setUserProfile(profile);
+        userRepo.save(user);
+
+        return profile;
+    }
+
 }

@@ -6,12 +6,17 @@ import com.workoutplanner.workout_planner_api.dto.ExerciseResponse;
 import com.workoutplanner.workout_planner_api.mapper.ExerciseMapper;
 import com.workoutplanner.workout_planner_api.model.Exercise;
 import com.workoutplanner.workout_planner_api.model.MuscleGroup;
+import com.workoutplanner.workout_planner_api.model.UserProfile;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +36,13 @@ public class ExerciseService {
         return exercisePage.map(exerciseMapper::toResponse);
     }
 
+    public Map<MuscleGroup, List<Exercise>> getExercisesByMuscleGroup(UserProfile userProfile) {
+        List<Exercise> filteredExercise = exerciseRepo.findByWorkoutEnvironment(userProfile.getWorkoutEnvironment());
+
+        return filteredExercise.stream()
+                .collect(Collectors.groupingBy(Exercise::getPrimaryMuscleGroup));
+    }
+
     public ExerciseResponse createExercise(ExerciseRequest request){
         if (exerciseRepo.existsByNameIgnoreCase(request.getName())) {
             throw new IllegalArgumentException("Exercise with this name already exists");
@@ -46,11 +58,10 @@ public class ExerciseService {
         Exercise exercise = exerciseRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
 
-        exercise.updateFromRequest(request);
+        exerciseMapper.updateEntityFromRequest(request, exercise);
         Exercise updatedExercise = exerciseRepo.save(exercise);
 
         return exerciseMapper.toResponse(updatedExercise);
-
     }
 
     public void deleteExercise(Long id) {
@@ -60,4 +71,6 @@ public class ExerciseService {
 
         exerciseRepo.deleteById(id);
     }
+
+
 }

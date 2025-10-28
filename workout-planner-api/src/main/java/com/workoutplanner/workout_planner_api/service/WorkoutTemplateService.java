@@ -6,15 +6,15 @@ import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateRequest;
 import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateResponse;
 import com.workoutplanner.workout_planner_api.mapper.PlanExerciseMapper;
 import com.workoutplanner.workout_planner_api.mapper.WorkoutTemplateMapper;
-import com.workoutplanner.workout_planner_api.model.Exercise;
-import com.workoutplanner.workout_planner_api.model.PlanExercise;
+import com.workoutplanner.workout_planner_api.model.*;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
-import com.workoutplanner.workout_planner_api.model.WorkoutTemplate;
 import com.workoutplanner.workout_planner_api.repo.WorkoutTemplateRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +31,22 @@ public class WorkoutTemplateService {
                 .orElseThrow(() -> new ResourceNotFoundException("Workout template not found for user ID: " + userId));
 
         return templateMapper.toResponse(template);
+    }
+
+    public WorkoutTemplate createTemplate (
+            User user,
+            UserProfile profile,
+            WorkoutSplit split
+    ) {
+        WorkoutTemplate template = workoutTemplateRepo.findByUser(user)
+                .orElse(new WorkoutTemplate());
+
+        template.setUser(user);
+        template.setName("Smart Plan - " + profile.getFitnessGoal().name());
+        template.setFitnessGoal(profile.getFitnessGoal());
+        template.setWorkoutSplit(split);
+
+        return template;
     }
 
     @Transactional
@@ -100,5 +116,23 @@ public class WorkoutTemplateService {
         }
 
         return template;
+    }
+
+    public WorkoutSplit determineWorkoutSplit (UserProfile profile) {
+        int days = profile.getTrainingDays();
+
+        return switch (days) {
+            case 2, 4 -> WorkoutSplit.UPPER_LOWER;
+            case 5 -> WorkoutSplit.BRO_SPLIT;
+            case 3, 6 -> WorkoutSplit.PPL;
+            default -> WorkoutSplit.FULL_BODY;
+        };
+    }
+
+    public void updateTemplateExercises (WorkoutTemplate template, List<PlanExercise> planExercises) {
+        template.getPlanExercises().clear();
+
+        planExercises.forEach(exercise -> exercise.setWorkoutTemplate(template));
+        template.getPlanExercises().addAll(planExercises);
     }
 }
