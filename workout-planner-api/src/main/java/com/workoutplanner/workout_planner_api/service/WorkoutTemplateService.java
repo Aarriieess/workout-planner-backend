@@ -78,13 +78,23 @@ public class WorkoutTemplateService {
             PlanExerciseRequest planExerciseRequest,
             Long userId
     ){
-        WorkoutTemplate template = findTemplateForUser(templateId, userId);
+        WorkoutTemplate template = workoutTemplateRepo.findById(templateId)
+                .orElseThrow(() -> new ResourceNotFoundException("Template not found"));
+
 
         Exercise exercise = exerciseRepo.findById(planExerciseRequest.getExerciseId())
                 .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
 
+        boolean alreadyAdded = template.getPlanExercises().stream()
+                .anyMatch(pe -> pe.getExercise().getId().equals(exercise.getId()));
+
+        if (alreadyAdded) {
+            throw new IllegalStateException("Exercise already exists in this template.");
+        }
+
         PlanExercise planExercise = planExerciseMapper.toEntity(planExerciseRequest);
         planExercise.setExercise(exercise);
+
         template.addExercise(planExercise);
 
         workoutTemplateRepo.save(template);

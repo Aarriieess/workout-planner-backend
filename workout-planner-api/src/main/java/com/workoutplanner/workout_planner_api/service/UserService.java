@@ -3,6 +3,8 @@ package com.workoutplanner.workout_planner_api.service;
 import com.workoutplanner.workout_planner_api.config.ResourceNotFoundException;
 import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.dto.UserProfileResponse;
+import com.workoutplanner.workout_planner_api.dto.UserResponse;
+import com.workoutplanner.workout_planner_api.mapper.UserMapper;
 import com.workoutplanner.workout_planner_api.mapper.UserProfileMapper;
 import com.workoutplanner.workout_planner_api.model.User;
 import com.workoutplanner.workout_planner_api.model.UserProfile;
@@ -19,6 +21,19 @@ public class UserService {
 
     private final UserRepo userRepo;
     private final UserProfileMapper userProfileMapper;
+    private final UserMapper userMapper;
+
+    public UserResponse getUserResponse(Long userId) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        return userMapper.toResponse(user);
+    }
+
+    public User getUserEntity(Long userId) {
+        return userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
 
     public UserProfileResponse getUserProfile(Long userId) {
         User user = userRepo.findById(userId)
@@ -26,7 +41,6 @@ public class UserService {
 
         return userProfileMapper.toResponse(user.getUserProfile());
     }
-
 
     @Transactional
     public UserProfileResponse updateUserProfile(Long userId, UserProfileRequest request) {

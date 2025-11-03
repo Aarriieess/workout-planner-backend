@@ -1,5 +1,6 @@
 package com.workoutplanner.workout_planner_api.service.implementation;
 
+import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
 import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateResponse;
 import com.workoutplanner.workout_planner_api.mapper.WorkoutTemplateMapper;
@@ -38,10 +39,14 @@ public class RuleBasedWorkoutServiceImpl implements RuleBasedWorkoutService {
 
     @Transactional
     @Override
-    public WorkoutTemplateResponse generateTemplate(@Valid UserProfileRequest request) {
-        userService.validateRequest(request);
-        UserProfile profile = userService.createUserProfile(request);
+    public WorkoutTemplateResponse generateTemplate(UserPrincipal user, UserProfileRequest request) {
+        var userEntity = userService.getUserEntity(user.getId());
 
+        if (userEntity.getUserProfile() == null) {
+            throw new IllegalStateException("Please complete your fitness profile before generating a plan.");
+        }
+
+        UserProfile profile = userService.createUserProfile(request);
         WorkoutSplit split = workoutTemplateService.determineWorkoutSplit(profile);
         WorkoutTemplate template = workoutTemplateService.createTemplate(profile.getUser(), profile, split);
 

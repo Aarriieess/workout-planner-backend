@@ -2,7 +2,9 @@ package com.workoutplanner.workout_planner_api.config;
 
 import com.workoutplanner.workout_planner_api.auth.CustomUserDetailsService;
 import com.workoutplanner.workout_planner_api.auth.JwtAuthenticationFilter;
+import com.workoutplanner.workout_planner_api.repo.WorkoutTemplateRepo;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,25 +19,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.swing.*;
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
+@EnableMethodSecurity(prePostEnabled = true)
+@Component("securityService")
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final CustomUserDetailsService userDetailsService;
-
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter,
-                          CustomUserDetailsService userDetailsService) {
-        this.jwtAuthFilter = jwtAuthFilter;
-        this.userDetailsService = userDetailsService;
-    }
+    private final WorkoutTemplateRepo workoutTemplateRepo;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -77,5 +78,9 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-
+    public boolean ownsTemplate(Long userId, Long templateId) {
+        return workoutTemplateRepo.findById(templateId)
+                .map(template -> template.getUser().getId().equals(userId))
+                .orElse(false);
+    }
 }

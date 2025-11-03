@@ -47,11 +47,11 @@ public class AuthService {
         User user = userRepo.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        String token = jwtService.generateToken(user.getEmail(), user.getId());
+        String accessToken = jwtService.generateAccessToken(user.getEmail(), user.getId());
         RefreshToken refreshToken = createRefreshToken(user);
 
         return new AuthResponse(
-                token,
+                accessToken,
                 refreshToken.getToken(),
                 user.getId(),
                 user.getEmail(),
@@ -72,11 +72,11 @@ public class AuthService {
 
         User newUser = userRepo.save(user);
 
-        String token = jwtService.generateToken(newUser.getEmail(), newUser.getId());
+        String accessToken = jwtService.generateAccessToken(newUser.getEmail(), newUser.getId());
         RefreshToken refreshToken = createRefreshToken(user);
 
         return new AuthResponse(
-                token,
+                accessToken,
                 refreshToken.getToken(),
                 newUser.getId(),
                 newUser.getEmail(),
@@ -99,18 +99,21 @@ public class AuthService {
         return refreshTokenRepo.save(refreshToken);
     }
 
-    public AuthResponse refreshToken(RefreshTokenRequest request) {
+    public AuthResponse refreshAccessToken(RefreshTokenRequest request) {
         String refreshToken = request.refreshToken();
 
-        RefreshToken token = refreshTokenRepo.findByToken(refreshToken)
+        RefreshToken oldRefreshToken = refreshTokenRepo.findByToken(refreshToken)
                 .orElseThrow(() -> new ResourceNotFoundException("Invalid refresh token"));
 
-        if (token.getExpiryDate().isBefore(Instant.now())){
+        if (!oldRefreshToken.isActive()) {
             throw new AccessDeniedException("Refresh token has expired. Please login again.");
         }
 
-        User user = token.getUser();
-        String newAccessToken = jwtService.generateToken(user.getEmail(), user.getId());
+        oldRefreshToken.markRevoked();
+
+
+        User user = oldRefreshToken.getUser();
+        String newAccessToken = jwtService.generateAccessToken(user.getEmail(), user.getId());
 
         return new AuthResponse(
                 newAccessToken,
@@ -122,7 +125,11 @@ public class AuthService {
     }
 
     @Transactional
-    public void logout(Long userId, @Nullable String refreshToken, boolean allDevices) {
+    public void logout(
+            Long userId,
+            @Nullable String refreshToken,
+            boolean allDevices)
+    {
         if (allDevices) {
             refreshTokenRepo.revokeAllByUserId(userId);
         }

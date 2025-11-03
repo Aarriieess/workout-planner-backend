@@ -7,6 +7,7 @@ import com.workoutplanner.workout_planner_api.service.WorkoutTemplateService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ public class WorkoutTemplateController {
         return ResponseEntity.ok(workoutTemplateService.getUserTemplate(userId));
     }
 
+    @PreAuthorize("@securityService.ownsTemplate(#user.id, #templateId")
     @PostMapping("/{templateId}/exercises")
     public ResponseEntity<WorkoutTemplateResponse> addExerciseToTemplate(
             @PathVariable Long templateId,
@@ -37,6 +39,7 @@ public class WorkoutTemplateController {
         ));
     }
 
+    @PreAuthorize("#user.id == #templade.user.id")
     @PutMapping("/{templateId}")
     public ResponseEntity<WorkoutTemplateResponse> updateTemplate(
             @PathVariable Long templateId,
@@ -50,6 +53,7 @@ public class WorkoutTemplateController {
         ));
     }
 
+    @PreAuthorize("@securityService.ownsTemplate(#user.id, #templateId")
     @DeleteMapping("/{templateId}/exercises/{planExerciseId}")
     public ResponseEntity<Void> removeExerciseFromTemplate(
             @PathVariable Long templateId,

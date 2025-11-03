@@ -19,7 +19,7 @@ public class JwtService {
 
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    public String generateToken(String email, Long userId) {
+    public String generateAccessToken(String email, Long userId) {
         return Jwts.builder()
                 .setSubject(email) // identifies the user
                 .claim("id", userId) // custom claim: userId
