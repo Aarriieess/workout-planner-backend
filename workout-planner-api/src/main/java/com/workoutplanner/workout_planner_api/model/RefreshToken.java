@@ -18,7 +18,13 @@ public class RefreshToken {
     private long id;
 
     @Column(nullable = false, unique = true)
-    private String token;
+    private String refreshTokenHashed;
+
+    @Transient
+    private String rawToken;
+
+    @Column(nullable = false)
+    private Instant createdAt = Instant.now();
 
     @Column(nullable = false)
     private Instant expiryDate;

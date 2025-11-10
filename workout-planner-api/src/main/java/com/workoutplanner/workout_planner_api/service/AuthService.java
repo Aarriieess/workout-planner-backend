@@ -1,6 +1,6 @@
 package com.workoutplanner.workout_planner_api.service;
 
-import com.workoutplanner.workout_planner_api.auth.JwtService;
+import com.workoutplanner.workout_planner_api.auth.RefreshTokenHasher;
 import com.workoutplanner.workout_planner_api.config.ResourceNotFoundException;
 import com.workoutplanner.workout_planner_api.dto.AuthResponse;
 import com.workoutplanner.workout_planner_api.dto.LoginRequest;
@@ -34,6 +34,7 @@ public class AuthService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
     private final RefreshTokenRepo refreshTokenRepo;
+    private final RefreshTokenHasher hasher;
 
 
     public AuthResponse login(LoginRequest request) {
@@ -52,7 +53,8 @@ public class AuthService {
 
         return new AuthResponse(
                 accessToken,
-                refreshToken.getToken(),
+                refreshToken.getRawToken(),
+                refreshToken.getExpiryDate(),
                 user.getId(),
                 user.getEmail(),
                 user.getName()
@@ -77,10 +79,11 @@ public class AuthService {
 
         return new AuthResponse(
                 accessToken,
-                refreshToken.getToken(),
-                newUser.getId(),
-                newUser.getEmail(),
-                newUser.getName()
+                refreshToken.getRawToken(),
+                refreshToken.getExpiryDate(),
+                user.getId(),
+                user.getEmail(),
+                user.getName()
         );
     }
 
@@ -91,33 +94,36 @@ public class AuthService {
     }
 
     private RefreshToken createRefreshToken(User user) {
+        String rawRefreshToken = generateRandomToken();
+        String hashedRefreshToken = hasher.hash(rawRefreshToken);
+
         RefreshToken refreshToken = RefreshToken.builder()
-                .token(generateRandomToken())
+                .refreshTokenHashed(hashedRefreshToken)
+                .rawToken(rawRefreshToken)
                 .user(user)
                 .expiryDate(Instant.now().plus(7, ChronoUnit.DAYS))
                 .build();
+
         return refreshTokenRepo.save(refreshToken);
     }
 
     public AuthResponse refreshAccessToken(RefreshTokenRequest request) {
         String refreshToken = request.refreshToken();
 
-        RefreshToken oldRefreshToken = refreshTokenRepo.findByToken(refreshToken)
+        RefreshToken userRefreshToken = refreshTokenRepo.findByToken(refreshToken)
                 .orElseThrow(() -> new ResourceNotFoundException("Invalid refresh token"));
 
-        if (!oldRefreshToken.isActive()) {
+        if (!userRefreshToken.isActive()) {
             throw new AccessDeniedException("Refresh token has expired. Please login again.");
         }
 
-        oldRefreshToken.markRevoked();
-
-
-        User user = oldRefreshToken.getUser();
+        User user = userRefreshToken.getUser();
         String newAccessToken = jwtService.generateAccessToken(user.getEmail(), user.getId());
 
         return new AuthResponse(
                 newAccessToken,
                 refreshToken,
+                userRefreshToken.getExpiryDate(),
                 user.getId(),
                 user.getEmail(),
                 user.getName()
