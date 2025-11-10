@@ -1,4 +1,4 @@
-package com.workoutplanner.workout_planner_api.service;
+package com.workoutplanner.workout_planner_api.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
