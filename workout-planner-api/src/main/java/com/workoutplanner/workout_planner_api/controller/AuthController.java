@@ -2,7 +2,7 @@ package com.workoutplanner.workout_planner_api.controller;
 
 import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
 import com.workoutplanner.workout_planner_api.dto.*;
-import com.workoutplanner.workout_planner_api.service.AuthService;
+import com.workoutplanner.workout_planner_api.auth.AuthService;
 import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

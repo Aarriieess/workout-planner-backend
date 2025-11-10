@@ -1,6 +1,5 @@
 package com.workoutplanner.workout_planner_api.auth;
 
-import com.workoutplanner.workout_planner_api.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

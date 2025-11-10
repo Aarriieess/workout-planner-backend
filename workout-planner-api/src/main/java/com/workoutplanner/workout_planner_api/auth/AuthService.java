@@ -1,6 +1,5 @@
-package com.workoutplanner.workout_planner_api.service;
+package com.workoutplanner.workout_planner_api.auth;
 
-import com.workoutplanner.workout_planner_api.auth.RefreshTokenHasher;
 import com.workoutplanner.workout_planner_api.config.ResourceNotFoundException;
 import com.workoutplanner.workout_planner_api.dto.AuthResponse;
 import com.workoutplanner.workout_planner_api.dto.LoginRequest;
