@@ -18,10 +18,12 @@ public class RefreshToken {
     private long id;
 
     @Column(nullable = false, unique = true)
-    private String refreshTokenHashed;
+    private String hashedToken;
 
     @Transient
     private String rawToken;
+
+    private String replacedByToken;
 
     @Column(nullable = false)
     private Instant createdAt = Instant.now();

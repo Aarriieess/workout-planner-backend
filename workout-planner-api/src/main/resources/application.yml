@@ -8,7 +8,3 @@ spring:
 jwt:
   secret: my-secret-key
   expiration: 86400000 # 24h in ms
-
-app:
-  security:
-    refresh-token-secret: ${APP_SECITY_REFRESH_TOKEN_SECRET}

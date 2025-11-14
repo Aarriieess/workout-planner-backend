@@ -23,6 +23,7 @@ import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -97,7 +98,7 @@ public class AuthService {
         String hashedRefreshToken = hasher.hash(rawRefreshToken);
 
         RefreshToken refreshToken = RefreshToken.builder()
-                .refreshTokenHashed(hashedRefreshToken)
+                .hashedToken(hashedRefreshToken)
                 .rawToken(rawRefreshToken)
                 .user(user)
                 .expiryDate(Instant.now().plus(7, ChronoUnit.DAYS))
@@ -106,23 +107,25 @@ public class AuthService {
         return refreshTokenRepo.save(refreshToken);
     }
 
-    public AuthResponse refreshAccessToken(RefreshTokenRequest request) {
-        String refreshToken = request.refreshToken();
+    @Transactional
+    public AuthResponse refreshTokens(RefreshTokenRequest request) {
+        String rawToken = request.refreshToken();
+        RefreshToken oldToken = findAndEvaluateToken(rawToken);
 
-        RefreshToken userRefreshToken = refreshTokenRepo.findByToken(refreshToken)
-                .orElseThrow(() -> new ResourceNotFoundException("Invalid refresh token"));
+        User user = oldToken.getUser();
+        RefreshToken newToken = createRefreshToken(user);
 
-        if (!userRefreshToken.isActive()) {
-            throw new AccessDeniedException("Refresh token has expired. Please login again.");
-        }
+        oldToken.setRevoked(true);
+        oldToken.setReplacedByToken(newToken.getHashedToken());
+        refreshTokenRepo.save(oldToken);
+        deleteRevokedTokens(user.getId());
 
-        User user = userRefreshToken.getUser();
         String newAccessToken = jwtService.generateAccessToken(user.getEmail(), user.getId());
 
         return new AuthResponse(
                 newAccessToken,
-                refreshToken,
-                userRefreshToken.getExpiryDate(),
+                newToken.getRawToken(),
+                newToken.getExpiryDate(),
                 user.getId(),
                 user.getEmail(),
                 user.getName()
@@ -148,5 +151,26 @@ public class AuthService {
                 throw new ResourceNotFoundException("Invalid refresh token");
             }
         }
+    }
+
+    private RefreshToken findAndEvaluateToken(String rawToken) {
+        String userEmail = jwtService.extractEmail(rawToken);
+
+        List<RefreshToken> tokens = refreshTokenRepo.findAllByEmail(userEmail);
+
+        RefreshToken token = tokens.stream()
+                .filter(t -> hasher.matches(rawToken, t.getHashedToken()))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid refresh token"));
+
+        if (!token.isActive()) {
+            throw new AccessDeniedException("Refresh token has expired. Please login again.");
+        }
+
+        return token;
+    }
+
+    private void deleteRevokedTokens(Long userId) {
+        refreshTokenRepo.deleteByUserIdAndRevokedTrue(userId);
     }
 }

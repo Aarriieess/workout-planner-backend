@@ -32,8 +32,8 @@ public class AuthController {
 
     @PermitAll
     @PostMapping("/refresh")
-    public ResponseEntity<AuthResponse> refreshAccessToken(@Valid @RequestBody RefreshTokenRequest request) {
-        return ResponseEntity.ok(authService.refreshAccessToken(request));
+    public ResponseEntity<AuthResponse> refreshTokens(@Valid @RequestBody RefreshTokenRequest request) {
+        return ResponseEntity.ok(authService.refreshTokens(request));
     }
 
     @PreAuthorize("#user.id != null")

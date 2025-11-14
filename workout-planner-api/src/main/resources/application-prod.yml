@@ -9,7 +9,3 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: false
-
-app:
-  security:
-    refresh-token-secret: ${APP_SECURITY_REFRESH_TOKEN_SECRET} 

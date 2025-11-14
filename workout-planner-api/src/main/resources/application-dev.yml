@@ -12,7 +12,3 @@ spring:
 
 server:
   port: 8085
-
-app:
-  security:
-    refresh-token-secret: x3OU4mL3zPzwQgq5cFSCnIgO2xcelfQCgj5njfdm7e1qLz28mJJ0cmsTBROzZcQeAlM7q9sNpHRkmSU6fwGouw==
