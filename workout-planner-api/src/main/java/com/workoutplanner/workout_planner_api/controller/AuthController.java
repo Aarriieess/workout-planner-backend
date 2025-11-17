@@ -33,7 +33,7 @@ public class AuthController {
     @PermitAll
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refreshTokens(@Valid @RequestBody RefreshTokenRequest request) {
-        return ResponseEntity.ok(authService.refreshTokens(request));
+        return ResponseEntity.ok(authService.refreshAccessTokens(request));
     }
 
     @PreAuthorize("#user.id != null")

@@ -26,7 +26,7 @@ public class RefreshToken {
     private String replacedByToken;
 
     @Column(nullable = false)
-    private Instant createdAt = Instant.now();
+    private Instant createdAt;
 
     @Column(nullable = false)
     private Instant expiryDate;
@@ -55,5 +55,12 @@ public class RefreshToken {
 
     public void markExpired() {
         this.expired = true;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = Instant.now();
+        }
     }
 }

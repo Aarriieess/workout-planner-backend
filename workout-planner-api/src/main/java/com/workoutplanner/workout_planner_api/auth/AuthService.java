@@ -54,7 +54,7 @@ public class AuthService {
         return new AuthResponse(
                 accessToken,
                 refreshToken.getRawToken(),
-                refreshToken.getExpiryDate(),
+                accessTokenExp(accessToken),
                 user.getId(),
                 user.getEmail(),
                 user.getName()
@@ -62,6 +62,7 @@ public class AuthService {
     }
 
     public AuthResponse signup(SignupRequest request) {
+
         if (userRepo.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email is already in use");
         }
@@ -75,16 +76,44 @@ public class AuthService {
         User newUser = userRepo.save(user);
 
         String accessToken = jwtService.generateAccessToken(newUser.getEmail(), newUser.getId());
-        RefreshToken refreshToken = createRefreshToken(user);
+        RefreshToken refreshToken = createRefreshToken(newUser);
+
 
         return new AuthResponse(
                 accessToken,
                 refreshToken.getRawToken(),
-                refreshToken.getExpiryDate(),
-                user.getId(),
-                user.getEmail(),
-                user.getName()
+                accessTokenExp(accessToken),
+                newUser.getId(),
+                newUser.getEmail(),
+                newUser.getName()
         );
+
+    }
+
+    @Transactional
+    public void logout(Long userId, @Nullable String refreshToken, boolean allDevices) {
+        if (allDevices) {
+            refreshTokenRepo.revokeAllByUserId(userId);
+            deleteRevokedTokens(userId);
+        } else {
+            logoutSingleDevice(userId, refreshToken);
+        }
+    }
+
+    private void logoutSingleDevice(Long userId, String refreshToken) {
+        if (refreshToken == null) {
+            throw new IllegalArgumentException("Refresh token is required for single-device logout");
+        }
+
+        RefreshToken token = findAndEvaluateToken(refreshToken);
+
+        if (!token.getUser().getId().equals(userId)) {
+            throw new AccessDeniedException("Token doesn't belong to this user");
+        }
+
+        token.setRevoked(true);
+        refreshTokenRepo.save(token);
+        deleteRevokedTokens(userId);
     }
 
     private String generateRandomToken() {
@@ -108,7 +137,7 @@ public class AuthService {
     }
 
     @Transactional
-    public AuthResponse refreshTokens(RefreshTokenRequest request) {
+    public AuthResponse refreshAccessTokens(RefreshTokenRequest request) {
         String rawToken = request.refreshToken();
         RefreshToken oldToken = findAndEvaluateToken(rawToken);
 
@@ -125,38 +154,17 @@ public class AuthService {
         return new AuthResponse(
                 newAccessToken,
                 newToken.getRawToken(),
-                newToken.getExpiryDate(),
+                accessTokenExp(newAccessToken),
                 user.getId(),
                 user.getEmail(),
                 user.getName()
         );
     }
 
-    @Transactional
-    public void logout(
-            Long userId,
-            @Nullable String refreshToken,
-            boolean allDevices)
-    {
-        if (allDevices) {
-            refreshTokenRepo.revokeAllByUserId(userId);
-        }
-        else {
-            if (refreshToken == null) {
-                throw new IllegalArgumentException("Refresh token is required for single-device logout");
-            }
-
-            int updated = refreshTokenRepo.revokeByTokenAndUserId(refreshToken, userId);
-            if (updated == 0) {
-                throw new ResourceNotFoundException("Invalid refresh token");
-            }
-        }
-    }
-
     private RefreshToken findAndEvaluateToken(String rawToken) {
         String userEmail = jwtService.extractEmail(rawToken);
 
-        List<RefreshToken> tokens = refreshTokenRepo.findAllByEmail(userEmail);
+        List<RefreshToken> tokens = refreshTokenRepo.findAllByUserEmail(userEmail);
 
         RefreshToken token = tokens.stream()
                 .filter(t -> hasher.matches(rawToken, t.getHashedToken()))
@@ -172,5 +180,9 @@ public class AuthService {
 
     private void deleteRevokedTokens(Long userId) {
         refreshTokenRepo.deleteByUserIdAndRevokedTrue(userId);
+    }
+
+    private Instant accessTokenExp(String accessToken) {
+        return jwtService.extractExpiration(accessToken).toInstant();
     }
 }

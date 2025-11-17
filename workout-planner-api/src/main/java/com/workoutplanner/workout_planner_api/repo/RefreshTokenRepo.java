@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface RefreshTokenRepo extends JpaRepository<RefreshToken, Long> {
     Optional<RefreshToken> findByHashedToken(String hashedToken);
 
-    List<RefreshToken> findAllByEmail(String email);
+    List<RefreshToken> findAllByUserEmail(String email);
 
     void deleteByUserIdAndRevokedTrue(Long userId);
 
@@ -20,7 +20,4 @@ public interface RefreshTokenRepo extends JpaRepository<RefreshToken, Long> {
     @Query("UPDATE RefreshToken rt SET rt.revoked = true WHERE rt.user.id = :userId")
     void revokeAllByUserId(@Param("userId") Long userId);
 
-    @Modifying
-    @Query("UPDATE RefreshToken rt SET rt.revoked = true WHERE rt.token = :token AND rt.user.id = :userId")
-    int revokeByTokenAndUserId(@Param("token") String token, @Param("userId") Long userId);
 }

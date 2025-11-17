@@ -4,17 +4,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+
 @Component
-@RequiredArgsConstructor
 public class RefreshTokenHasher {
 
-    private final PasswordEncoder passwordEncoder;
 
-    public String hash(String token) {
-        return passwordEncoder.encode(token);
+    public String hash(String refreshToken) {
+       try {
+           MessageDigest digest = MessageDigest.getInstance("SHA-256");
+           byte[] hashBytes = digest.digest(refreshToken.getBytes(StandardCharsets.UTF_8));
+           return Base64.getEncoder().encodeToString(hashBytes);
+       } catch (NoSuchAlgorithmException e) {
+           throw new RuntimeException("SHA-256 algorithm not available", e);
+       }
     }
 
-    public boolean matches(String raw, String hashed) {
-        return passwordEncoder.matches(raw, hashed);
+    public boolean matches(String rawToken, String hashedToken) {
+        String rawTokenHash = hash(rawToken);
+        return rawTokenHash.equals(hashedToken);
     }
 }
