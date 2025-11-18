@@ -162,7 +162,10 @@ public class AuthService {
     }
 
     private RefreshToken findAndEvaluateToken(String rawToken) {
+        String hashToken = hasher.hash(rawToken);
 
+        RefreshToken token = refreshTokenRepo.findByHashedToken(hashToken)
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid refresh token"));
 
         if (!token.isActive()) {
             throw new AccessDeniedException("Refresh token has expired. Please login again.");
