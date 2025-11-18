@@ -162,14 +162,7 @@ public class AuthService {
     }
 
     private RefreshToken findAndEvaluateToken(String rawToken) {
-        String userEmail = jwtService.extractEmail(rawToken);
 
-        List<RefreshToken> tokens = refreshTokenRepo.findAllByUserEmail(userEmail);
-
-        RefreshToken token = tokens.stream()
-                .filter(t -> hasher.matches(rawToken, t.getHashedToken()))
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Invalid refresh token"));
 
         if (!token.isActive()) {
             throw new AccessDeniedException("Refresh token has expired. Please login again.");
