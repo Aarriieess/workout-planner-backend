@@ -6,5 +6,5 @@ import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateResponse;
 
 
 public interface RuleBasedWorkoutService {
-    WorkoutTemplateResponse generateTemplate(UserPrincipal user, UserProfileRequest request);
+    WorkoutTemplateResponse generateTemplate(UserPrincipal user);
 }

@@ -27,7 +27,7 @@ public class  RuleBasedWorkoutController {
                 UserPrincipal userPrincipal,
                 @Valid @RequestBody UserProfileRequest request
         ) {
-        WorkoutTemplateResponse generated = ruleBasedWorkoutService.generateTemplate(userPrincipal, request);
+        WorkoutTemplateResponse generated = ruleBasedWorkoutService.generateTemplate(userPrincipal);
         return ResponseEntity.ok(generated);
     }
 }

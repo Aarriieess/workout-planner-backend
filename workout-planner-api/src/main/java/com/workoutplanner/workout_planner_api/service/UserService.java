@@ -23,6 +23,18 @@ public class UserService {
     private final UserProfileMapper userProfileMapper;
     private final UserMapper userMapper;
 
+    public UserProfile getUserProfileEntity(Long userId) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        UserProfile profile = user.getUserProfile();
+        if (profile == null) {
+            throw new ResourceNotFoundException("User profile not found");
+        }
+
+        return profile;
+    }
+
     public UserResponse getUserResponse(Long userId) {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
@@ -39,19 +51,29 @@ public class UserService {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        return userProfileMapper.toResponse(user.getUserProfile());
+        UserProfile profile = user.getUserProfile();
+
+        if (profile == null) {
+            throw new ResourceNotFoundException("User profile not found");
+        }
+
+        return userProfileMapper.toResponse(profile);
     }
 
     @Transactional
-    public UserProfileResponse updateUserProfile(Long userId, UserProfileRequest request) {
+    public UserProfileResponse upsertUserProfile(Long userId, UserProfileRequest request) {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        UserProfile profile = Optional.ofNullable(user.getUserProfile())
-                .orElse(new UserProfile());
+        UserProfile profile = user.getUserProfile();
 
-        userProfileMapper.updateEntityFromRequest(request, profile);
-        user.setUserProfile(profile);
+        if (profile == null) {
+            profile = userProfileMapper.toEntity(request);
+            profile.setUser(user);
+            user.setUserProfile(profile);
+        } else {
+            userProfileMapper.updateEntityFromRequest(request, profile);
+        }
 
         userRepo.save(user);
         return userProfileMapper.toResponse(profile);
@@ -66,19 +88,5 @@ public class UserService {
         }
     }
 
-    public UserProfile createUserProfile (UserProfileRequest request) {
-        User user = userRepo.findById(request.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
-        if (user.getUserProfile() != null) {
-            throw new IllegalStateException("User already has a profile");
-        }
-        UserProfile profile = userProfileMapper.toEntity(request);
-
-        user.setUserProfile(profile);
-        userRepo.save(user);
-
-        return profile;
-    }
 
 }

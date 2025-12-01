@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 public class RuleBasedWorkoutServiceImpl implements RuleBasedWorkoutService {
 
     private final UserService userService;
-    private final UserRepo userRepo;
     private final WorkoutTemplateService workoutTemplateService;
     private final WorkoutTemplateRepo workoutTemplateRepo;
     private final ExerciseService exerciseService;
@@ -39,22 +38,27 @@ public class RuleBasedWorkoutServiceImpl implements RuleBasedWorkoutService {
 
     @Transactional
     @Override
-    public WorkoutTemplateResponse generateTemplate(UserPrincipal user, UserProfileRequest request) {
-        var userEntity = userService.getUserEntity(user.getId());
+    public WorkoutTemplateResponse generateTemplate(UserPrincipal user) {
 
-        if (userEntity.getUserProfile() == null) {
-            throw new IllegalStateException("Please complete your fitness profile before generating a plan.");
-        }
+        var userProfile = userService.getUserProfileEntity(user.getId());
 
-        UserProfile profile = userService.createUserProfile(request);
-        WorkoutSplit split = workoutTemplateService.determineWorkoutSplit(profile);
-        WorkoutTemplate template = workoutTemplateService.createTemplate(profile.getUser(), profile, split);
+        WorkoutSplit split = workoutTemplateService.determineWorkoutSplit(userProfile);
 
-        Map<MuscleGroup, List<Exercise>> exercisesByMuscleGroup = exerciseService.getExercisesByMuscleGroup(profile);
+        WorkoutTemplate template = workoutTemplateService.createTemplate(
+                userProfile.getUser(),
+                userProfile,
+                split
+        );
+
+        Map<MuscleGroup, List<Exercise>> exercisesByMuscleGroup
+                = exerciseService.getExercisesByMuscleGroup(userProfile);
+
         WorkoutGenerationStrategy strategy = strategyFactory.getStrategy(split);
-        List<PlanExercise> planExercises = strategy.generatePlan(profile, exercisesByMuscleGroup, template);
+
+        List<PlanExercise> planExercises = strategy.generatePlan(userProfile, exercisesByMuscleGroup, template);
 
         workoutTemplateService.updateTemplateExercises(template, planExercises);
+
         workoutTemplateRepo.save(template);
 
         return workoutTemplateMapper.toResponse(template);

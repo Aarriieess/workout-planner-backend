@@ -25,19 +25,17 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserResponse(user.getId()));
     }
 
-    @PreAuthorize("#user.id == userId")
     @GetMapping("/me/profile")
     public ResponseEntity<UserProfileResponse> getMyProfile(@AuthenticationPrincipal UserPrincipal user
     ) {
         return ResponseEntity.ok(userService.getUserProfile(user.getId()));
     }
 
-    @PreAuthorize("#user.id == userId")
     @PutMapping("/me/profile")
-    public ResponseEntity<UserProfileResponse> updateMyProfile(
+    public ResponseEntity<UserProfileResponse> upsertMyProfile(
             @AuthenticationPrincipal UserPrincipal user,
             @RequestBody @Valid UserProfileRequest request
             ) {
-        return ResponseEntity.ok(userService.updateUserProfile(user.getId(), request));
+        return ResponseEntity.ok(userService.upsertUserProfile(user.getId(), request));
     }
 }
