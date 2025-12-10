@@ -2,13 +2,14 @@ package com.workoutplanner.workout_planner_api.mapper;
 
 import com.workoutplanner.workout_planner_api.dto.PlanExerciseRequest;
 import com.workoutplanner.workout_planner_api.dto.PlanExerciseResponse;
+import com.workoutplanner.workout_planner_api.model.Exercise;
 import com.workoutplanner.workout_planner_api.model.PlanExercise;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-17T19:10:16+0800",
+    date = "2025-12-10T15:17:12+0800",
     comments = "version: 1.6.3, compiler: javac, environment: Java 24.0.1 (Oracle Corporation)"
 )
 @Component
@@ -20,16 +21,17 @@ public class PlanExerciseMapperImpl implements PlanExerciseMapper {
             return null;
         }
 
+        Long exerciseId = null;
+        String exerciseName = null;
         int sets = 0;
         int reps = 0;
         int restSeconds = 0;
 
+        exerciseId = planExerciseExerciseId( planExercise );
+        exerciseName = planExerciseExerciseName( planExercise );
         sets = planExercise.getSets();
         reps = planExercise.getReps();
         restSeconds = planExercise.getRestSeconds();
-
-        Long exerciseId = null;
-        String exerciseName = null;
 
         PlanExerciseResponse planExerciseResponse = new PlanExerciseResponse( exerciseId, exerciseName, sets, reps, restSeconds );
 
@@ -72,5 +74,21 @@ public class PlanExerciseMapperImpl implements PlanExerciseMapper {
         if ( request.getRestSeconds() != null ) {
             planExercise.setRestSeconds( request.getRestSeconds() );
         }
+    }
+
+    private Long planExerciseExerciseId(PlanExercise planExercise) {
+        Exercise exercise = planExercise.getExercise();
+        if ( exercise == null ) {
+            return null;
+        }
+        return exercise.getId();
+    }
+
+    private String planExerciseExerciseName(PlanExercise planExercise) {
+        Exercise exercise = planExercise.getExercise();
+        if ( exercise == null ) {
+            return null;
+        }
+        return exercise.getName();
     }
 }

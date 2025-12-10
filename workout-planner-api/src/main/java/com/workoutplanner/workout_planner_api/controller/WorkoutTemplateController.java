@@ -21,8 +21,8 @@ public class WorkoutTemplateController {
 
 
     @GetMapping("/me")
-    public ResponseEntity<WorkoutTemplateResponse> getUserTemplate(@PathVariable Long userId) {
-        return ResponseEntity.ok(workoutTemplateService.getUserTemplate(userId));
+    public ResponseEntity<WorkoutTemplateResponse> getUserTemplate(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        return ResponseEntity.ok(workoutTemplateService.getUserTemplate(userPrincipal.getId()));
     }
 
     @PreAuthorize("@securityService.ownsTemplate(#user.id, #templateId")

@@ -1,12 +1,9 @@
 package com.workoutplanner.workout_planner_api.service.implementation;
 
 import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
-import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateResponse;
 import com.workoutplanner.workout_planner_api.mapper.WorkoutTemplateMapper;
 import com.workoutplanner.workout_planner_api.model.*;
-import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
-import com.workoutplanner.workout_planner_api.repo.UserRepo;
 import com.workoutplanner.workout_planner_api.repo.WorkoutTemplateRepo;
 import com.workoutplanner.workout_planner_api.service.ExerciseService;
 import com.workoutplanner.workout_planner_api.service.RuleBasedWorkoutService;
@@ -14,14 +11,11 @@ import com.workoutplanner.workout_planner_api.service.UserService;
 import com.workoutplanner.workout_planner_api.service.WorkoutTemplateService;
 import com.workoutplanner.workout_planner_api.service.strategy.WorkoutGenerationStrategy;
 import com.workoutplanner.workout_planner_api.service.strategy.WorkoutStrategyFactory;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -59,8 +53,8 @@ public class RuleBasedWorkoutServiceImpl implements RuleBasedWorkoutService {
 
         workoutTemplateService.updateTemplateExercises(template, planExercises);
 
-        workoutTemplateRepo.save(template);
+        WorkoutTemplate userTemplate = workoutTemplateRepo.save(template);
 
-        return workoutTemplateMapper.toResponse(template);
+        return workoutTemplateMapper.toResponse(userTemplate);
     }
 }

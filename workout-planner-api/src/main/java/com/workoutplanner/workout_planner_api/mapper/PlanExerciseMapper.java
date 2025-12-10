@@ -6,6 +6,7 @@ import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateRequest;
 import com.workoutplanner.workout_planner_api.model.PlanExercise;
 import com.workoutplanner.workout_planner_api.model.WorkoutTemplate;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
@@ -16,6 +17,8 @@ import org.mapstruct.ReportingPolicy;
 )
 public interface PlanExerciseMapper {
 
+    @Mapping(source = "exercise.id", target = "exerciseId")
+    @Mapping(source = "exercise.name", target = "exerciseName")
     PlanExerciseResponse toResponse(PlanExercise planExercise);
     PlanExercise toEntity(PlanExerciseRequest request);
 

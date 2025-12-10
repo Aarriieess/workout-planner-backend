@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +22,8 @@ public class  RuleBasedWorkoutController {
 
     private final RuleBasedWorkoutServiceImpl ruleBasedWorkoutService;
 
-    @PreAuthorize("#user.id == #request.userId")
     @PostMapping("/generate")
-        public ResponseEntity<WorkoutTemplateResponse> generatePlan(
-                UserPrincipal userPrincipal,
-                @Valid @RequestBody UserProfileRequest request
-        ) {
+        public ResponseEntity<WorkoutTemplateResponse> generatePlan(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         WorkoutTemplateResponse generated = ruleBasedWorkoutService.generateTemplate(userPrincipal);
         return ResponseEntity.ok(generated);
     }

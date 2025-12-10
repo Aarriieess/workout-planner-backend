@@ -139,6 +139,7 @@ public class WorkoutTemplateService {
         };
     }
 
+    @Transactional
     public void updateTemplateExercises (WorkoutTemplate template, List<PlanExercise> planExercises) {
         template.getPlanExercises().clear();
 

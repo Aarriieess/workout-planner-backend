@@ -33,5 +33,4 @@ public class UserProfile {
 
     private int trainingDays;
 
-
 }
