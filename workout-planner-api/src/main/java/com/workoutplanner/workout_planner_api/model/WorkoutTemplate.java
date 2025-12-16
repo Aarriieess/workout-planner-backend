@@ -37,6 +37,7 @@ public class WorkoutTemplate {
 
     @OneToMany(mappedBy = "workoutTemplate", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
+    @OrderBy("dayIndex ASC, id ASC")
     private List<PlanExercise> planExercises = new ArrayList<>();
 
     public void clearExercises() {
