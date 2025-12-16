@@ -26,8 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/me/profile")
-    public ResponseEntity<UserProfileResponse> getMyProfile(@AuthenticationPrincipal UserPrincipal user
-    ) {
+    public ResponseEntity<UserProfileResponse> getMyProfile(@AuthenticationPrincipal UserPrincipal user) {
         return ResponseEntity.ok(userService.getUserProfile(user.getId()));
     }
 

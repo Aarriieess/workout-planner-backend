@@ -51,11 +51,10 @@ public class WorkoutTemplateService {
 
     @Transactional
     public WorkoutTemplateResponse updateTemplate(
-            Long templateId,
             WorkoutTemplateRequest request,
             Long userId
     ) {
-        WorkoutTemplate template = findTemplateForUser(templateId, userId);
+        WorkoutTemplate template = findTemplateByUserId(userId);
         template.clearExercises();
 
         for (PlanExerciseRequest planExerciseRequest : request.getPlanExerciseRequestList()) {
@@ -74,12 +73,10 @@ public class WorkoutTemplateService {
     }
 
     public WorkoutTemplateResponse addExerciseToTemplate(
-            Long templateId,
             PlanExerciseRequest planExerciseRequest,
             Long userId
     ){
-        WorkoutTemplate template = workoutTemplateRepo.findById(templateId)
-                .orElseThrow(() -> new ResourceNotFoundException("Template not found"));
+        WorkoutTemplate template = findTemplateByUserId(userId);
 
 
         Exercise exercise = exerciseRepo.findById(planExerciseRequest.getExerciseId())
@@ -102,11 +99,10 @@ public class WorkoutTemplateService {
     }
 
     public void removeExerciseFromTemplate(
-            Long templateId,
             Long planExerciseId,
             Long userId
     ) {
-        WorkoutTemplate template = findTemplateForUser(templateId, userId);
+        WorkoutTemplate template = findTemplateByUserId(userId);
 
         PlanExercise toRemove = template.getPlanExercises().stream()
                 .filter(pe -> pe.getId().equals(planExerciseId))
@@ -117,8 +113,8 @@ public class WorkoutTemplateService {
         workoutTemplateRepo.save(template);
     }
 
-    private WorkoutTemplate findTemplateForUser(Long templateId, Long userId) {
-        WorkoutTemplate template = workoutTemplateRepo.findById(templateId)
+    private WorkoutTemplate findTemplateByUserId(Long userId) {
+        WorkoutTemplate template = workoutTemplateRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Template not found"));
 
         if (!template.getUser().getId().equals(userId)) {

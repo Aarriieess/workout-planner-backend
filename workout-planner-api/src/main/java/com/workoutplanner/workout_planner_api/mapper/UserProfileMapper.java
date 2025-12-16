@@ -4,6 +4,7 @@ import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.dto.UserProfileResponse;
 import com.workoutplanner.workout_planner_api.model.UserProfile;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 

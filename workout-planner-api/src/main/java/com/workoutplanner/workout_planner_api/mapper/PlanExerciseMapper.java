@@ -17,6 +17,7 @@ import org.mapstruct.ReportingPolicy;
 )
 public interface PlanExerciseMapper {
 
+    @Mapping(source = "planExercise.id", target = "planExerciseId")
     @Mapping(source = "exercise.id", target = "exerciseId")
     @Mapping(source = "exercise.name", target = "exerciseName")
     PlanExerciseResponse toResponse(PlanExercise planExercise);

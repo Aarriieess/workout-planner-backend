@@ -11,7 +11,6 @@ import lombok.Data;
 
 @Data
 public class UserProfileRequest {
-    private Long userId;
 
     @NotNull
     private FitnessLevel fitnessLevel;

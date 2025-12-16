@@ -2,9 +2,6 @@ package com.workoutplanner.workout_planner_api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.workoutplanner.workout_planner_api.dto.PlanExerciseResponse;
-import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateRequest;
-import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,6 +55,5 @@ public class WorkoutTemplate {
 
     public void removeExercise(PlanExercise exercise) {
         this.planExercises.remove(exercise);
-        exercise.setWorkoutTemplate(null);
     }
 }

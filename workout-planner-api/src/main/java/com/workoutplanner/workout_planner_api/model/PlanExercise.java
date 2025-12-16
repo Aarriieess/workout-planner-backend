@@ -43,21 +43,4 @@ public class PlanExercise {
     @JoinColumn(name = "workout_template_id")
     @JsonBackReference
     private WorkoutTemplate workoutTemplate;
-
-    public static PlanExercise fromRequest(PlanExerciseRequest request,
-                                           WorkoutTemplate template,
-                                           Exercise exercise)
-    {
-        PlanExercise planExercise = new PlanExercise();
-        planExercise.updateFromRequest(request);
-        planExercise.setWorkoutTemplate(template);
-        planExercise.setExercise(exercise);
-        return planExercise;
-    }
-
-    public void updateFromRequest(PlanExerciseRequest request) {
-        this.setReps(request.getReps());
-        this.setSets(request.getSets());
-        this.setRestSeconds(request.getRestSeconds());
-    }
 }
