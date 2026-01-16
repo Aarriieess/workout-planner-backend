@@ -10,4 +10,8 @@ public record UserResponse(
         String name,
         String email,
         UserProfileResponse profile
-) { }
+) {
+    public UserResponse(Long id, String name, String email) {
+        this(id, name, email, null);
+    }
+}

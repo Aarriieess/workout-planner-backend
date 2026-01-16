@@ -1,10 +1,7 @@
 package com.workoutplanner.workout_planner_api.auth;
 
 import com.workoutplanner.workout_planner_api.config.ResourceNotFoundException;
-import com.workoutplanner.workout_planner_api.dto.AuthResponse;
-import com.workoutplanner.workout_planner_api.dto.LoginRequest;
-import com.workoutplanner.workout_planner_api.dto.RefreshTokenRequest;
-import com.workoutplanner.workout_planner_api.dto.SignupRequest;
+import com.workoutplanner.workout_planner_api.dto.*;
 import com.workoutplanner.workout_planner_api.model.RefreshToken;
 import com.workoutplanner.workout_planner_api.model.User;
 import com.workoutplanner.workout_planner_api.repo.RefreshTokenRepo;
@@ -23,7 +20,6 @@ import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -91,6 +87,42 @@ public class AuthService {
     }
 
     @Transactional
+    public AuthResponse refreshAccessTokens(RefreshTokenRequest request) {
+        String rawToken = request.refreshToken();
+        RefreshToken oldToken = findAndEvaluateToken(rawToken);
+
+        User user = oldToken.getUser();
+        RefreshToken newToken = createRefreshToken(user);
+
+        oldToken.setRevoked(true);
+        oldToken.setReplacedByToken(newToken.getHashedToken());
+        refreshTokenRepo.save(oldToken);
+        deleteRevokedTokens(user.getId());
+
+        String newAccessToken = jwtService.generateAccessToken(user.getEmail(), user.getId());
+
+        return new AuthResponse(
+                newAccessToken,
+                newToken.getRawToken(),
+                accessTokenExp(newAccessToken),
+                user.getId(),
+                user.getEmail(),
+                user.getName()
+        );
+    }
+
+    public UserResponse getUser(Long userId) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        return new UserResponse(
+                user.getId(),
+                user.getEmail(),
+                user.getName()
+        );
+    }
+
+    @Transactional
     public void logout(Long userId, @Nullable String refreshToken, boolean allDevices) {
         if (allDevices) {
             refreshTokenRepo.revokeAllByUserId(userId);
@@ -134,31 +166,6 @@ public class AuthService {
                 .build();
 
         return refreshTokenRepo.save(refreshToken);
-    }
-
-    @Transactional
-    public AuthResponse refreshAccessTokens(RefreshTokenRequest request) {
-        String rawToken = request.refreshToken();
-        RefreshToken oldToken = findAndEvaluateToken(rawToken);
-
-        User user = oldToken.getUser();
-        RefreshToken newToken = createRefreshToken(user);
-
-        oldToken.setRevoked(true);
-        oldToken.setReplacedByToken(newToken.getHashedToken());
-        refreshTokenRepo.save(oldToken);
-        deleteRevokedTokens(user.getId());
-
-        String newAccessToken = jwtService.generateAccessToken(user.getEmail(), user.getId());
-
-        return new AuthResponse(
-                newAccessToken,
-                newToken.getRawToken(),
-                accessTokenExp(newAccessToken),
-                user.getId(),
-                user.getEmail(),
-                user.getName()
-        );
     }
 
     private RefreshToken findAndEvaluateToken(String rawToken) {

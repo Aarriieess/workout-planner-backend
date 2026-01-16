@@ -36,6 +36,13 @@ public class ExerciseService {
         return exercisePage.map(exerciseMapper::toResponse);
     }
 
+    public ExerciseResponse getExerciseById(Long id) {
+        Exercise exercise = exerciseRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
+
+        return exerciseMapper.toResponse(exercise);
+    }
+
     public Map<MuscleGroup, List<Exercise>> getExercisesByMuscleGroup(UserProfile userProfile) {
         List<Exercise> filteredExercise = exerciseRepo.findByWorkoutEnvironment(userProfile.getWorkoutEnvironment());
 

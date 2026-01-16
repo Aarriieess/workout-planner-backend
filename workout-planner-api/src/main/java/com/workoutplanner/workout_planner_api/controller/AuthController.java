@@ -45,4 +45,10 @@ public class AuthController {
         authService.logout(user.getId(), request.getRefreshToken(), request.isAllDevices());
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getUser(@AuthenticationPrincipal UserPrincipal user) {
+        UserResponse response = authService.getUser(user.getId());
+        return ResponseEntity.ok(response);
+    }
 }

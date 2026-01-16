@@ -33,6 +33,11 @@ public class ExerciseController {
         return ResponseEntity.ok(responses);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ExerciseResponse> getExercisesById(@PathVariable Long id) {
+        ExerciseResponse response = exerciseService.getExerciseById(id);
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping
     public ResponseEntity<ExerciseResponse> createExercise(@Valid @RequestBody ExerciseRequest request) {
