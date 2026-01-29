@@ -129,8 +129,9 @@ public class WorkoutTemplateService {
 
         return switch (days) {
             case 2, 4 -> WorkoutSplit.UPPER_LOWER;
-            case 5 -> WorkoutSplit.BRO_SPLIT;
+            case 5, 7 -> WorkoutSplit.BRO_SPLIT;
             case 3, 6 -> WorkoutSplit.PPL;
+            case 1 -> WorkoutSplit.FULL_BODY;
             default -> WorkoutSplit.FULL_BODY;
         };
     }

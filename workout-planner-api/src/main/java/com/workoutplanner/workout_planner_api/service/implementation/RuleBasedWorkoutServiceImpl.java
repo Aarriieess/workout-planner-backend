@@ -36,7 +36,15 @@ public class RuleBasedWorkoutServiceImpl implements RuleBasedWorkoutService {
 
         var userProfile = userService.getUserProfileEntity(user.getId());
 
+        System.out.println("=== DEBUG USER PROFILE ===");
+        System.out.println("User ID: " + user.getId());
+        System.out.println("Training Days from DB: " + userProfile.getTrainingDays());
+        System.out.println("Fitness Goal: " + userProfile.getFitnessGoal());
+        System.out.println("========================");
+
         WorkoutSplit split = workoutTemplateService.determineWorkoutSplit(userProfile);
+
+        System.out.println("🎯 Determined Split: " + split);
 
         WorkoutTemplate template = workoutTemplateService.createTemplate(
                 userProfile.getUser(),
@@ -48,6 +56,9 @@ public class RuleBasedWorkoutServiceImpl implements RuleBasedWorkoutService {
                 = exerciseService.getExercisesByMuscleGroup(userProfile);
 
         WorkoutGenerationStrategy strategy = strategyFactory.getStrategy(split);
+
+        System.out.println("🎯 Selected Split: " + split);
+        System.out.println("🎯 Strategy Class: " + strategy.getClass().getSimpleName());
 
         List<PlanExercise> planExercises = strategy.generatePlan(userProfile, exercisesByMuscleGroup, template);
 

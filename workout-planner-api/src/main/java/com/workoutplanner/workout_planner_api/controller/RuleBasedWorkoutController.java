@@ -1,17 +1,12 @@
 package com.workoutplanner.workout_planner_api.controller;
 
 import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
-import com.workoutplanner.workout_planner_api.dto.UserProfileRequest;
 import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateResponse;
-import com.workoutplanner.workout_planner_api.model.WorkoutTemplate;
 import com.workoutplanner.workout_planner_api.service.implementation.RuleBasedWorkoutServiceImpl;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +18,7 @@ public class  RuleBasedWorkoutController {
     private final RuleBasedWorkoutServiceImpl ruleBasedWorkoutService;
 
     @PostMapping("/generate")
-        public ResponseEntity<WorkoutTemplateResponse> generatePlan(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        public ResponseEntity<WorkoutTemplateResponse> generateTemplate(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         WorkoutTemplateResponse generated = ruleBasedWorkoutService.generateTemplate(userPrincipal);
         return ResponseEntity.ok(generated);
     }
