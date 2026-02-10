@@ -24,15 +24,20 @@ public class Exercise {
 
     private String name;
 
+    private String description;
+
+    @Enumerated(EnumType.STRING)
+    private ExerciseType exerciseType;
+
+    private boolean isUnilateral;
+
+
     @Enumerated(EnumType.STRING)
     private MuscleGroup primaryMuscleGroup;
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private List<MuscleGroup> secondaryMuscleGroup;
-
-    private String description;
-
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
@@ -45,12 +50,6 @@ public class Exercise {
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private List<WorkoutEnvironment> workoutEnvironment;
-
-    @Enumerated(EnumType.STRING)
-    private ExerciseType exerciseType;
-
-    private boolean isUnilateral;
-
 
     public static Exercise fromRequest(ExerciseRequest request) {
         Exercise exercise = new Exercise();

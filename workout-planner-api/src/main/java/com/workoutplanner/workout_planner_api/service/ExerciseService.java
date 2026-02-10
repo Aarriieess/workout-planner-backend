@@ -7,11 +7,14 @@ import com.workoutplanner.workout_planner_api.mapper.ExerciseMapper;
 import com.workoutplanner.workout_planner_api.model.Exercise;
 import com.workoutplanner.workout_planner_api.model.MuscleGroup;
 import com.workoutplanner.workout_planner_api.model.UserProfile;
+import com.workoutplanner.workout_planner_api.model.WorkoutEnvironment;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
+import jakarta.persistence.criteria.Join;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,14 +29,33 @@ public class ExerciseService {
     private final ExerciseMapper exerciseMapper;
 
 
-    public Page<ExerciseResponse> getExercise(MuscleGroup muscleGroup, int page, int size) {
+    public Page<ExerciseResponse> getExercise(int page, int size, MuscleGroup muscleGroup, WorkoutEnvironment environment, String search) {
+
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<Exercise> exercisePage = (muscleGroup != null)
-                ? exerciseRepo.findByMuscleGroup(muscleGroup, pageable)
-                : exerciseRepo.findAll(pageable);
+        Specification<Exercise> spec = ((root, query, cb) -> cb.conjunction());
 
-        return exercisePage.map(exerciseMapper::toResponse);
+        if (muscleGroup != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(root.get("primaryMuscleGroup"), muscleGroup)
+            );
+        }
+
+        if (environment != null) {
+            spec = spec.and((root, query, cb) -> {
+                Join<Exercise, WorkoutEnvironment> environmentJoin = root.join("workoutEnvironment");
+                return cb.equal(environmentJoin, environment);
+            });
+        }
+
+        if (search != null && !search.trim().isEmpty()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.like(cb.lower(root.get("name")), "%" + search.toLowerCase() + "%")
+            );
+        }
+
+        Page<Exercise> exercises = exerciseRepo.findAll(spec, pageable);
+        return exercises.map(exerciseMapper::toResponse);
     }
 
     public ExerciseResponse getExerciseById(Long id) {

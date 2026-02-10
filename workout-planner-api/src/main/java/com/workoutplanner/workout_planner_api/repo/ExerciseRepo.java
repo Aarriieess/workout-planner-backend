@@ -6,13 +6,14 @@ import com.workoutplanner.workout_planner_api.model.WorkoutEnvironment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ExerciseRepo extends JpaRepository<Exercise, Long> {
+public interface ExerciseRepo extends JpaRepository<Exercise, Long>, JpaSpecificationExecutor<Exercise> {
     List<Exercise> findByWorkoutEnvironment(WorkoutEnvironment environment);
 
     @Query("""

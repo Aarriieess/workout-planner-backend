@@ -4,11 +4,14 @@ import com.workoutplanner.workout_planner_api.dto.ExerciseRequest;
 import com.workoutplanner.workout_planner_api.dto.ExerciseResponse;
 import com.workoutplanner.workout_planner_api.model.Exercise;
 import com.workoutplanner.workout_planner_api.model.MuscleGroup;
+import com.workoutplanner.workout_planner_api.model.WorkoutEnvironment;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import com.workoutplanner.workout_planner_api.service.ExerciseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +30,11 @@ public class ExerciseController {
     public ResponseEntity<Page<ExerciseResponse>> getAllExercises(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) MuscleGroup muscleGroup
+            @RequestParam(required = false) MuscleGroup muscleGroup,
+            @RequestParam(required = false) WorkoutEnvironment environment,
+            @RequestParam(required = false) String search
     ) {
-        Page<ExerciseResponse> responses = exerciseService.getExercise(muscleGroup, page, size);
+        Page<ExerciseResponse> responses = exerciseService.getExercise(page, size, muscleGroup, environment, search);
         return ResponseEntity.ok(responses);
     }
 
