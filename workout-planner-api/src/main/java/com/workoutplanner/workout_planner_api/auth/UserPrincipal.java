@@ -2,6 +2,7 @@ package com.workoutplanner.workout_planner_api.auth;
 
 import com.workoutplanner.workout_planner_api.model.User;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-@Getter
+@Data
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
 

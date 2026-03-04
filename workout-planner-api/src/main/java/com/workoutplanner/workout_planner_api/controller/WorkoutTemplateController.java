@@ -2,12 +2,12 @@ package com.workoutplanner.workout_planner_api.controller;
 
 import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
 import com.workoutplanner.workout_planner_api.dto.*;
-import com.workoutplanner.workout_planner_api.model.WorkoutTemplate;
+import com.workoutplanner.workout_planner_api.model.User;
+import com.workoutplanner.workout_planner_api.repo.UserRepo;
 import com.workoutplanner.workout_planner_api.service.WorkoutTemplateService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,15 +27,22 @@ public class WorkoutTemplateController {
         return ResponseEntity.ok(workoutTemplateService.getUserTemplate(userPrincipal.getId()));
     }
 
-    @PostMapping("exercises")
-    public ResponseEntity<WorkoutTemplateResponse> addExerciseToTemplate(
-            @RequestBody @Valid PlanExerciseRequest request,
-            @AuthenticationPrincipal UserPrincipal user
+    @PostMapping
+    public ResponseEntity<WorkoutTemplateResponse> createEmptyTemplate(
+            @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
-        return ResponseEntity.ok(workoutTemplateService.addExerciseToTemplate(
-                request,
-                user.getId()
-        ));
+        return ResponseEntity.ok(workoutTemplateService.createEmptyTemplate(userPrincipal.getId()));
+    }
+
+    @PostMapping("/exercises")
+    public ResponseEntity<PlanExerciseResponse> addExerciseToTemplate(
+            @AuthenticationPrincipal UserPrincipal user,
+            @RequestBody AddExerciseRequest exerciseRequest) {
+
+        PlanExerciseResponse response =
+                workoutTemplateService.addExerciseToTemplateWithDefaults(user.getId(), exerciseRequest.getExerciseId());
+
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping

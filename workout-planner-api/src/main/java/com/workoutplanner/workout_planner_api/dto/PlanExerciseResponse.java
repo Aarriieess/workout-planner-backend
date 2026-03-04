@@ -9,5 +9,6 @@ public record PlanExerciseResponse(
         int sets,
         int reps,
         int restSeconds,
-        int dayIndex
+        int dayIndex,
+        int orderIndex
 ) {}

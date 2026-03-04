@@ -2,12 +2,14 @@ package com.workoutplanner.workout_planner_api.service;
 
 import com.workoutplanner.workout_planner_api.config.ResourceNotFoundException;
 import com.workoutplanner.workout_planner_api.dto.PlanExerciseRequest;
+import com.workoutplanner.workout_planner_api.dto.PlanExerciseResponse;
 import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateRequest;
 import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateResponse;
 import com.workoutplanner.workout_planner_api.mapper.PlanExerciseMapper;
 import com.workoutplanner.workout_planner_api.mapper.WorkoutTemplateMapper;
 import com.workoutplanner.workout_planner_api.model.*;
 import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
+import com.workoutplanner.workout_planner_api.repo.UserRepo;
 import com.workoutplanner.workout_planner_api.repo.WorkoutTemplateRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +27,7 @@ public class WorkoutTemplateService {
     private final ExerciseRepo exerciseRepo;
     private final WorkoutTemplateMapper templateMapper;
     private final PlanExerciseMapper planExerciseMapper;
+    private final UserRepo userRepo;
 
 
     public WorkoutTemplateResponse getUserTemplate(Long userId) {
@@ -46,7 +50,25 @@ public class WorkoutTemplateService {
         template.setFitnessGoal(profile.getFitnessGoal());
         template.setWorkoutSplit(split);
 
+        workoutTemplateRepo.save(template);
         return template;
+    }
+
+    public WorkoutTemplateResponse createEmptyTemplate (Long userId) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Optional<WorkoutTemplate> existing = workoutTemplateRepo.findByUser(user);
+        if(existing.isPresent()) {
+            return templateMapper.toResponse(existing.get());
+        }
+
+        WorkoutTemplate template = new WorkoutTemplate();
+        template.setUser(user);
+
+        workoutTemplateRepo.save(template);
+
+        return templateMapper.toResponse(template);
     }
 
     @Transactional
@@ -63,7 +85,7 @@ public class WorkoutTemplateService {
 
                     PlanExercise planExercise = planExerciseMapper.toEntity(planExerciseRequest);
                     planExercise.setExercise(exercise);
-                    template.addExercise(planExercise);
+                    template.addPlanExercise(planExercise);
                 }
 
         templateMapper.updateEntityFromRequest(request, template);
@@ -72,30 +94,17 @@ public class WorkoutTemplateService {
         return templateMapper.toResponse(template);
     }
 
-    public WorkoutTemplateResponse addExerciseToTemplate(
-            PlanExerciseRequest planExerciseRequest,
-            Long userId
-    ){
+    public PlanExerciseResponse addExerciseToTemplateWithDefaults(Long userId, Long exerciseId) {
         WorkoutTemplate template = findTemplateByUserId(userId);
 
-
-        Exercise exercise = exerciseRepo.findById(planExerciseRequest.getExerciseId())
+        Exercise exercise = exerciseRepo.findById(exerciseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
 
-        boolean alreadyAdded = template.getPlanExercises().stream()
-                .anyMatch(pe -> pe.getExercise().getId().equals(exercise.getId()));
-
-        if (alreadyAdded) {
-            throw new IllegalStateException("Exercise already exists in this template.");
-        }
-
-        PlanExercise planExercise = planExerciseMapper.toEntity(planExerciseRequest);
-        planExercise.setExercise(exercise);
-
-        template.addExercise(planExercise);
+        PlanExercise planExercise = template.addDefaultPlanExercise(exercise);
 
         workoutTemplateRepo.save(template);
-        return templateMapper.toResponse(template);
+
+        return planExerciseMapper.toResponse(planExercise);
     }
 
     public void removeExerciseFromTemplate(
@@ -143,4 +152,6 @@ public class WorkoutTemplateService {
         planExercises.forEach(exercise -> exercise.setWorkoutTemplate(template));
         template.getPlanExercises().addAll(planExercises);
     }
+
+
 }

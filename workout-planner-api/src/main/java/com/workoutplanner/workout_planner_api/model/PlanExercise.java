@@ -39,6 +39,8 @@ public class PlanExercise {
     @Column
     private  int dayIndex;
 
+    int orderIndex;
+
     @ManyToOne
     @JoinColumn(name = "workout_template_id")
     @JsonBackReference

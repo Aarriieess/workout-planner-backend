@@ -37,7 +37,7 @@ public class WorkoutTemplate {
 
     @OneToMany(mappedBy = "workoutTemplate", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    @OrderBy("dayIndex ASC, id ASC")
+    @OrderBy("dayIndex ASC, orderIndex ASC")
     private List<PlanExercise> planExercises = new ArrayList<>();
 
     public void clearExercises() {
@@ -49,12 +49,36 @@ public class WorkoutTemplate {
         }
     }
 
-    public void addExercise(PlanExercise exercise) {
-        exercise.setWorkoutTemplate(this);
-        this.planExercises.add(exercise);
+    public void addPlanExercise(PlanExercise planExercise) {
+        planExercise.setWorkoutTemplate(this);
+        this.planExercises.add(planExercise);
     }
 
     public void removeExercise(PlanExercise exercise) {
         this.planExercises.remove(exercise);
+    }
+
+    public PlanExercise addDefaultPlanExercise(Exercise exercise) {
+        boolean alreadyExists = this.planExercises.stream()
+                .anyMatch(pe -> pe.getExercise().getId().equals(exercise.getId()));
+
+        if (alreadyExists) {
+            throw new IllegalArgumentException("Exercise already exist");
+        }
+
+        int nextIndex = this.planExercises.size();
+
+        PlanExercise planExercise = PlanExercise.builder()
+                .exercise(exercise)
+                .sets(3)
+                .reps(10)
+                .restSeconds(60)
+                .orderIndex(nextIndex)
+                .build();
+
+        planExercise.setWorkoutTemplate(this);
+        this.addPlanExercise(planExercise);
+
+        return planExercise;
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-16T17:25:11+0800",
+    date = "2026-03-04T18:42:19+0800",
     comments = "version: 1.6.3, compiler: javac, environment: Java 24.0.1 (Oracle Corporation)"
 )
 @Component
@@ -28,6 +28,7 @@ public class PlanExerciseMapperImpl implements PlanExerciseMapper {
         int reps = 0;
         int restSeconds = 0;
         int dayIndex = 0;
+        int orderIndex = 0;
 
         planExerciseId = planExercise.getId();
         exerciseId = planExerciseExerciseId( planExercise );
@@ -36,8 +37,9 @@ public class PlanExerciseMapperImpl implements PlanExerciseMapper {
         reps = planExercise.getReps();
         restSeconds = planExercise.getRestSeconds();
         dayIndex = planExercise.getDayIndex();
+        orderIndex = planExercise.getOrderIndex();
 
-        PlanExerciseResponse planExerciseResponse = new PlanExerciseResponse( planExerciseId, exerciseId, exerciseName, sets, reps, restSeconds, dayIndex );
+        PlanExerciseResponse planExerciseResponse = new PlanExerciseResponse( planExerciseId, exerciseId, exerciseName, sets, reps, restSeconds, dayIndex, orderIndex );
 
         return planExerciseResponse;
     }

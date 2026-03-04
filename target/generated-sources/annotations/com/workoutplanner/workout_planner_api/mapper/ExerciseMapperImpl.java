@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-16T17:18:03+0800",
+    date = "2026-03-04T18:42:19+0800",
     comments = "version: 1.6.3, compiler: javac, environment: Java 24.0.1 (Oracle Corporation)"
 )
 @Component
@@ -62,12 +62,13 @@ public class ExerciseMapperImpl implements ExerciseMapper {
         Exercise.ExerciseBuilder exercise = Exercise.builder();
 
         exercise.name( request.getName() );
+        exercise.description( request.getDescription() );
+        exercise.exerciseType( request.getExerciseType() );
         exercise.primaryMuscleGroup( request.getPrimaryMuscleGroup() );
         List<MuscleGroup> list = request.getSecondaryMuscleGroup();
         if ( list != null ) {
             exercise.secondaryMuscleGroup( new ArrayList<MuscleGroup>( list ) );
         }
-        exercise.description( request.getDescription() );
         List<FitnessGoal> list1 = request.getTargetGoals();
         if ( list1 != null ) {
             exercise.targetGoals( new ArrayList<FitnessGoal>( list1 ) );
@@ -80,7 +81,6 @@ public class ExerciseMapperImpl implements ExerciseMapper {
         if ( list3 != null ) {
             exercise.workoutEnvironment( new ArrayList<WorkoutEnvironment>( list3 ) );
         }
-        exercise.exerciseType( request.getExerciseType() );
 
         return exercise.build();
     }
@@ -92,6 +92,9 @@ public class ExerciseMapperImpl implements ExerciseMapper {
         }
 
         exercise.setName( request.getName() );
+        exercise.setDescription( request.getDescription() );
+        exercise.setExerciseType( request.getExerciseType() );
+        exercise.setUnilateral( request.isUnilateral() );
         exercise.setPrimaryMuscleGroup( request.getPrimaryMuscleGroup() );
         if ( exercise.getSecondaryMuscleGroup() != null ) {
             List<MuscleGroup> list = request.getSecondaryMuscleGroup();
@@ -109,7 +112,6 @@ public class ExerciseMapperImpl implements ExerciseMapper {
                 exercise.setSecondaryMuscleGroup( new ArrayList<MuscleGroup>( list ) );
             }
         }
-        exercise.setDescription( request.getDescription() );
         if ( exercise.getTargetGoals() != null ) {
             List<FitnessGoal> list1 = request.getTargetGoals();
             if ( list1 != null ) {
@@ -158,7 +160,5 @@ public class ExerciseMapperImpl implements ExerciseMapper {
                 exercise.setWorkoutEnvironment( new ArrayList<WorkoutEnvironment>( list3 ) );
             }
         }
-        exercise.setExerciseType( request.getExerciseType() );
-        exercise.setUnilateral( request.isUnilateral() );
     }
 }
