@@ -9,12 +9,10 @@ import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import com.workoutplanner.workout_planner_api.repo.UserRepo;
 import com.workoutplanner.workout_planner_api.repo.WorkoutTemplateRepo;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.jdbc.Work;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,10 +69,7 @@ public class WorkoutTemplateService {
     }
 
     @Transactional
-    public WorkoutTemplateResponse updateTemplate(
-            WorkoutTemplateRequest request,
-            Long userId
-    ) {
+    public WorkoutTemplateResponse updateTemplate(WorkoutTemplateRequest request, Long userId) {
         WorkoutTemplate template = findTemplateByUserId(userId);
         templateMapper.updateEntityFromRequest(request, template);
 
