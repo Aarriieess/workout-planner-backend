@@ -1,6 +1,7 @@
 package com.workoutplanner.workout_planner_api.controller;
 
 import com.workoutplanner.workout_planner_api.auth.UserPrincipal;
+import com.workoutplanner.workout_planner_api.config.ResourceNotFoundException;
 import com.workoutplanner.workout_planner_api.dto.*;
 import com.workoutplanner.workout_planner_api.model.User;
 import com.workoutplanner.workout_planner_api.repo.UserRepo;
@@ -43,6 +44,14 @@ public class WorkoutTemplateController {
                 workoutTemplateService.addExerciseToTemplateWithDefaults(user.getId(), exerciseRequest.getExerciseId());
 
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/exercises")
+    public ResponseEntity<PlanExerciseResponse> updatePlanExercise(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @RequestBody @Valid PlaneExerciseUpdateRequest request
+    ) {
+        return ResponseEntity.ok(workoutTemplateService.updatePlanExercise(userPrincipal.getId(), request));
     }
 
     @PutMapping

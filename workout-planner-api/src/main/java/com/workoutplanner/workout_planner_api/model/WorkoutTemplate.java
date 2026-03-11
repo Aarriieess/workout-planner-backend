@@ -59,12 +59,6 @@ public class WorkoutTemplate {
     }
 
     public PlanExercise addDefaultPlanExercise(Exercise exercise) {
-        boolean alreadyExists = this.planExercises.stream()
-                .anyMatch(pe -> pe.getExercise().getId().equals(exercise.getId()));
-
-        if (alreadyExists) {
-            throw new IllegalArgumentException("Exercise already exist");
-        }
 
         int nextIndex = this.planExercises.size();
 

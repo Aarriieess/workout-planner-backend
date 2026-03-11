@@ -62,7 +62,7 @@ public class RuleBasedWorkoutServiceImpl implements RuleBasedWorkoutService {
 
         List<PlanExercise> planExercises = strategy.generatePlan(userProfile, exercisesByMuscleGroup, template);
 
-        workoutTemplateService.updateTemplateExercises(template, planExercises);
+        workoutTemplateService.updateWholeTemplateExercises(template, planExercises);
 
         WorkoutTemplate userTemplate = workoutTemplateRepo.save(template);
 

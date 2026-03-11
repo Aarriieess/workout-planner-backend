@@ -1,10 +1,7 @@
 package com.workoutplanner.workout_planner_api.service;
 
 import com.workoutplanner.workout_planner_api.config.ResourceNotFoundException;
-import com.workoutplanner.workout_planner_api.dto.PlanExerciseRequest;
-import com.workoutplanner.workout_planner_api.dto.PlanExerciseResponse;
-import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateRequest;
-import com.workoutplanner.workout_planner_api.dto.WorkoutTemplateResponse;
+import com.workoutplanner.workout_planner_api.dto.*;
 import com.workoutplanner.workout_planner_api.mapper.PlanExerciseMapper;
 import com.workoutplanner.workout_planner_api.mapper.WorkoutTemplateMapper;
 import com.workoutplanner.workout_planner_api.model.*;
@@ -12,10 +9,12 @@ import com.workoutplanner.workout_planner_api.repo.ExerciseRepo;
 import com.workoutplanner.workout_planner_api.repo.UserRepo;
 import com.workoutplanner.workout_planner_api.repo.WorkoutTemplateRepo;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.jdbc.Work;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,21 +76,24 @@ public class WorkoutTemplateService {
             Long userId
     ) {
         WorkoutTemplate template = findTemplateByUserId(userId);
-        template.clearExercises();
-
-        for (PlanExerciseRequest planExerciseRequest : request.getPlanExerciseRequestList()) {
-            Exercise exercise = exerciseRepo.findById(planExerciseRequest.getExerciseId())
-                            .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
-
-                    PlanExercise planExercise = planExerciseMapper.toEntity(planExerciseRequest);
-                    planExercise.setExercise(exercise);
-                    template.addPlanExercise(planExercise);
-                }
-
         templateMapper.updateEntityFromRequest(request, template);
-        workoutTemplateRepo.save(template);
 
-        return templateMapper.toResponse(template);
+        List<PlanExercise> exercises = request.getPlanExerciseRequestList()
+                        .stream().map(req -> {
+                                    Exercise exercise = exerciseRepo.findById(req.getExerciseId())
+                                            .orElseThrow(() -> new IllegalArgumentException("Exercise not found"));
+
+                                    PlanExercise planExercise = planExerciseMapper.toEntity(req);
+                                    planExercise.setExercise(exercise);
+                                    planExercise.setWorkoutTemplate(template);
+
+                                    return planExercise;
+                        }).toList();
+
+        template.getPlanExercises().clear();
+        template.getPlanExercises().addAll(exercises);
+
+        return templateMapper.toResponse(workoutTemplateRepo.save(template));
     }
 
     public PlanExerciseResponse addExerciseToTemplateWithDefaults(Long userId, Long exerciseId) {
@@ -146,12 +148,28 @@ public class WorkoutTemplateService {
     }
 
     @Transactional
-    public void updateTemplateExercises (WorkoutTemplate template, List<PlanExercise> planExercises) {
+    public void updateWholeTemplateExercises(WorkoutTemplate template, List<PlanExercise> planExercises) {
         template.getPlanExercises().clear();
 
         planExercises.forEach(exercise -> exercise.setWorkoutTemplate(template));
         template.getPlanExercises().addAll(planExercises);
     }
 
+    @Transactional
+    public PlanExerciseResponse updatePlanExercise(Long userId, PlaneExerciseUpdateRequest request) {
+        WorkoutTemplate template = findTemplateByUserId(userId);
 
+        PlanExercise planExercise = template.getPlanExercises()
+                        .stream()
+                        .filter(ex -> ex.getId().equals(request.getPlanExerciseId()))
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("Exercise not found"));
+
+        planExercise.setId(request.getPlanExerciseId());
+        planExercise.setSets(request.getSets());
+        planExercise.setReps(request.getReps());
+        planExercise.setRestSeconds(request.getRestSeconds());
+
+        return planExerciseMapper.toResponse(planExercise);
+    }
 }
