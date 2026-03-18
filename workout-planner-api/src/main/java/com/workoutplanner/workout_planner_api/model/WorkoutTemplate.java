@@ -38,6 +38,7 @@ public class WorkoutTemplate {
     @OneToMany(mappedBy = "workoutTemplate", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     @OrderBy("dayIndex ASC, orderIndex ASC")
+    @Builder.Default
     private List<PlanExercise> planExercises = new ArrayList<>();
 
     public void clearExercises() {
@@ -58,7 +59,7 @@ public class WorkoutTemplate {
         this.planExercises.remove(exercise);
     }
 
-    public PlanExercise addDefaultPlanExercise(Exercise exercise) {
+    public void addDefaultPlanExercise(Exercise exercise) {
 
         int nextIndex = this.planExercises.size();
 
@@ -72,7 +73,5 @@ public class WorkoutTemplate {
 
         planExercise.setWorkoutTemplate(this);
         this.addPlanExercise(planExercise);
-
-        return planExercise;
     }
 }

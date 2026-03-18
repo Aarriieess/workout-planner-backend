@@ -97,11 +97,14 @@ public class WorkoutTemplateService {
         Exercise exercise = exerciseRepo.findById(exerciseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
 
-        PlanExercise planExercise = template.addDefaultPlanExercise(exercise);
+        template.addDefaultPlanExercise(exercise);
 
-        workoutTemplateRepo.save(template);
+        WorkoutTemplate saved = workoutTemplateRepo.saveAndFlush(template);
 
-        return planExerciseMapper.toResponse(planExercise);
+        PlanExercise savedPlanExercise = saved.getPlanExercises()
+                .get(saved.getPlanExercises().size()-1);
+
+        return planExerciseMapper.toResponse(savedPlanExercise);
     }
 
     public void removeExerciseFromTemplate(

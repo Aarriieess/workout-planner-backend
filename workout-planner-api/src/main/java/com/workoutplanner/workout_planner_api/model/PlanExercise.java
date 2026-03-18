@@ -37,7 +37,7 @@ public class PlanExercise {
     private Exercise exercise;
 
     @Column
-    private  int dayIndex;
+    private int dayIndex;
 
     int orderIndex;
 
