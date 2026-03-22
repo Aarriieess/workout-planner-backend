@@ -28,7 +28,7 @@ public class WorkoutTemplateService {
 
 
     public WorkoutTemplateResponse getUserTemplate(Long userId) {
-        WorkoutTemplate template = workoutTemplateRepo.findByUserId(userId)
+        WorkoutTemplate template = workoutTemplateRepo.findByUserIdWithExercises(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Workout template not found for user ID: " + userId));
 
         return templateMapper.toResponse(template);
@@ -163,10 +163,10 @@ public class WorkoutTemplateService {
                         .findFirst()
                         .orElseThrow(() -> new IllegalArgumentException("Exercise not found"));
 
-        planExercise.setId(request.getPlanExerciseId());
         planExercise.setSets(request.getSets());
         planExercise.setReps(request.getReps());
         planExercise.setRestSeconds(request.getRestSeconds());
+        planExercise.setDayIndex(request.getDayIndex());
 
         return planExerciseMapper.toResponse(planExercise);
     }

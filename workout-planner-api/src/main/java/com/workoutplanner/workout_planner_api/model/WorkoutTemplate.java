@@ -69,6 +69,7 @@ public class WorkoutTemplate {
                 .reps(10)
                 .restSeconds(60)
                 .orderIndex(nextIndex)
+                .dayIndex(1)
                 .build();
 
         planExercise.setWorkoutTemplate(this);
