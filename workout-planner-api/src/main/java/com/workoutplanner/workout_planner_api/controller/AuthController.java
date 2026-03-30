@@ -51,4 +51,22 @@ public class AuthController {
         UserResponse response = authService.getUser(user.getId());
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/me/password")
+    public ResponseEntity<Void> changePassword(
+            @AuthenticationPrincipal UserPrincipal user,
+            @RequestBody ChangePasswordRequest request
+    ) {
+        authService.changePassword(user.getId(), request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/me/email")
+    public ResponseEntity<Void> changeEmail(
+            @AuthenticationPrincipal UserPrincipal user,
+            @RequestBody ChangeEmailRequest request
+    ) {
+        authService.changeEmail(user.getId(), request);
+        return ResponseEntity.noContent().build();
+    }
 }

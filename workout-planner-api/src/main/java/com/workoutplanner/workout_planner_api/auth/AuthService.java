@@ -83,7 +83,6 @@ public class AuthService {
                 newUser.getEmail(),
                 newUser.getName()
         );
-
     }
 
     @Transactional
@@ -146,6 +145,38 @@ public class AuthService {
         token.setRevoked(true);
         refreshTokenRepo.save(token);
         deleteRevokedTokens(userId);
+    }
+
+    public void changePassword(Long userId, ChangePasswordRequest request) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPasswordHash())) {
+            throw new IllegalArgumentException("Current password is incorrect");
+        }
+
+        if (!request.getNewPassword().equals(request.getConfirmNewPassword())) {
+            throw new IllegalArgumentException("Password do not match");
+        }
+
+        user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
+        userRepo.save(user);
+    }
+
+    public void changeEmail(Long userId, ChangeEmailRequest request) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPasswordHash())) {
+            throw new IllegalArgumentException("Current password is incorrect");
+        }
+
+        if (userRepo.findByEmail(request.getNewEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email already in use");
+        }
+
+        user.setEmail(request.getNewEmail());
+        userRepo.save(user);
     }
 
     private String generateRandomToken() {

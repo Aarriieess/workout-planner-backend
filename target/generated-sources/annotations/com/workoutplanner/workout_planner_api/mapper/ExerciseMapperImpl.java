@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-03-04T18:42:19+0800",
+    date = "2026-03-28T09:03:48+0800",
     comments = "version: 1.6.3, compiler: javac, environment: Java 24.0.1 (Oracle Corporation)"
 )
 @Component
@@ -94,7 +94,6 @@ public class ExerciseMapperImpl implements ExerciseMapper {
         exercise.setName( request.getName() );
         exercise.setDescription( request.getDescription() );
         exercise.setExerciseType( request.getExerciseType() );
-        exercise.setUnilateral( request.isUnilateral() );
         exercise.setPrimaryMuscleGroup( request.getPrimaryMuscleGroup() );
         if ( exercise.getSecondaryMuscleGroup() != null ) {
             List<MuscleGroup> list = request.getSecondaryMuscleGroup();
