@@ -110,16 +110,6 @@ public class AuthService {
         );
     }
 
-    public UserResponse getUser(Long userId) {
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
-        return new UserResponse(
-                user.getId(),
-                user.getEmail(),
-                user.getName()
-        );
-    }
 
     @Transactional
     public void logout(Long userId, @Nullable String refreshToken, boolean allDevices) {

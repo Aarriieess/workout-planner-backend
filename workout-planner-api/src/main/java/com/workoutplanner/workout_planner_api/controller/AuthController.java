@@ -46,12 +46,6 @@ public class AuthController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<UserResponse> getUser(@AuthenticationPrincipal UserPrincipal user) {
-        UserResponse response = authService.getUser(user.getId());
-        return ResponseEntity.ok(response);
-    }
-
     @PutMapping("/me/password")
     public ResponseEntity<Void> changePassword(
             @AuthenticationPrincipal UserPrincipal user,

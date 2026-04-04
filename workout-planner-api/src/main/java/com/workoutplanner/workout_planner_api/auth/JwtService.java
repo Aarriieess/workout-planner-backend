@@ -21,29 +21,29 @@ public class JwtService {
 
     public String generateAccessToken(String email, Long userId) {
         return Jwts.builder()
-                .setSubject(email) // identifies the user
-                .claim("id", userId) // custom claim: userId
+                .setSubject(String.valueOf(userId))
+                .claim("email", email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(key)
                 .compact();
     }
 
-    public String extractEmail(String token) {
-        return extractClaim(token, Claims::getSubject);
-    }
-
     public Long extractUserId(String token) {
-        return extractClaim(token, claims -> claims.get("id", Long.class));
+        return Long.valueOf(extractClaim(token, Claims::getSubject));
     }
 
-    public boolean isTokenValid(String token, String userEmail) {
-        final String email = extractEmail(token);
-        return (email.equals(userEmail)) && !isTokenExpired(token);
+    public String extractEmail(String token) {
+        return extractClaim(token, claims -> claims.get("email", String.class));
+    }
+
+    public boolean isTokenValid(String token, Long userId) {
+        final Long tokenUserId = extractUserId(token);
+        return tokenUserId.equals(userId) && isTokenExpired(token);
     }
 
     public boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+        return !extractExpiration(token).before(new Date());
     }
 
     public Date extractExpiration(String token) {
@@ -58,5 +58,4 @@ public class JwtService {
                 .getBody();
         return claimsResolver.apply(claims);
     }
-
 }
